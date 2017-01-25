@@ -1,0 +1,27 @@
+Cheating.  You shouldn't do it.  If you're on your first play-through, that is.  We didn't.  But Fallout 4 suffers from an immense lack of replay-ability for several reasons and The Cheat Bunker is here to help augment your subsequent experiences.  Eventually, we all use mods that are implicitly cheats to either work around bugs or just for fun and The Cheat Bunker aims to do both!
+
+Features:
+ - "Bottomless" containers with armor, weapons, and mods for you, your followers, and settlers
+ - A fast-travel feature based on the Institute's teleporter which works in any of the game's world spaces
+ - Several terminals in the Bunker itself which can spawn weapons and armor with legendary effects unique to this mod
+ - The ability to track companions (and Dogmeat) and move them to the player if they are glitched or lost.  Includes the ability to repair damaged relationships.  Note that the Cheat Bunker was designed to be compatible with Everyone's Best Friend if it is installed.
+ - The ability to spawn any suit of Power Armor known to the Bunker and any mod for said armor.
+ - Each type of vanilla workbench having been well-stocked for your convenience
+ - Options to progress your character to a point where you want it to be as well as replicate previous accomplishments by spawning collectible items
+ - The ability to auto-complete portions of quests known to be insufferable the second time around
+ - The ability to add content from DLC to the Bunker by way of packages supplied by other plugins
+ - A holotape which provides easy access to just about every feature of The Cheat Bunker on-the-go
+
+The Cheat Bunker proudly uses the Papyrus libraries Inject-Tec and Dynamic Terminal which have been bundled with this mod for your convenience.  The helpful terminals and the ability to easily include content from DLC are entirely due to these libraries and The Cheat Bunker could not exist without them.
+
+Upon installation, The Cheat Bunker will start a quest to guide you to The Bunker and point you to the manual which has been kept as short as possible.  Please read the manual at least once.
+
+-
+
+Please be aware I do not have an X-Box One and I am unable to test this mod and it's packages directly.  Extensive play-testing on the PC using the packaged files has revealed no problems.  Let me know the instant something seems off and I'll do my best to solve it.
+
+-
+
+If you're interested in seeing how the Cheat Bunker and the DLC packages make use of Inject-Tec and/or Dynamic Terminal, the loose files with the script sources have been provided as miscellaneous files.
+
+There may or may not be an all-in-one plugin available in the future after there are no outstanding bugs and all intended features are complete across all the plugins.  For the time being, I have to acknowledge some people were smarter than I am and didn't buy all the DLC such that I have plan around this fact in this mod.
