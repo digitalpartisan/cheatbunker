@@ -1,2 +1,5 @@
+1.0.1
+Fixed a bug that caused the wrong teleportation effect to be applied to the wrong actor objects at the wrong times
+
 1.0.0
 Initial release

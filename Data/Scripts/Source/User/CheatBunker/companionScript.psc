@@ -1,5 +1,7 @@
 Scriptname CheatBunker:CompanionScript extends Quest Conditional
 
+CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const
+{So that companion movement gets the transit effects}
 ReferenceAlias Property CompanionAlias Auto Const
 {The current companion from the Followers quest}
 ReferenceAlias Property DogmeatAlias Auto Const
@@ -117,7 +119,7 @@ Function moveToPlayer(Actor aTarget, Message mFailure = None)
 	endif
 	
 	Debug.Trace("[CheatBunker][Companion] attempting to move actor to player: " + aTarget)
-	aTarget.MoveTo(Game.GetPlayer())
+	CheatBunkerTransitQuest.transitToPlayer(aTarget)
 EndFunction
 
 Function trackCompanion()

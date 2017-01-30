@@ -31,6 +31,7 @@ Group FastTravel
 	Location Property InteriorLocation Auto Const
 	Location Property FastTravelLocation Auto Const
 	Cell Property InteriorCell Auto Const
+	Spell Property TeleportPlayerSpell Auto Const
 	Spell Property TeleportSpell Auto Const
 	ObjectReference Property InteriorMarker Auto Const
 	ObjectReference Property FastTravelMarker Auto Const
@@ -45,21 +46,36 @@ EndFunction
 
 Function applyEffectsToActor(Actor aTarget)
 	if (aTarget)
-		aTarget.addSpell(TeleportSpell, false)
+		if (Game.GetPlayer() == aTarget)
+			aTarget.addSpell(TeleportPlayerSpell, false)
+		else
+			aTarget.addSpell(TeleportSpell, false)
+		endif
 	endif
 EndFunction
 
 Function applyEffects()
 	applyEffectsToActor(Game.GetPlayer())
-	applyEffectsToActor(CheatBunkerCompanionQuest.getDogmeatActor())
 	applyEffectsToActor(CheatBunkerCompanionQuest.getCompanionActor())
+	applyEffectsToActor(CheatBunkerCompanionQuest.getDogmeatActor())
 EndFunction
 
 Function transitActor(Actor aTarget, ObjectReference akLocation)
 	if (aTarget)
-		aTarget.moveTo(akLocation)
-		aTarget.addSpell(TeleportSpell, false)
+		if ( (aTarget as ObjectReference) != akLocation)
+			aTarget.moveTo(akLocation)
+			applyEffectsToActor(aTarget)
+		endif
 	endif
+EndFunction
+
+Function transitToPlayer(Actor aTarget)
+	Actor aPlayer = Game.GetPlayer()
+	if (aPlayer == aTarget)
+		return
+	endif
+
+	transitActor(aTarget, aPlayer)
 EndFunction
 
 Function transitToMarker(ObjectReference akMarker)
