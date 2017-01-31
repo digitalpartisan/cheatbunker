@@ -12,6 +12,9 @@ Chaining updates is possible if the ToVersion of one matches the FromVersion of 
 FormList Property Autocompletions Auto Const
 {These aren't injections as such because they actually have event listeners that need to be manually started and stopped if they're running and a package is uninstalled.}
 
+Bool Property InAIO = false Auto Const
+{Setting this value to true will prevent this package from being uninstalled in the diagnostics terminal if the plugin is in all-in-one mode.}
+
 Group Metadata
 	Message Property InstallationMessage Auto Const
 	{Displayed when the package is first installed}
@@ -39,16 +42,16 @@ Bool Function isCurrent()
 		return false
 	endif
 
-	if (DisplayVersion == None || !DisplayVersion.validate())
+	if (DisplayVersion == None || DisplayVersion.VersionData == None || !DisplayVersion.VersionData.validate())
 		return true ; technically accurate since there's no way to proceed with becoming current
 	endif
 
-	if (StoredVersion.greaterThan(DisplayVersion)) ; true, but U DID WOT, M8?
+	if (StoredVersion.greaterThan(DisplayVersion.VersionData)) ; true, but U DID WOT, M8?
 		Debug.Trace("[CheatBunker][Package] " + self + " stored version greater than display version")
 		return true
 	endif
 
-	return !StoredVersion.lessThan(DisplayVersion)
+	return !StoredVersion.lessThan(DisplayVersion.VersionData)
 EndFunction
 
 Function registerImporters()
@@ -112,7 +115,7 @@ Bool Function canInstall()
 		return false
 	endif
 
-	if (DisplayVersion == None || !DisplayVersion.validate())
+	if (DisplayVersion == None || DisplayVersion.VersionData == None || !DisplayVersion.VersionData.validate())
 		return false
 	endif
 
@@ -131,7 +134,7 @@ Bool Function install()
 	InstallationMessage.Show()
 	postInstallationBehavior()
 
-	StoredVersion.setTo(DisplayVersion)
+	StoredVersion.setTo(DisplayVersion.VersionData)
 	
 	return true
 EndFunction
@@ -153,7 +156,7 @@ Bool Function isUpdateRelevant(CheatBunker:PackageUpdater updater)
 		return false
 	endif
 
-	if (DisplayVersion.lessThan(updater.FromVersion) || DisplayVersion.lessThan(updater.ToVersion)) ; the updater wants to upgrade from and/or to a version that doesn't even exist
+	if (DisplayVersion.VersionData.lessThan(updater.FromVersion) || DisplayVersion.VersionData.lessThan(updater.ToVersion)) ; the updater wants to upgrade from and/or to a version that doesn't even exist
 		return false
 	endif
 
@@ -191,13 +194,13 @@ Bool Function update()
 		return false
 	endif
 	
-	Debug.Trace("[CheatBunker][Package] " + toString() + " detected update to " + DisplayVersion.toString())
+	Debug.Trace("[CheatBunker][Package] " + toString() + " detected update to " + DisplayVersion.VersionData.toString())
 	Injections.inject() ; this is soft behavior and won't do a whole lot other than run injections which haven't been run yet
 	registerImporters() ; this is also soft behavior and won't double-add an existing injector or run injections which have already been run
 	installAutocompletions() ; yet more "soft" behavior.  autocompletions won't be repeatedly added to the list
 	runUpdaters()
 
-	StoredVersion.setTo(DisplayVersion) ; regardless of what version we're at after running the updaters, this package needs to fully update so that update cycles don't kick off for no reason
+	StoredVersion.setTo(DisplayVersion.VersionData) ; regardless of what version we're at after running the updaters, this package needs to fully update so that update cycles don't kick off for no reason
 
 	return true
 EndFunction

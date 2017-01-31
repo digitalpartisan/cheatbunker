@@ -1,6 +1,7 @@
 Scriptname CheatBunker:QuestScript extends Quest Conditional
 
 Holotape Property CheatBunkerHolotape Auto Const
+Bool Property AIOMode = False Auto Const
 
 Group Packages
 	FormList Property Packages Auto Const

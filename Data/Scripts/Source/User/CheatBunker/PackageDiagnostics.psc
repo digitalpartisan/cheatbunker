@@ -6,6 +6,7 @@ CheatBunker:Package myPackage = None ; the package to act on
 
 Bool bUsingBasePackage = false Conditional
 Bool bValid = false Conditional
+Bool bAIOPreventsUninstall = false Conditional
 
 CheatBunker:Package Function getPackage()
 	return myPackage
@@ -14,8 +15,9 @@ EndFunction
 Function setPackage(CheatBunker:Package newPackage)
 	myPackage = newPackage
 	bUsingBasePackage = myPackage == CheatBunkerQuest.BasePackage
+	bAIOPreventsUninstall = CheatBunkerQuest.AIOMode && myPackage.InAIO
 	bValid = myPackage.isInstalled()
-	Debug.Trace("[CheatBunker][Diagnostics] set " + myPackage.toString())
+	Debug.Trace("[CheatBunker][Diagnostics] set " + myPackage.toString() + " with values bUsingBasePackage: " + bUsingBasePackage + " bValid: " + bValid + " bAIOPreventsUninstall: " + bAIOPreventsUninstall)
 EndFunction
 
 Function logNoPackage(String sTask)
