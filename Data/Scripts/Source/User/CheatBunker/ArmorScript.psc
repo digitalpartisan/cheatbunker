@@ -61,7 +61,7 @@ Function spawnItem(Armor aItem = None, ObjectMod size = None, ObjectMod material
 		return
 	endif
 
-	ObjectReference akInstance = CheatBunkerQuest.SpawnItemsMarker.PlaceAtMe(aItem)
+	ObjectReference akInstance = CheatBunkerQuest.SpawnItemsContainer.PlaceAtMe(aItem)
 	if (size != None)
 		akInstance.AttachMod(size)
 	endif
@@ -69,6 +69,7 @@ Function spawnItem(Armor aItem = None, ObjectMod size = None, ObjectMod material
 		akInstance.AttachMod(material)
 	endif
 	akInstance.AttachMod(CheaterMod)
+	CheatBunkerQuest.SpawnItemsContainer.AddItem(akInstance)
 EndFunction
 
 Function spawnHelmet(CheatBunker:ArmorSize size = None, CheatBunker:ArmorMaterial material = None)

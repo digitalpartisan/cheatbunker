@@ -31,12 +31,12 @@ Function attachSpecialMod(ObjectReference akInstance)
 	endif
 EndFunction
 
-Function generate(ObjectReference akTarget = None)
+Function generate(ObjectReference akTarget = None, Bool bForceInContainer = false)
 	ObjectReference akInstance = getInstance(akTarget)
 	attachMods(akInstance)
 	attachSpecialMod(akInstance)
 
-	if (bInContainer)
+	if (bForceInContainer || bInContainer)
 		akTarget.addItem(akInstance)
 	endif
 EndFunction

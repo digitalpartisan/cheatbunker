@@ -51,7 +51,7 @@ Function calculateCanBuild()
 EndFunction
 
 Function spawnComponent(Int iComponentID, Int iAmount = 1)
-	CheatBunkerQuest.SpawnItemsMarker.PlaceAtMe(getComponent(iComponentID).getValue(), iAmount)
+	CheatBunkerQuest.SpawnItemsContainer.AddItem(getComponent(iComponentID).getValue(), iAmount)
 EndFunction
 
 Function buildLogic()
