@@ -1,8 +1,11 @@
-1.0.2
+v1.1.0
+Nearly every item spawns in the spawn cabinet because the out-in-the-open style caused issues.  Added chair so the player can wait.
+
+v1.0.2
 Fixed a bug where the AiO release would allow bundled packages to be uninstalled and a design failure in the package versioning system.  Unless you're running the AiO release, please update all Cheat Bunker packages to match this update.
 
-1.0.1
+v1.0.1
 Fixed a bug that caused the wrong teleportation effect to be applied to the wrong actor objects at the wrong times
 
-1.0.0
+v1.0.0
 Initial release
