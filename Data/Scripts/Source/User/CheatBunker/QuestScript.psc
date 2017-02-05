@@ -2,11 +2,11 @@ Scriptname CheatBunker:QuestScript extends Quest Conditional
 
 Group Metadata
 	Quest Property CheatBunkerQuest Auto Const Mandatory
+	ReferenceAlias Property PlayerAlias Auto Const Mandatory
 	Bool Property AIOMode = False Auto Const
-	Int Property HoldingStage = 20 Auto Const
 EndGroup
 
-Group PackagesAndAssociated
+Group PackagesAndPackageSupport
 	FormList Property Packages Auto Const Mandatory
 	FormList Property Importers Auto Const Mandatory
 	FormList Property Autocompletions Auto Const Mandatory
@@ -24,29 +24,9 @@ Group ItemSpawning
 	ObjectReference Property WorkbenchContainer Auto Const
 EndGroup
 
-Group IntroQuestSettings
-	Quest Property OutOfTimeQuest Auto Const
-	Quest Property CheatBunkerIntroQuest Auto Const
-	Int Property ExitVaultObjective Auto Const
-	Int Property GoHomeStage Auto Const
-
-	GlobalVariable Property PostVaultDelay Auto Const
-EndGroup
-
-Function init()
-	RegisterForRemoteEvent(Game.GetPlayer(), "OnPlayerLoadGame") ; game loading should trigger attempts to update packages, so hook the event
-	introQuestSetup()
+Event OnQuestInit()
 	installPackage(BasePackage)
-	CheatBunkerQuest.SetStage(HoldingStage)
-EndFunction
-
-Function introQuestSetup()
-	if (OutOfTimeQuest.IsObjectiveCompleted(ExitVaultObjective))
-		CheatBunkerIntroQuest.Start()
-	else
-		RegisterForRemoteEvent(OutOfTimeQuest, "OnStageSet")
-	endif
-EndFunction
+EndEvent
 
 CheatBunker:Package Function getPackage(Int iIndex)
 	CheatBunker:Package thisPackage = Packages.GetAt(iIndex) as CheatBunker:Package
@@ -79,7 +59,7 @@ Function uninstall()
 	UnregisterForRemoteEvent(Game.GetPlayer(), "OnPlayerLoadGame") ; make sure this stops or else we're sloppily leaving listeners lying around
 EndFunction
 
-Function runUpdates()
+Function checkForUpdates()
 	Bool bUpdateRun = false
 
 	Int iCounter = 0
@@ -93,8 +73,11 @@ Function runUpdates()
 	EndWhile
 
 	if (bUpdateRun)
+		Debug.Trace("[CheatBunker] updates ran")
 		Utility.Wait(PackageInitMessageDelay.GetValue())
 		UpdatesRunMessage.Show()
+	else
+		Debug.Trace("[CheatBunker] no updates ran")
 	endif
 EndFunction
 
@@ -130,14 +113,16 @@ Function uninstallAutocompletion(CheatBunker:Autocompletion autocompletion)
 	endif
 EndFunction
 
-Event Quest.OnStageSet(Quest akSender, int auiStageID, int auiItemID)
-	if (OutOfTimeQuest == akSender && auiStageID == GoHomeStage)
-		Utility.Wait(PostVaultDelay.GetValue()) ; So that we're not competing with the main quest for UI space
-		CheatBunkerIntroQuest.Start()
-		UnregisterForRemoteEvent(OutOfTimeQuest, "OnStageSet")
-	endif
-EndEvent
-
 Event Actor.OnPlayerLoadGame(Actor aActorRef)
-	runUpdates()
+{This is legacy code intended to handle part of the update from version 1.1.0 to version 1.2.0.
+It exists because during that update, the checkForUpdates() call was moved to an alias script on this same quest.
+Saves with the Cheat Bunker already present wouldn't have that alias filled in because the quest was already started and the load event would still come to this script.
+Because this script receives the load event, it needs to call checkForUpdates() like the rest of the plugin was expecting, fill in the PlayerAlias so that it would get the game load events, and unregister for this event in the future.}
+	Debug.Trace("[CheatBunker] legacy version called " + self + " with game load event")
+
+	checkForUpdates()
+
+	Actor aPlayer = Game.GetPlayer()
+	PlayerAlias.ForceRefTo(aPlayer)
+	UnregisterForRemoteEvent(aPlayer, "OnPlayerLoadGame")
 EndEvent

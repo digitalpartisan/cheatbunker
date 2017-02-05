@@ -31,5 +31,6 @@
 	"Data\\Scripts\\DynamicTerminal\\ListWrapper.pex",
 	"Data\\Scripts\\DynamicTerminal\\PaginationProxy.pex",
 	"Data\\Scripts\\DynamicTerminal\\Paginator.pex",
-	"Data\\SCRIPTS\\HolotapeRetainer.pex"
+	"Data\\SCRIPTS\\HolotapeRetainer.pex",
+	"Data\\SCRIPTS\\Vault111ExitDetector.pex"
 ]
