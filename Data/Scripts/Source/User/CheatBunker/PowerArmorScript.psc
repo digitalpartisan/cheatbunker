@@ -1,11 +1,11 @@
 Scriptname CheatBunker:PowerArmorScript extends DynamicTerminal:Builder:Menu Conditional
 
-ObjectReference Property Workbench Auto Const
-Furniture Property PowerArmorFrame Auto Const
-Ammo Property FusionCore Auto Const
-Message Property mSpawned Auto Const
-Message Property mCannotSpawn Auto Const
-Keyword Property FurnitureTypePowerArmor Auto Const
+ObjectReference Property Workbench Auto Const Mandatory
+Furniture Property PowerArmorFrame Auto Const Mandatory
+Ammo Property FusionCore Auto Const Mandatory
+Message Property mSpawned Auto Const Mandatory
+Message Property mCannotSpawn Auto Const Mandatory
+Keyword Property FurnitureTypePowerArmor Auto Const Mandatory
 Int Property iPowerArmorSearchRadius = 128 Auto Const
 
 Int Property iArmorID = 0 Auto Const
@@ -48,10 +48,6 @@ ObjectReference Function spawnFrame(Furniture FrameToSpawn)
 	ObjectReference frame = Workbench.PlaceAtMe(FrameToSpawn)
 	frame.AddItem(FusionCore)
 	return frame
-EndFunction
-
-Function spawnFrameAtPlayer()
-	Game.GetPlayer().PlaceAtMe(PowerArmorFrame).AddItem(FusionCore)
 EndFunction
 
 Function applyMod(ObjectReference piece, ObjectMod mod)
