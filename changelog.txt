@@ -1,3 +1,6 @@
+v1.2.0
+Holotape is now a quest item to prevent loss.  Added ability to despawn unusuable Power Armor Frames after spawning them.  Internal refactors for much cleaner uninstallation process.
+
 v1.1.0
 Nearly every item spawns in the spawn cabinet because the out-in-the-open style caused issues.  Added chair so the player can wait.
 
