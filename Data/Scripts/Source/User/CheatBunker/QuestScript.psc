@@ -1,21 +1,20 @@
 Scriptname CheatBunker:QuestScript extends Quest Conditional
 
-Holotape Property CheatBunkerHolotape Auto Const
-Bool Property AIOMode = False Auto Const
-
-Group Packages
-	FormList Property Packages Auto Const
-	CheatBunker:Package Property BasePackage Auto Const
-	Message Property UpdatesRunMessage Auto Const
-	GlobalVariable Property PackageInitMessageDelay Auto Const
+Group Metadata
+	Quest Property CheatBunkerQuest Auto Const Mandatory
+	Bool Property AIOMode = False Auto Const
+	Int Property HoldingStage = 20 Auto Const
 EndGroup
 
-Group Importers
-	FormList Property Importers Auto Const
-EndGroup
-
-Group Autocompletions
-	FormList Property Autocompletions Auto Const
+Group PackagesAndAssociated
+	FormList Property Packages Auto Const Mandatory
+	FormList Property Importers Auto Const Mandatory
+	FormList Property Autocompletions Auto Const Mandatory
+	
+	CheatBunker:Package Property BasePackage Auto Const Mandatory
+	
+	Message Property UpdatesRunMessage Auto Const Mandatory
+	GlobalVariable Property PackageInitMessageDelay Auto Const Mandatory
 EndGroup
 
 Group ItemSpawning
@@ -30,9 +29,6 @@ Group IntroQuestSettings
 	Quest Property CheatBunkerIntroQuest Auto Const
 	Int Property ExitVaultObjective Auto Const
 	Int Property GoHomeStage Auto Const
-	
-	Quest Property CheatBunkerQuest Auto Const
-	Int Property HoldingStage = 20 Auto Const
 
 	GlobalVariable Property PostVaultDelay Auto Const
 EndGroup
@@ -44,10 +40,6 @@ Function init()
 	CheatBunkerQuest.SetStage(HoldingStage)
 EndFunction
 
-Function giveHolotape()
-	Game.GetPlayer().AddItem(CheatBunkerHolotape)
-EndFunction
-
 Function introQuestSetup()
 	if (OutOfTimeQuest.IsObjectiveCompleted(ExitVaultObjective))
 		CheatBunkerIntroQuest.Start()
@@ -56,14 +48,10 @@ Function introQuestSetup()
 	endif
 EndFunction
 
-Int Function getNumPackages()
-	return Packages.GetSize()
-EndFunction
-
 CheatBunker:Package Function getPackage(Int iIndex)
 	CheatBunker:Package thisPackage = Packages.GetAt(iIndex) as CheatBunker:Package
 	if (None == thisPackage)
-		Debug.Trace("[CheatBunker] found no package at index " + iIndex + " in package list of size " + getNumPackages())
+		Debug.Trace("[CheatBunker] found no package at index " + iIndex + " in package list of size " + Packages.GetSize())
 	endif
 	return thisPackage
 EndFunction

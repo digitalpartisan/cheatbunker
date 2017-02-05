@@ -14,11 +14,11 @@ EndFunction
 Function Fragment_Stage_0020_Item_00()
 ;BEGIN CODE
 SetObjectiveCompleted(10)
-CheatBunkerQuest.GiveHolotape()
+CheatBunkerHolotapeQuest.Start()
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:QuestScript Property CheatBunkerQuest Auto Const
+Quest Property CheatBunkerHolotapeQuest Auto Const
