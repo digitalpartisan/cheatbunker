@@ -9,8 +9,13 @@ Location Property CheatBunkerLocation Auto Const Mandatory
 Quest Property CheatBunkerHolotapeQuest Auto Const Mandatory
 
 Event OnQuestInit()
+	Debug.Trace("[CheatBunker][IntroQuest] starting up")
 	CheatBunkerIntroQuest.SetObjectiveDisplayed(EnterObjectiveID)
 	CheatBunkerIntroQuest.SetActive()
+EndEvent
+
+Event OnQuestShutdown()
+	Debug.Trace("[CheatBunker][IntroQuest] shutting down")
 EndEvent
 
 Function manualWasOpened()

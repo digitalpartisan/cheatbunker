@@ -40,6 +40,16 @@ EndGroup
 Bool InFastTravel = false Conditional
 Bool bSnapbackPrimed = false Conditional
 
+Event OnQuestInit()
+	Debug.Trace("[CheatBunker][TransitQuest] starting up")
+EndEvent
+
+Event OnQuestShutdown()
+	Debug.Trace("[CheatBunker][TransitQuest] shutting down")
+	CancelTimer(iSnapbackTimerID)
+	destroySnapbackMarker()
+EndEvent
+
 Function forceHoldStage()
 	CheatBunkerTransitQuest.SetStage(HoldStage)
 EndFunction

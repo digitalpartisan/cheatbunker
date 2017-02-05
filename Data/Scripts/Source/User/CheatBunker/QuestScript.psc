@@ -15,6 +15,8 @@ Group PackagesAndPackageSupport
 	
 	Message Property UpdatesRunMessage Auto Const Mandatory
 	GlobalVariable Property PackageInitMessageDelay Auto Const Mandatory
+
+	FormList Property CheatBunkerUninstallQuests Auto Const Mandatory
 EndGroup
 
 Group ItemSpawning
@@ -25,7 +27,12 @@ Group ItemSpawning
 EndGroup
 
 Event OnQuestInit()
+	Debug.Trace("[CheatBunker][Quest] starting up")
 	installPackage(BasePackage)
+EndEvent
+
+Event OnQuestShutdown()
+	Debug.Trace("[CheatBunker][Quest] shutting down")
 EndEvent
 
 CheatBunker:Package Function getPackage(Int iIndex)
@@ -56,7 +63,12 @@ Function uninstall()
 		iCounter += 1
 	EndWhile
 	
-	UnregisterForRemoteEvent(Game.GetPlayer(), "OnPlayerLoadGame") ; make sure this stops or else we're sloppily leaving listeners lying around
+	iCounter = 0
+	iSize = CheatBunkerUninstallQuests.GetSize()
+	While (iCounter < iSize)
+		(CheatBunkerUninstallQuests.GetAt(iCounter) as Quest).Stop()
+		iCounter += 1
+	EndWhile
 EndFunction
 
 Function checkForUpdates()
@@ -126,3 +138,4 @@ Because this script receives the load event, it needs to call checkForUpdates() 
 	PlayerAlias.ForceRefTo(aPlayer)
 	UnregisterForRemoteEvent(aPlayer, "OnPlayerLoadGame")
 EndEvent
+

@@ -137,3 +137,11 @@ EndFunction
 Function moveDogmeatToPlayer()
 	moveToPlayer(Dogmeat.getUniqueActor(), NoDogmeatMessage)
 EndFunction
+
+Event OnQuestInit()
+	Debug.Trace("[CheatBunker][CompanionQuest] starting up")
+EndEvent
+
+Event OnQuestShutdown()
+	Debug.Trace("[CheatBunker][CompanionQuest] shutting down")
+EndEvent

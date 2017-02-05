@@ -102,3 +102,11 @@ Function maximizeSpecial()
 
 	CheatBunkerSpecialMaximizedMessage.Show()
 EndFunction
+
+Event OnQuestInit()
+	Debug.Trace("[CheatBunker][DevelopmentQuest] starting up")
+EndEvent
+
+Event OnQuestShutdown()
+	Debug.Trace("[CheatBunker][DevelopmentQuest] shutting down")
+EndEvent
