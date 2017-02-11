@@ -113,6 +113,8 @@
 	"Data\\SCRIPTS\\CheatBunker\\PowerArmorScript.pex",
 	"Data\\SCRIPTS\\CheatBunker\\PowerArmorSelector.pex",
 	"Data\\SCRIPTS\\CheatBunker\\QuestScript.pex",
+	"Data\\SCRIPTS\\CheatBunker\\ResetSpawnContainer.pex",
+	"Data\\SCRIPTS\\CheatBunker\\ResetWorkshopContainer.pex",
 	"Data\\SCRIPTS\\CheatBunker\\SpawnFormlist.pex",
 	"Data\\SCRIPTS\\CheatBunker\\SpawnPowerArmorScript.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TeleportAliasScript.pex",
@@ -123,5 +125,5 @@
 	"Data\\SCRIPTS\\CheatBunker\\TerminalSpawnGeneratedItem.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TerminalSpawnSmallItem.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TransitScript.pex",
-	"Data\\SCRIPTS\\cheatbunker\\version.pex"
+	"Data\\SCRIPTS\\CheatBunker\\Version.pex"
 ]

@@ -20,10 +20,10 @@ Group PackagesAndPackageSupport
 EndGroup
 
 Group ItemSpawning
-	ObjectReference Property SpawnItemsContainer Auto Const
-	ObjectReference Property SpawnItemsMarker Auto Const
-	ObjectReference Property SpawnWeaponMarker Auto Const
-	ObjectReference Property WorkbenchContainer Auto Const
+	ObjectReference Property SpawnItemsContainer Auto Const Mandatory
+	ObjectReference Property SpawnItemsMarker Auto Const Mandatory
+	ObjectReference Property SpawnWeaponMarker Auto Const Mandatory
+	ObjectReference Property Workshop Auto Const Mandatory
 EndGroup
 
 Event OnQuestInit()
