@@ -121,7 +121,7 @@ Bool Function finish()
 EndFunction
 
 Function listenForTrigger()
-	if (bListeningForTrigger)
+	if (bListeningForTrigger || None == MyQuest) ; Some autocompleters don't set a specific quest, prevent Debug log warnings
 		return
 	endif
 	
@@ -130,7 +130,7 @@ Function listenForTrigger()
 EndFunction
 
 Function stopListeningForTrigger()
-	if (!bListeningForTrigger)
+	if (!bListeningForTrigger || None == MyQuest) ; Some autocompleters don't set a specific quest, prevent Debug log warnings
 		return
 	endif
 	
