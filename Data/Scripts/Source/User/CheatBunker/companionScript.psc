@@ -46,7 +46,7 @@ Bool Function isRelationshipDamaged(CheatBunker:Companion companion)
 	else
 		Float fAffinity = companionActor.GetValue(Game.GetCommonProperties().CA_Affinity)
 		Float fThreshold = DamagedAffinityThreshold.GetValue()
-		Debug.Trace("[CheatBunker][DamagedRelationshipCheck] Affinity is " + fAffinity + " and threshold is " + fThreshold + " for companion " + companion)
+		CheatBunker:Logger:Companion.affinity(companion, fAffinity, fThreshold)
 		return fAffinity < fThreshold
 	endif
 EndFunction
@@ -118,7 +118,7 @@ Function moveToPlayer(Actor aTarget, Message mFailure = None)
 		return
 	endif
 	
-	Debug.Trace("[CheatBunker][Companion] attempting to move actor to player: " + aTarget)
+	CheatBunker:Logger:Companion.movingToPlayer(aTarget)
 	CheatBunkerTransitQuest.transitToPlayer(aTarget)
 EndFunction
 
@@ -137,11 +137,3 @@ EndFunction
 Function moveDogmeatToPlayer()
 	moveToPlayer(Dogmeat.getUniqueActor(), NoDogmeatMessage)
 EndFunction
-
-Event OnQuestInit()
-	Debug.Trace("[CheatBunker][CompanionQuest] starting up")
-EndEvent
-
-Event OnQuestShutdown()
-	Debug.Trace("[CheatBunker][CompanionQuest] shutting down")
-EndEvent

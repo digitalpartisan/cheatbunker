@@ -22,10 +22,6 @@ Group Messaging
 	Message Property AvailabilityMessage Auto Const
 EndGroup
 
-Function logEvent(String sEvent)
-	Debug.Trace("[CheatBunker][Autocompletion] " + sEvent + " " + self)
-EndFunction
-
 Bool Function isRunning()
 	return bRunning
 EndFunction
@@ -61,7 +57,8 @@ Bool Function run()
 		return false
 	endif
 
-	logEvent("running")
+	CheatBunker:Logger:Autocompletion.running(self)
+	
 	bRunning = true
 	RunningMessage.Show()
 	runBehavior()
@@ -82,7 +79,8 @@ Bool Function halt()
 		return false
 	endif
 
-	logEvent("halt")
+	CheatBunker:Logger:Autocompletion.halting(self)
+	
 	bRunning = false
 	HaltMessage.Show()
 	haltBehavior()
@@ -111,7 +109,7 @@ Bool Function finish()
 		return false
 	endif
 	
-	logEvent("finishing")
+	CheatBunker:Logger:Autocompletion.finished(self)
 	
 	finishBehavior()
 	
@@ -125,6 +123,8 @@ Function listenForTrigger()
 		return
 	endif
 	
+	CheatBunker:Logger:Autocompletion.listening(self)
+	
 	bListeningForTrigger = true
 	RegisterForRemoteEvent(MyQuest, "OnStageSet")
 EndFunction
@@ -133,6 +133,8 @@ Function stopListeningForTrigger()
 	if (!bListeningForTrigger || None == MyQuest) ; Some autocompleters don't set a specific quest, prevent Debug log warnings
 		return
 	endif
+	
+	CheatBunker:Logger:Autocompletion.notListening(self)
 	
 	bListeningForTrigger = false
 	UnregisterForRemoteEvent(MyQuest, "OnStageSet")
@@ -144,7 +146,7 @@ Event Quest.OnStageSet(Quest akSender, int auiStageID, int auiItemID)
 	endif
 
 	if (MyQuest == akSender && auiStageID == StageToWatch)
-		Utility.Wait(5)
+		CheatBunker:Logger:Autocompletion.available(self)
 		AvailabilityMessage.Show()
 		stopListeningForTrigger()
 	endif

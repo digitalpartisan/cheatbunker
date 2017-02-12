@@ -17,6 +17,8 @@ Group PackagesAndPackageSupport
 	GlobalVariable Property PackageInitMessageDelay Auto Const Mandatory
 
 	FormList Property CheatBunkerUninstallQuests Auto Const Mandatory
+	
+	Message Property CheatBunkerMissingPackageMessage Auto Const Mandatory
 EndGroup
 
 Group ItemSpawning
@@ -27,18 +29,17 @@ Group ItemSpawning
 EndGroup
 
 Event OnQuestInit()
-	Debug.Trace("[CheatBunker][Quest] starting up")
 	installPackage(BasePackage)
 EndEvent
 
-Event OnQuestShutdown()
-	Debug.Trace("[CheatBunker][Quest] shutting down")
-EndEvent
-
 CheatBunker:Package Function getPackage(Int iIndex)
-	CheatBunker:Package thisPackage = Packages.GetAt(iIndex) as CheatBunker:Package
+	return Packages.GetAt(iIndex) as CheatBunker:Package
+EndFunction
+
+CheatBunker:Package Function checkForPackage(Int iIndex)
+	CheatBunker:Package thisPackage = getPackage(iIndex)
 	if (None == thisPackage)
-		Debug.Trace("[CheatBunker] found no package at index " + iIndex + " in package list of size " + Packages.GetSize())
+		CheatBunkerMissingPackageMessage.Show()
 	endif
 	return thisPackage
 EndFunction
@@ -55,7 +56,7 @@ Function uninstallPackage(CheatBunker:Package packageToRemove)
 EndFunction
 
 Function uninstall()
-	Debug.Trace("[CheatBunker] uninstalling all packages and prepping for mod removal")
+	CheatBunker:Logger.uninstall()
 	Int iCounter = 0
 	Int iSize = Packages.GetSize()
 	While(iCounter < iSize)
@@ -77,19 +78,16 @@ Function checkForUpdates()
 	Int iCounter = 0
 	Int iSize = Packages.GetSize()
 	While (iCounter < iSize)
-		CheatBunker:Package thisPackage = getPackage(iCounter)
-		if ( !thisPackage.isCurrent() && thisPackage.update() ) ; running unneeded updates will trigger stack traces, don't do it
+		CheatBunker:Package thisPackage = checkForPackage(iCounter)
+		if ( None != thisPackage && !thisPackage.isCurrent() && thisPackage.update() ) ; running unneeded updates will trigger stack traces, don't do it
 			bUpdateRun = true
 		endif
 		iCounter += 1
 	EndWhile
 
 	if (bUpdateRun)
-		Debug.Trace("[CheatBunker] updates ran")
 		Utility.Wait(PackageInitMessageDelay.GetValue())
 		UpdatesRunMessage.Show()
-	else
-		Debug.Trace("[CheatBunker] no updates ran")
 	endif
 EndFunction
 
@@ -126,12 +124,10 @@ Function uninstallAutocompletion(CheatBunker:Autocompletion autocompletion)
 EndFunction
 
 Event Actor.OnPlayerLoadGame(Actor aActorRef)
-{This is legacy code intended to handle part of the update from version 1.1.0 to version 1.2.0.
+{This is legacy code intended to handle part of the update from v1.1.0 to v1.2.0.
 It exists because during that update, the checkForUpdates() call was moved to an alias script on this same quest.
 Saves with the Cheat Bunker already present wouldn't have that alias filled in because the quest was already started and the load event would still come to this script.
 Because this script receives the load event, it needs to call checkForUpdates() like the rest of the plugin was expecting, fill in the PlayerAlias so that it would get the game load events, and unregister for this event in the future.}
-	Debug.Trace("[CheatBunker] legacy version called " + self + " with game load event")
-
 	checkForUpdates()
 
 	Actor aPlayer = Game.GetPlayer()

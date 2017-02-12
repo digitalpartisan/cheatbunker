@@ -21,7 +21,7 @@ EndFunction
 
 Bool Function setCheck()
 	if (None == getAutocompletion())
-		Debug.TraceStack("[CheatBunker][Autocompletion] autocompletion variable is not set")
+		CheatBunker:Logger:Autocompletion.nothingToProxy()
 		return false
 	endif
 

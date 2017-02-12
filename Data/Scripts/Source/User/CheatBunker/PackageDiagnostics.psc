@@ -17,58 +17,49 @@ Function setPackage(CheatBunker:Package newPackage)
 	bUsingBasePackage = myPackage == CheatBunkerQuest.BasePackage
 	bAIOPreventsUninstall = CheatBunkerQuest.AIOMode && myPackage.InAIO
 	bValid = myPackage.isInstalled()
-	Debug.Trace("[CheatBunker][Diagnostics] set " + myPackage.toString() + " with values bUsingBasePackage: " + bUsingBasePackage + " bValid: " + bValid + " bAIOPreventsUninstall: " + bAIOPreventsUninstall)
-EndFunction
-
-Function logNoPackage(String sTask)
-	Debug.TraceStack("[CheatBunker][Diagnostics] no package specified, cannot " + sTask)
-EndFunction
-
-Function logAction(String sAction)
-	Debug.Trace("[CheatBunker][Diagnostics] " + sAction + ": " + getPackage())
 EndFunction
 
 Function rerunInjections()
 	CheatBunker:Package thisPackage = getPackage()
 	if (thisPackage == None)
-		logNoPackage("rerun injections")
+		CheatBunker:Logger:Package.nothingToProxy()
 		return
 	endif
 	
-	logAction("rerunning injections")
 	thisPackage.Injections.inject()
 EndFunction
 
 Function forceInjections()
 	CheatBunker:Package thisPackage = getPackage()
 	if (thisPackage == None)
-		logNoPackage("force injections")
+		CheatBunker:Logger:Package.nothingToProxy()
 		return
 	endif
 	
-	logAction("rerunning injections")
 	thispackage.Injections.forceInject()
 EndFunction
 
 Function prepareUninstall()
 	CheatBunker:Package thisPackage = getPackage()
 	if (thisPackage == None)
-		logNoPackage("prepare uninstall")
+		CheatBunker:Logger:Package.nothingToProxy()
 		return
 	endif
 
-	logAction("prep uninstall")
 	CheatBunkerQuest.uninstallPackage(thisPackage)
 EndFunction
 
 Function tokenReplacementLogic()
 	CheatBunker:Package thisPackage = getPackage()
 	if (thisPackage == None)
-		logNoPackage("token replacement")
-		return
+		CheatBunker:Logger:Package.nothingToProxy()
+		
+		replace("PackageObject", None)
+		replace("PackageVersion", None)
+		replace("PackageDescription", None)
+	else
+		replace("PackageObject", thisPackage)
+		replace("PackageVersion", thisPackage.DisplayVersion.VersionString)
+		replace("PackageDescription", thisPackage.Description)
 	endif
-
-	replace("PackageObject", thisPackage)
-	replace("PackageVersion", thisPackage.DisplayVersion.VersionString)
-	replace("PackageDescription", thisPackage.Description)
 EndFunction

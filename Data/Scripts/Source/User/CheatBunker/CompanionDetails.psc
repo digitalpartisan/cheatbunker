@@ -21,7 +21,7 @@ EndFunction
 
 Bool Function setCheck()
 	if (None == getCompanion())
-		Debug.TraceStack("[CheatBunker][Companion] companion variable is not set")
+		CheatBunker:Logger:Companion.nothingToProxy()
 		return false
 	endif
 

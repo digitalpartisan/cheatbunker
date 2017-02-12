@@ -1,0 +1,3 @@
+Loggout v1.0.0
+Vault111ExitDetector v1.0.0
+Holotape Retainer v1.0.0

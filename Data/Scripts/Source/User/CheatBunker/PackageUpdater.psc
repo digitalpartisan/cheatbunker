@@ -5,34 +5,30 @@ Be sure to specify the appropriate version objects or else the update cannot run
 Don't forget to add these new behaviors to the package's update FormList so that they are performed when an update occurs at the version equal to the FromVersion property.}
 
 Group Versions
-	CheatBunker:Version:Static Property FromVersion Auto Const
-	CheatBunker:Version:Static Property ToVersion Auto Const
+	CheatBunker:Version:Static Property FromVersion Auto Const Mandatory
+	CheatBunker:Version:Static Property ToVersion Auto Const Mandatory
 EndGroup
-
-Function logError(String sMessage)
-	Debug.Trace("[CheatBunker][PackageUpdater] " + toString() + " " + sMessage)
-EndFunction
 
 Bool Function validate()
 {Written in such a way that all possible errors are reported on even if a failure result has already been detected.}
 	Bool bCanTest = true
 
 	if (FromVersion == None)
-		logError("FromVersion unset")
+		CheatBunker:Logger:Package.updateFromVersionUnset(self)
 		bCanTest = false
 	else
 		if (!FromVersion.validate())
-			logError("FromVersion invalid")
+			CheatBunker:Logger:Package.updateFromVersionInvalid(self)
 			bCanTest = false
 		endif
 	endif
 
 	if (ToVersion == None)
-		logError("ToVersion unset")
+		CheatBunker:Logger:Package.updateToVersionUnset(self)
 		bCanTest = false
 	else
 		if (!ToVersion.validate())
-			logError("ToVersion invalid")
+			CheatBunker:Logger:Package.updateToVersionInvalid(self)
 			bCanTest = false
 		endif
 	endif
@@ -46,11 +42,11 @@ EndFunction
 
 Function updateBehavior()
 {Override this to implement the needed upgrade behavior.}
-	Debug.Trace("[CheatBunker][PackageUpdater] " + toString() + " has no update behavior.  This may be deliberate.")
+	CheatBunker:Logger:Package.noUpdateBehavior(self)
 EndFunction
 
 Function run()
-	Debug.Trace("[CheatBunker][PackageUpdater] running " + toString())
+	CheatBunker:Logger:Package.runningUpdate(self)
 	updateBehavior()
 EndFunction
 

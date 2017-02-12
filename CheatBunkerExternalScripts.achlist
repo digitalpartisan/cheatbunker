@@ -1,4 +1,7 @@
 [
+	"Data\\Scripts\\Loggout.pex",
+	"Data\\SCRIPTS\\Vault111ExitDetector.pex",
+	"Data\\SCRIPTS\\HolotapeRetainer.pex",
 	"Data\\Scripts\\InjectTec\\Core\\FormList.pex",
 	"Data\\Scripts\\InjectTec\\Core\\Leveled.pex",
 	"Data\\Scripts\\InjectTec\\Core\\NamingRules.pex",
@@ -30,7 +33,5 @@
 	"Data\\Scripts\\DynamicTerminal\\Basic.pex",
 	"Data\\Scripts\\DynamicTerminal\\ListWrapper.pex",
 	"Data\\Scripts\\DynamicTerminal\\PaginationProxy.pex",
-	"Data\\Scripts\\DynamicTerminal\\Paginator.pex",
-	"Data\\SCRIPTS\\HolotapeRetainer.pex",
-	"Data\\SCRIPTS\\Vault111ExitDetector.pex"
+	"Data\\Scripts\\DynamicTerminal\\Paginator.pex"
 ]

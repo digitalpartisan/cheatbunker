@@ -47,7 +47,7 @@ Bool Function isCurrent()
 	endif
 
 	if (StoredVersion.greaterThan(DisplayVersion.VersionData)) ; true, but U DID WOT, M8?
-		Debug.Trace("[CheatBunker][Package] " + self + " stored version greater than display version")
+		CheatBunker:Logger:Package.internalVersionError(self)
 		return true
 	endif
 
@@ -130,7 +130,6 @@ Bool Function install()
 	Injections.inject()
 	registerImporters()
 	installAutocompletions()
-	Utility.Wait(CheatBunkerQuest.PackageInitMessageDelay.GetValue()) ; So that we don't miss the message displaying in the UI
 	InstallationMessage.Show()
 	postInstallationBehavior()
 
@@ -167,7 +166,7 @@ Bool Function shouldRunUpdate(CheatBunker:PackageUpdater updater)
 	if (isUpdateRelevant(updater) && StoredVersion.equals(updater.FromVersion))
 		return true
 	else
-		Debug.Trace("[CheatBunker][Package] " + toString() + " decided not to run " + updater.toString())
+		CheatBunker:Logger:Package.notRunningUpdate(self, updater)
 		return false
 	endif
 EndFunction
@@ -194,7 +193,7 @@ Bool Function update()
 		return false
 	endif
 	
-	Debug.Trace("[CheatBunker][Package] " + toString() + " detected update to " + DisplayVersion.VersionData.toString())
+	CheatBunker:Logger:Package.updateDetected(self)
 	Injections.inject() ; this is soft behavior and won't do a whole lot other than run injections which haven't been run yet
 	registerImporters() ; this is also soft behavior and won't double-add an existing injector or run injections which have already been run
 	installAutocompletions() ; yet more "soft" behavior.  autocompletions won't be repeatedly added to the list
@@ -213,6 +212,8 @@ Function prepareUninstall()
 	if (!isInstalled())
 		return
 	endif
+	
+	CheatBunker:Logger:Package.uninstall(self)
 	
 	Injections.revert()
 	deregisterImporters()

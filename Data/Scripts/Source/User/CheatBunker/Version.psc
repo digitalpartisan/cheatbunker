@@ -1,35 +1,28 @@
 Scriptname CheatBunker:Version extends Quest Conditional
 {Used for tracking version information and easily comparing versions in order to see what changes (if any) need to be made across the Cheat Bunker mod.}
 
-Function logError(String sMessage)
-	Debug.TraceStack("[CheatBunker][Version] " + sMessage)
-EndFunction
-
 Int Function getMajor()
-	logError("getMajor() not impelemented in " + self)
 	return 0
 EndFunction
 
 Function setMajor(Int iValue)
-	logError("setMajor() not impelemented in " + self)
+	
 EndFunction
 
 Int Function getMinor()
-	logError("getMinor() not impelemented in " + self)
 	return 0
 EndFunction
 
 Function setMinor(Int iValue)
-	logError("setMinor() not impelemented in " + self)
+	
 EndFunction
 
 Int Function getBugfix()
-	logError("getBugfix() not impelemented in " + self)
 	return 0
 EndFunction
 
 Function setBugfix(Int iValue)
-	logError("setBugfix() not impelemented in " + self)
+	
 EndFunction
 
 Bool Function validate()
@@ -86,12 +79,10 @@ EndFunction
 
 Bool Function setTo(CheatBunker:Version otherVersion)
 	if (!otherVersion.validate())
-		logError("[CheatBunker][Version] " + self + " cannot set value to other version because it fails validation " + otherVersion)
 		return false
 	endif
 
 	if (otherVersion.lessThan(self))
-		logError("[CheatBunker][Version] " + self + " cannot set value to other version because it would be a downgrade " + otherVersion)
 		return false
 	endif
 
