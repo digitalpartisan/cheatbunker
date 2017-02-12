@@ -1,5 +1,14 @@
+v1.3.0
+Added Auto-completion option for “The Molecular Level”
+Fixed a minor bug involving Auto-completion options during uninstallation
+Integrated Loggout for debug logging
+Integrated new versions of Vault 111 Exit Detector, Holotape Retainer, Inject-Tec, and Dynamic Terminal
+Fixed a bug where workshop mode could be activated in The Cheat Bunker
+Fixed a bug preventing workbench supply refills
+Auto-completion availability messages now display for five seconds instead of two
+
 v1.2.0
-Holotape is now a quest item to prevent loss.  Added ability to despawn unusuable Power Armor Frames after spawning them.  Internal refactors for much cleaner uninstallation process.
+Holotape is now a quest item to prevent loss.  Added ability to despawn unusable Power Armor Frames after spawning them.  Internal refactors for much cleaner uninstallation process.
 
 v1.1.0
 Nearly every item spawns in the spawn cabinet because the out-in-the-open style caused issues.  Added chair so the player can wait.
