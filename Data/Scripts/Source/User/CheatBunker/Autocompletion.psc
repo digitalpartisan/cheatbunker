@@ -31,11 +31,11 @@ Bool Function isFinished()
 EndFunction
 
 Bool Function isQuestReady()
-	return MyQuest.IsRunning() && MyQuest.IsObjectiveDisplayed(RequiredObjective)
+	return MyQuest && MyQuest.IsRunning() && MyQuest.IsObjectiveDisplayed(RequiredObjective)
 EndFunction
 
 Bool Function hasWindowPassed()
-	return isRunning() || isFinished() || MyQuest.IsCompleted() || MyQuest.IsObjectiveCompleted(RequiredObjective) ; once again, redundant, but w/e
+	return isRunning() || isFinished() || (!MyQuest || MyQuest.IsCompleted()) || (!MyQuest || MyQuest.IsObjectiveCompleted(RequiredObjective)) ; once again, redundant, but w/e
 EndFunction
 
 Bool Function canRun()
@@ -119,7 +119,7 @@ Bool Function finish()
 EndFunction
 
 Function listenForTrigger()
-	if (bListeningForTrigger || None == MyQuest) ; Some autocompleters don't set a specific quest, prevent Debug log warnings
+	if (!MyQuest || bListeningForTrigger) ; Some autocompleters don't set a specific quest, prevent Debug log warnings
 		return
 	endif
 	
@@ -130,7 +130,7 @@ Function listenForTrigger()
 EndFunction
 
 Function stopListeningForTrigger()
-	if (!bListeningForTrigger || None == MyQuest) ; Some autocompleters don't set a specific quest, prevent Debug log warnings
+	if (!MyQuest || !bListeningForTrigger) ; Some autocompleters don't set a specific quest, prevent Debug log warnings
 		return
 	endif
 	
