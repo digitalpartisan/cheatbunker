@@ -1,3 +1,7 @@
+v1.3.1
+Fixed a bug involving Auto-completion options and uninstallation
+Fixed a bug involving a phantom button placemen and the upgrade to v1.3.0
+
 v1.3.0
 Added Auto-completion option for “The Molecular Level”
 Fixed a minor bug involving Auto-completion options during uninstallation
