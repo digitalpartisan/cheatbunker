@@ -15,10 +15,12 @@ Group PackagesAndPackageSupport
 	
 	Message Property UpdatesRunMessage Auto Const Mandatory
 	GlobalVariable Property PackageInitMessageDelay Auto Const Mandatory
-
-	FormList Property CheatBunkerUninstallQuests Auto Const Mandatory
 	
 	Message Property CheatBunkerMissingPackageMessage Auto Const Mandatory
+
+	FormList Property CheatBunkerUninstallQuests Auto Const Mandatory
+
+	CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const Mandatory
 EndGroup
 
 Group ItemSpawning
@@ -30,6 +32,10 @@ EndGroup
 
 Event OnQuestInit()
 	installPackage(BasePackage)
+EndEvent
+
+Event OnQuestShutdown()
+	uninstall()
 EndEvent
 
 CheatBunker:Package Function getPackage(Int iIndex)
@@ -57,6 +63,9 @@ EndFunction
 
 Function uninstall()
 	CheatBunker:Logger.uninstall()
+
+	CheatBunkerTransitQuest.forceLeaveBunker()
+
 	Int iCounter = 0
 	Int iSize = Packages.GetSize()
 	While(iCounter < iSize)

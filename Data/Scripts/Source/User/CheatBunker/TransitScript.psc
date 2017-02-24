@@ -2,17 +2,6 @@ Scriptname CheatBunker:TransitScript Extends Quest Conditional
 
 CheatBunker:CompanionScript Property CheatBunkerCompanionQuest Auto Const
 
-Group StatusControl
-	Quest Property CheatBunkerTransitQuest Auto Const
-	Int Property HoldStage = 10 Auto Const
-	Int Property CheatBunkerStage = 20 Auto Const
-	Int Property FastTravelStage = 30 Auto Const
-	Int Property RecoverCompanionsStage = 40 Auto Const
-	Int Property InitiateSnapbackStage = 50 Auto Const
-	Int Property CompleteSnapbackStage = 60 Auto Const
-	Int Property CancelSnapbackStage = 70 Auto Const
-EndGroup
-
 Group Snapback
 	Int Property iSnapbackTimerID = 1 Auto Const
 
@@ -37,6 +26,9 @@ Group FastTravel
 	ObjectReference Property FastTravelMarker Auto Const
 EndGroup
 
+ObjectReference Property BunkerExitDoor Auto Const Mandatory
+{Used to expedite the uninstallation process}
+
 Bool InFastTravel = false Conditional
 Bool bSnapbackPrimed = false Conditional
 
@@ -44,10 +36,6 @@ Event OnQuestShutdown()
 	CancelTimer(iSnapbackTimerID)
 	destroySnapbackMarker()
 EndEvent
-
-Function forceHoldStage()
-	CheatBunkerTransitQuest.SetStage(HoldStage)
-EndFunction
 
 Function applyEffectsToActor(Actor aTarget)
 	if (aTarget)
@@ -93,21 +81,22 @@ EndFunction
 Function transitToInterior()
 	transitToMarker(InteriorMarker)
 	InFastTravel = false
-	
-	forceHoldStage()
 EndFunction
 
 Function transitToFastTravel()
 	transitToMarker(FastTravelMarker)
 	InFastTravel = true
-	
-	forceHoldStage()
 EndFunction
 
 Function recoverCompanions()
 	transitToMarker(Game.GetPlayer())
-	
-	forceHoldStage()
+EndFunction
+
+Function forceLeaveBunker()
+	Actor aPlayer = Game.GetPlayer()
+	aPlayer.MoveTo(BunkerExitDoor)
+	BunkerExitDoor.Activate(aPlayer)
+	applyEffects()
 EndFunction
 
 Bool Function placeSnapbackMarker()
@@ -139,16 +128,12 @@ Function initiateSnapback()
 	CheatBunkerSnapbackInitMessage.Show()
 	bSnapbackPrimed = true
 	StartTimer(SnapbackTimeLimit.GetValue(), iSnapbackTimerID)
-	
-	forceHoldStage()
 EndFunction
 
 Function cancelSnapback()
 	destroySnapbackMarker()
 	bSnapbackPrimed = false
 	CheatBunkerSnapbackCancelledMessage.Show()
-	
-	forceHoldStage()
 EndFunction
 
 Function completeSnapback()
@@ -162,8 +147,6 @@ Function completeSnapback()
 	CheatBunkerSnapbackCompleteMessage.Show()
 	bSnapbackPrimed = false
 	CancelTimer(iSnapbackTimerID)
-	
-	forceHoldStage()
 EndFunction
 
 Function locationChangeHandler(Location akFrom, Location akTo)

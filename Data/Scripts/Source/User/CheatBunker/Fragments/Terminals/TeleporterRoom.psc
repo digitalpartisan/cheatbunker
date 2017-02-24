@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:TeleporterRoom Extends Terminal Hidde
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
 ;BEGIN CODE
-TransitHandler.CheatBunkerTransitQuest.SetStage(TransitHandler.FastTravelStage)
+CheatBunkerTransitQuest.transitToFastTravel()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -12,7 +12,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_02
 Function Fragment_Terminal_02(ObjectReference akTerminalRef)
 ;BEGIN CODE
-TransitHandler.CheatBunkerTransitQuest.SetStage(TransitHandler.CheatBunkerStage)
+CheatBunkerTransitQuest.transitToInterior()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -20,7 +20,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_03
 Function Fragment_Terminal_03(ObjectReference akTerminalRef)
 ;BEGIN CODE
-TransitHandler.CheatBunkerTransitQuest.SetStage(TransitHandler.CompleteSnapbackStage)
+CheatBunkerTransitQuest.completeSnapback()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -28,11 +28,11 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_04
 Function Fragment_Terminal_04(ObjectReference akTerminalRef)
 ;BEGIN CODE
-TransitHandler.CheatBunkerTransitQuest.SetStage(TransitHandler.CancelSnapbackStage)
+CheatBunkerTransitQuest.cancelSnapback()
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:TransitScript Property TransitHandler Auto Const
+CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const
