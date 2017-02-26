@@ -31,3 +31,7 @@ EndFunction
 Bool Function uninstall() Global
 	return log("uninstall initiated")
 EndFunction
+
+Bool Function preloadingCell() Global
+	return log("preloading interior")
+EndFunction

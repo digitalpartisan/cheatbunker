@@ -5,46 +5,71 @@ CheatBunker:CompanionScript Property CheatBunkerCompanionQuest Auto Const
 Group Snapback
 	Int Property iSnapbackTimerID = 1 Auto Const
 
-	GlobalVariable Property SnapbackTimeLimit Auto Const
+	GlobalVariable Property SnapbackTimeLimit Auto Const Mandatory
 
-	Message Property CheatBunkerSnapbackInitMessage Auto Const
-	Message Property CheatBunkerSnapbackFailMessage Auto Const
-	Message Property CheatBunkerSnapbackCompleteMessage Auto Const
-	Message Property CheatBunkerSnapbackCancelledMessage Auto Const
+	Message Property CheatBunkerSnapbackInitMessage Auto Const Mandatory
+	Message Property CheatBunkerSnapbackFailMessage Auto Const Mandatory
+	Message Property CheatBunkerSnapbackCompleteMessage Auto Const Mandatory
+	Message Property CheatBunkerSnapbackCancelledMessage Auto Const Mandatory
 	
 	ObjectReference Property SnapbackMarker = None Auto
-	Static Property XMarkerHeading Auto Const
+	Static Property XMarkerHeading Auto Const Mandatory
 EndGroup
 
-Group FastTravel
-	Location Property InteriorLocation Auto Const
-	Location Property FastTravelLocation Auto Const
-	Cell Property InteriorCell Auto Const
-	Spell Property TeleportPlayerSpell Auto Const
-	Spell Property TeleportSpell Auto Const
-	ObjectReference Property InteriorMarker Auto Const
-	ObjectReference Property FastTravelMarker Auto Const
+Group Transit
+	Int Property LoadCellTimerID = 2 Auto Const
+	GlobalVariable Property CheatBunkerLoadCellTimerDuration Auto Const Mandatory
+
+	Location Property CheatBunkerLocation Auto Const Mandatory
+	Location Property CheatBunkerFastTravelLocation Auto Const Mandatory
+	
+	Spell Property TeleportPlayerInSpell Auto Const Mandatory
+	Spell Property TeleportInSpell Auto Const Mandatory
+	
+	Cell Property CheatBunkerInterior Auto Const Mandatory
+	Cell Property CheatBunkerFastTravel Auto Const Mandatory
+	
+	ObjectReference Property InteriorMarker Auto Const Mandatory
+	ObjectReference Property FastTravelMarker Auto Const Mandatory
 EndGroup
 
+ObjectReference Property BunkerEntranceDoor Auto Const Mandatory
+{Used to preload the interior of the bunker}
 ObjectReference Property BunkerExitDoor Auto Const Mandatory
 {Used to expedite the uninstallation process}
 
-Bool InFastTravel = false Conditional
 Bool bSnapbackPrimed = false Conditional
+Bool bPreloadCell = false Conditional
+
+Bool Function preloadingCell()
+	return bPreloadCell
+EndFunction
+
+Function preloadCell(Bool bValue = true)
+	bPreloadCell = bValue
+
+	if (preloadingCell())
+		forcePreloadCell()
+	endif
+EndFunction
 
 Event OnQuestShutdown()
 	CancelTimer(iSnapbackTimerID)
+	CancelTimer(LoadCellTimerID)
 	destroySnapbackMarker()
 EndEvent
 
 Function applyEffectsToActor(Actor aTarget)
-	if (aTarget)
-		if (Game.GetPlayer() == aTarget)
-			aTarget.addSpell(TeleportPlayerSpell, false)
-		else
-			aTarget.addSpell(TeleportSpell, false)
-		endif
+	if (!aTarget)
+		return
 	endif
+	
+	Spell sTeleport = TeleportInSpell
+	if (aTarget == Game.GetPlayer())
+		sTeleport = TeleportPlayerInSpell
+	endif
+	
+	aTarget.AddSpell(sTeleport, false)
 EndFunction
 
 Function applyEffects()
@@ -53,22 +78,34 @@ Function applyEffects()
 	applyEffectsToActor(CheatBunkerCompanionQuest.getDogmeatActor())
 EndFunction
 
-Function transitActor(Actor aTarget, ObjectReference akLocation)
-	if (aTarget)
-		if ( (aTarget as ObjectReference) != akLocation)
-			aTarget.moveTo(akLocation)
-			applyEffectsToActor(aTarget)
-		endif
+Bool Function moveActor(Actor aTarget, ObjectReference akLocation)
+	if (!aTarget)
+		return false
 	endif
+	
+	if ( (aTarget as ObjectReference) != akLocation)
+		aTarget.MoveTo(akLocation)
+		return true
+	endif
+	
+	return false
 EndFunction
 
-Function transitToPlayer(Actor aTarget)
+Function moveToMarker(ObjectReference akMarker)
 	Actor aPlayer = Game.GetPlayer()
-	if (aPlayer == aTarget)
-		return
-	endif
+	moveActor(aPlayer, akMarker)
+	moveActor(CheatBunkerCompanionQuest.getDogmeatActor(), aPlayer)
+	moveActor(CheatBunkerCompanionQuest.getCompanionActor(), aPlayer)
+EndFunction
 
-	transitActor(aTarget, aPlayer)
+Function moveToPlayer()
+	moveToMarker(Game.GetPlayer())
+EndFunction
+
+Function transitActor(Actor aTarget, ObjectReference akLocation)
+	if (moveActor(aTarget, akLocation))
+		applyEffectsToActor(aTarget)
+	endif
 EndFunction
 
 Function transitToMarker(ObjectReference akMarker)
@@ -78,18 +115,20 @@ Function transitToMarker(ObjectReference akMarker)
 	transitActor(CheatBunkerCompanionQuest.getCompanionActor(), aPlayer)
 EndFunction
 
+Function transitToPlayer()
+	transitToMarker(Game.GetPlayer())
+EndFunction
+
 Function transitToInterior()
 	transitToMarker(InteriorMarker)
-	InFastTravel = false
 EndFunction
 
 Function transitToFastTravel()
 	transitToMarker(FastTravelMarker)
-	InFastTravel = true
 EndFunction
 
 Function recoverCompanions()
-	transitToMarker(Game.GetPlayer())
+	transitToPlayer()
 EndFunction
 
 Function forceLeaveBunker()
@@ -150,18 +189,35 @@ Function completeSnapback()
 EndFunction
 
 Function locationChangeHandler(Location akFrom, Location akTo)
-	if (akTo == FastTravelLocation)
-		InFastTravel = true
-	else
-		if (InFastTravel)
-			applyEffects()
-		endif
-		InFastTravel = false
+	if (akFrom == CheatBunkerFastTravelLocation && akTo != CheatBunkerLocation) ; leaving the fast travel room to somewhere other than the bunker interior, so fast travel via map
+		applyEffects()
+	endif
+EndFunction
+
+Function forcePreloadCell()
+	CheatBunker:Logger.preloadingCell()
+
+	if (CheatBunkerInterior.IsAttached()) ; player is in the bunker, cell is loaded, do nothing
+		return
+	endif
+	
+	if (CheatBunkerInterior.IsLoaded()) ; once again, do nothing since it's needless work
+		return
+	endif
+	
+	BunkerEntranceDoor.PreloadTargetArea()
+
+	if (preloadingCell())
+		StartTimer(CheatBunkerLoadCellTimerDuration.GetValue(), LoadCellTimerID)
 	endif
 EndFunction
 
 Event OnTimer(int iTimerID)
 	if (iTimerID == iSnapbackTimerID)
 		cancelSnapback()
+	endif
+
+	if (iTimerID == LoadCellTimerID)
+		forcePreloadCell()
 	endif
 EndEvent

@@ -32,6 +32,7 @@ EndGroup
 
 Event OnQuestInit()
 	installPackage(BasePackage)
+	CheatBunkerTransitQuest.forcePreloadCell()
 EndEvent
 
 Event OnQuestShutdown()
@@ -132,15 +133,19 @@ Function uninstallAutocompletion(CheatBunker:Autocompletion autocompletion)
 	endif
 EndFunction
 
+Function loadGameHandler()
+	checkForUpdates()
+	CheatBunkerTransitQuest.forcePreloadCell()
+EndFunction
+
 Event Actor.OnPlayerLoadGame(Actor aActorRef)
 {This is legacy code intended to handle part of the update from v1.1.0 to v1.2.0.
 It exists because during that update, the checkForUpdates() call was moved to an alias script on this same quest.
 Saves with the Cheat Bunker already present wouldn't have that alias filled in because the quest was already started and the load event would still come to this script.
 Because this script receives the load event, it needs to call checkForUpdates() like the rest of the plugin was expecting, fill in the PlayerAlias so that it would get the game load events, and unregister for this event in the future.}
-	checkForUpdates()
+	loadGameHandler()
 
 	Actor aPlayer = Game.GetPlayer()
 	PlayerAlias.ForceRefTo(aPlayer)
 	UnregisterForRemoteEvent(aPlayer, "OnPlayerLoadGame")
 EndEvent
-
