@@ -38,10 +38,10 @@
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\MS07c.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\Paginator.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\Proxy.pex",
-	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Quests\\Transit.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\ArmorMods.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\ArmorSelection.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\AutocompletionDetails.pex",
+	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\CellPreloading.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\CharacterDevelopment.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\CharDevAddLevels.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\CharDevAddPerkPoints.pex",
@@ -132,5 +132,5 @@
 	"Data\\SCRIPTS\\CheatBunker\\TerminalSpawnGeneratedItem.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TerminalSpawnSmallItem.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TransitScript.pex",
-	"Data\\SCRIPTS\\CheatBunker\\Version.pex"
+	"Data\\SCRIPTS\\cheatbunker\\Version.pex"
 ]
