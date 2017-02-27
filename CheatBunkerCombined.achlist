@@ -82,6 +82,7 @@
 	"Data\\Scripts\\CheatBunker\\Logger\\importer.pex",
 	"Data\\Scripts\\CheatBunker\\Logger\\Package.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Updater\\v1_1_0_to_v1_2_0.pex",
+	"Data\\SCRIPTS\\CheatBunker\\Updater\\v1_3_1_to_v1_4_0.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Version\\Display.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Version\\STATIC.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Version\\Stored.pex",

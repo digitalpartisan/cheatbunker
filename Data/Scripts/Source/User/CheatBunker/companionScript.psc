@@ -119,7 +119,8 @@ Function moveToPlayer(Actor aTarget, Message mFailure = None)
 	endif
 	
 	CheatBunker:Logger:Companion.movingToPlayer(aTarget)
-	CheatBunkerTransitQuest.transitToPlayer(aTarget)
+	CheatBunkerTransitQuest.moveActor(aTarget, Game.GetPlayer())
+	CheatBunkerTransitQuest.applyEffectsToActor(aTarget)
 EndFunction
 
 Function trackCompanion()
@@ -127,7 +128,7 @@ Function trackCompanion()
 EndFunction
 
 Function moveCompanionToPlayer()
-	MoveToPlayer(getCompanionActor(), NoCompanionMessage)
+	moveToPlayer(getCompanionActor(), NoCompanionMessage)
 EndFunction
 
 Function trackDogmeat()
