@@ -1,9 +1,9 @@
 v1.4.0
-Under-the-hood improves to teleporting
-Radically shortened the manual
+Under-the-hood improvements to teleporting
+Significantly shortened the manual
 Added “Cell Preloading” option
-Lighting fixes
-Expedited uninstallation process
+Lighting adjustments
+Expedited uninstall process
 
 v1.3.1
 Fixed a bug involving Auto-completion options and uninstallation
