@@ -1,3 +1,6 @@
+v1.4.1
+Removed a bug that unintentionally affected lighting in the Institute
+
 v1.4.0
 Under-the-hood improvements to teleporting
 Significantly shortened the manual
