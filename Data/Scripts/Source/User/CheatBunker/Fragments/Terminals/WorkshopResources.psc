@@ -17,6 +17,14 @@ Proxy.init(akTerminalRef, PlantablesPaginator, PlantablesData)
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_Terminal_03
+Function Fragment_Terminal_03(ObjectReference akTerminalRef)
+;BEGIN CODE
+Proxy.init(akTerminalRef, IngredientsPaginator,  IngredientsData)
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 CheatBunker:TerminalGiveAll Property ShipmentsPaginator Auto Const
@@ -26,5 +34,9 @@ DynamicTerminal:ListWrapper Property ShipmentsData Auto Const
 CheatBunker:TerminalGiveAll Property PlantablesPaginator Auto Const
 
 DynamicTerminal:ListWrapper Property PlantablesData Auto Const
+
+CheatBunker:TerminalGiveAll Property IngredientsPaginator Auto Const
+
+DynamicTerminal:ListWrapper Property IngredientsData Auto Const
 
 DynamicTerminal:PaginationProxy Property Proxy Auto Const

@@ -1,9 +1,10 @@
 v1.5.0
 Incorporated Inject-Tec v1.3.0
-Made Intro Quest XP zero
+Made Intro Quest XP trivial
 Marked Lorenzo's Crown as playable
 Added Vault-Tec Lunchbox to Vault locker
 Added toys to the Misc. Items chest
+Added collectible ingredients to the Workshop Resources terminal
 
 v1.4.1
 Removed a bug that unintentionally affected lighting in the Institute
