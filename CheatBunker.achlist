@@ -29,6 +29,7 @@
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\PaginatorAutocompletion.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\PaginatorImporters.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\PaginatorPackages.pex",
+	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\PaginatorWorkshopNPC.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\PowerArmorMods.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\PowerArmorSelection.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Fragments\\Terminals\\ProxyGiveAll.pex",
@@ -51,6 +52,10 @@
 	"Data\\SCRIPTS\\CheatBunker\\Version\\Display.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Version\\STATIC.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Version\\Stored.pex",
+	"Data\\SCRIPTS\\CheatBunker\\WorkshopNPCLogic\\Brahmin.pex",
+	"Data\\SCRIPTS\\CheatBunker\\WorkshopNPCLogic\\Guard.pex",
+	"Data\\SCRIPTS\\CheatBunker\\WorkshopNPCLogic\\Settler.pex",
+	"Data\\SCRIPTS\\CheatBunker\\WorkshopNPCLogic\\Synth.pex",
 	"Data\\SCRIPTS\\CheatBunker\\ArmorLimbs.pex",
 	"Data\\SCRIPTS\\CheatBunker\\ArmorMaterial.pex",
 	"Data\\SCRIPTS\\CheatBunker\\ArmorModScript.pex",
@@ -64,6 +69,7 @@
 	"Data\\SCRIPTS\\CheatBunker\\companionScript.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Container.pex",
 	"Data\\SCRIPTS\\CheatBunker\\DevelopmentScript.pex",
+	"Data\\Scripts\\CheatBunker\\EditorWarnings.txt",
 	"Data\\SCRIPTS\\CheatBunker\\EnterBunker.pex",
 	"Data\\SCRIPTS\\CheatBunker\\GameLoadedAlias.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Importer.pex",
@@ -90,6 +96,7 @@
 	"Data\\SCRIPTS\\CheatBunker\\ResetWorkshopContainer.pex",
 	"Data\\SCRIPTS\\CheatBunker\\SpawnFormlist.pex",
 	"Data\\SCRIPTS\\CheatBunker\\SpawnPowerArmorScript.pex",
+	"Data\\SCRIPTS\\CheatBunker\\SpawnWorkshopNPCPaginator.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TeleportAliasScript.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TerminalGiveAll.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TerminalGiveItem.pex",
@@ -98,5 +105,7 @@
 	"Data\\SCRIPTS\\CheatBunker\\TerminalSpawnGeneratedItem.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TerminalSpawnSmallItem.pex",
 	"Data\\SCRIPTS\\CheatBunker\\TransitScript.pex",
-	"Data\\SCRIPTS\\cheatbunker\\Version.pex"
+	"Data\\SCRIPTS\\cheatbunker\\version.pex",
+	"Data\\SCRIPTS\\CheatBunker\\WorkshopNPCLogic.pex",
+	"Data\\SCRIPTS\\CheatBunker\\WorkshopNPCSpawnState.pex"
 ]
