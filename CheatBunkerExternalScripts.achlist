@@ -39,7 +39,7 @@
 	"Data\\Scripts\\InjectTec\\Loader.pex",
 	"Data\\Scripts\\InjectTec\\Logger.pex",
 	"Data\\SCRIPTS\\injecttec\\plugin.pex",
-	"Data\\SCRIPTS\\InjectTec\\ReusableRemoteForms.pex"
+	"Data\\SCRIPTS\\InjectTec\\ReusableRemoteForms.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\Builder\\Component.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\Builder\\Menu.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\ListWrapper\\DynamicArray.pex",
