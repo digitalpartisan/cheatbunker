@@ -5,6 +5,7 @@ Marked Lorenzo's Crown as playable
 Added Vault-Tec Lunchbox to Vault locker
 Added toys to the Misc. Items chest
 Added collectible ingredients to the Workshop Resources terminal
+Added Workshop NPC spawning to Workshop Resources on the holotape
 
 v1.4.1
 Removed a bug that unintentionally affected lighting in the Institute
