@@ -1,3 +1,6 @@
+v1.5.1
+Fixed a bug where the first option of the Spawn Workshop NPCs terminal wouldn't redraw the screen
+
 v1.5.0
 Incorporated Inject-Tec v1.3.0
 Made Intro Quest XP trivial
