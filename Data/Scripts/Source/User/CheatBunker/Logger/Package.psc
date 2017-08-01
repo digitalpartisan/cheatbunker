@@ -18,6 +18,18 @@ Bool Function error(String sMessage) Global
 	return Loggout.error(CheatBunker:Logger.getName(), sMessage, getTags())
 EndFunction
 
+Bool Function alreadyInstalled(CheatBunker:Package myPackage) Global
+	return log(myPackage.toString() + " is already installed")
+EndFunction
+
+Bool Function displayVersionError(CheatBunker:Package myPackage) Global
+	return log(myPackage.toString() + " has a display version error")
+EndFunction
+
+Bool Function install(CheatBunker:Package myPackage) Global
+	return log(myPackage.toString() + " is attempting installation")
+EndFunction
+
 Bool Function internalVersionError(CheatBunker:Package myPackage) Global
 	return error(myPackage + " stored version greater than display version")
 EndFunction

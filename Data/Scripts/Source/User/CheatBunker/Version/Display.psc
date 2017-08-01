@@ -1,4 +1,4 @@
-Scriptname CheatBunker:Version:Display
+Scriptname CheatBunker:Version:Display extends Quest
 {In previous iterations of this library, this extended the CheatBunker:Version:Static script, but a composite solution ended up being preferred to prevent bugs from duplicated data disagreeing.}
 
 CheatBunker:Version:Static Property VersionData Auto Const

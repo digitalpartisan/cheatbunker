@@ -112,10 +112,12 @@ EndFunction
 
 Bool Function canInstall()
 	if (isInstalled())
+		CheatBunker:Logger:Package.alreadyInstalled(self)
 		return false
 	endif
 
 	if (DisplayVersion == None || DisplayVersion.VersionData == None || !DisplayVersion.VersionData.validate())
+		CheatBunker:Logger:Package.displayVersionError(self)
 		return false
 	endif
 
@@ -127,6 +129,8 @@ Bool Function install()
 		return false
 	endif
 
+	CheatBunker:Logger:Package.install(self)
+	
 	Injections.inject()
 	registerImporters()
 	installAutocompletions()
