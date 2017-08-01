@@ -21,6 +21,8 @@ Group PackagesAndPackageSupport
 	FormList Property CheatBunkerUninstallQuests Auto Const Mandatory
 
 	CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const Mandatory
+	
+	Message Property CheatBunkerRemoteLoadingFailureMessage Auto Const Mandatory
 EndGroup
 
 Group ItemSpawning
@@ -149,3 +151,7 @@ Because this script receives the load event, it needs to call checkForUpdates() 
 	PlayerAlias.ForceRefTo(aPlayer)
 	UnregisterForRemoteEvent(aPlayer, "OnPlayerLoadGame")
 EndEvent
+
+Function remoteLoadingFailure()
+	CheatBunkerRemoteLoadingFailureMessage.Show()
+EndFunction
