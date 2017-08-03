@@ -21,7 +21,7 @@ EndFunction
 Function Fragment_Terminal_03(ObjectReference akTerminalRef)
 ;BEGIN CODE
 ImporterData.setData(PackageDiagnostics.getPackage().Importers)
-Proxy.init(akTerminalRef, ImporterPaginator, ImporterData)
+ImporterPaginator.init(akTerminalRef, ImporterData)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -39,7 +39,5 @@ EndFunction
 CheatBunker:PackageDiagnostics Property PackageDiagnostics Auto Const
 
 DynamicTerminal:Paginator Property ImporterPaginator Auto Const
-
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
 
 DynamicTerminal:ListWrapper:DynamicList Property ImporterData Auto Const
