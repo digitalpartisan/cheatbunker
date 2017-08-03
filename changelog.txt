@@ -1,3 +1,6 @@
+v1.6.0
+Integrated Dynamic Terminal v1.2.0
+
 v1.5.1
 Fixed a bug where the first option of the Spawn Workshop NPCs terminal wouldn't redraw the screen
 
