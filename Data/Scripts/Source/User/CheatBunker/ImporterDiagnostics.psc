@@ -3,6 +3,7 @@ Scriptname CheatBunker:ImporterDiagnostics extends DynamicTerminal:Basic Conditi
 CheatBunker:QuestScript Property CheatBunkerQuest Auto Const
 
 CheatBunker:Importer myImporter = None
+Bool bPluginDetected = false Conditional
 
 CheatBunker:Importer Function getImporter()
 	return myImporter
@@ -10,6 +11,7 @@ EndFunction
 
 Function setImporter(CheatBunker:Importer newImporter)
 	myImporter = newImporter
+	bPluginDetected = (None != myImporter.Injections && myImporter.Injections.checkPlugin())
 EndFunction
 
 Function rerunInjections()
