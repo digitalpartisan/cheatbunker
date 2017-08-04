@@ -116,7 +116,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_18
 Function Fragment_Terminal_18(ObjectReference akTerminalRef)
 ;BEGIN CODE
-Game.GetPlayer().AddItem(Bottlecaps.fItem, Bottlecaps.iAmount)
+Bottlecaps.give()
 ;END CODE
 EndFunction
 ;END FRAGMENT

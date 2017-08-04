@@ -1,4 +1,7 @@
-Scriptname CheatBunker:ItemQuantity extends Quest Conditional
+Scriptname CheatBunker:ItemQuantity extends CheatBunker:ItemQuantity:Abstract
 
 Form Property fItem Auto Const
-Int Property iAmount = 1 Auto Const
+
+Form Function getForm()
+	return fItem
+EndFunction

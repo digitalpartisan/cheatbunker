@@ -1,16 +1,15 @@
 Scriptname CheatBunker:TerminalGiveItemAmount extends DynamicTerminal:Paginator Conditional
 
 Function itemActivation(Int iItem, ObjectReference akTerminalRef)
-	CheatBunker:ItemQuantity itemData = getItem(iItem) as CheatBunker:ItemQuantity
-	Game.GetPlayer().AddItem(itemData.fItem, itemData.iAmount)
+	(getItem(iItem) as CheatBunker:ItemQuantity:Abstract).give()
 EndFunction
 
 Function tokenReplacementLogic()
 	Int iCounter = 0
 	Int iPageItems = getPageItems()
 	while (iCounter < iPageItems)
-		CheatBunker:ItemQuantity itemData = getItem(iCounter) as CheatBunker:ItemQuantity
-		replace("Item" + iCounter, itemData.fItem)
+		CheatBunker:ItemQuantity:Abstract itemData = getItem(iCounter) as CheatBunker:ItemQuantity:Abstract
+		replace("Item" + iCounter, itemData.getDisplayForm())
 		iCounter += 1
 	endwhile
 EndFunction
