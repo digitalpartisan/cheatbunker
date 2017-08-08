@@ -24,7 +24,7 @@ EndFunction
 Function updateLogic()
 	if (!bHasArmor && getComponent(iArmorID).isComplete())
 		bHasArmor = true
-		getComponent(iMaterialID).setOptions( (getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption).MaterialOptions )
+		getComponent(iMaterialID).setOptions( (getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption:Abstract).MaterialOptions )
 	endif
 
 	bHasMaterial = bHasMaterial || getComponent(iMaterialID).isComplete()
@@ -34,8 +34,8 @@ Function calculateCanBuild()
 	setCanBuild(bHasArmor) ; material not required
 EndFunction
 
-CheatBunker:PowerArmorOption Function getArmor()
-	return getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption
+CheatBunker:PowerArmorOption:Abstract Function getArmor()
+	return getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption:Abstract
 EndFunction
 
 ObjectReference Function spawnFrame(Furniture FrameToSpawn)
@@ -63,47 +63,47 @@ Function applyMaterial(ObjectReference piece)
 EndFunction
 
 Function spawnHelmet(ObjectReference frame)
-	CheatBunker:PowerArmorOption selectedArmor = getArmor()
-	ObjectReference helmet = frame.PlaceAtMe(selectedArmor.Helmet)
-	applyMod(helmet, selectedArmor.HelmetLining)
+	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
+	ObjectReference helmet = frame.PlaceAtMe(selectedArmor.getHelmet())
+	applyMod(helmet, selectedArmor.getHelmetLining())
 	applyMaterial(helmet)
 	frame.AddItem(helmet)
 EndFunction
 
 Function spawnTorso(ObjectReference frame)
-	CheatBunker:PowerArmorOption selectedArmor = getArmor()
-	ObjectReference torso = frame.PlaceAtMe(selectedArmor.Torso)
-	applyMod(torso, selectedArmor.TorsoLining)
+	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
+	ObjectReference torso = frame.PlaceAtMe(selectedArmor.getTorso())
+	applyMod(torso, selectedArmor.getTorsoLining())
 	applyMaterial(torso)
 	frame.addItem(torso)
 EndFunction
 
 Function spawnArm(ObjectReference frame, Armor piece)
-	CheatBunker:PowerArmorOption selectedArmor = getArmor() 
+	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor() 
 	ObjectReference arm = frame.PlaceAtMe(piece)
-	applyMod(arm, selectedArmor.ArmLining)
+	applyMod(arm, selectedArmor.getArmLining())
 	applyMaterial(arm)
 	frame.AddItem(arm)
 EndFunction
 
 Function spawnArms(ObjectReference frame)
-	CheatBunker:PowerArmorOption selectedArmor = getArmor()
-	spawnArm(frame, selectedArmor.ArmLeft)
-	spawnArm(frame, selectedArmor.ArmRight)
+	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
+	spawnArm(frame, selectedArmor.getArmLeft())
+	spawnArm(frame, selectedArmor.getArmRight())
 EndFunction
 
 Function spawnLeg(ObjectReference frame, Armor piece)
-	CheatBunker:PowerArmorOption selectedArmor = getArmor()
+	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
 	ObjectReference leg = frame.PlaceAtMe(piece)
-	applyMod(leg, selectedArmor.LegLining)
+	applyMod(leg, selectedArmor.getLegLining())
 	applyMaterial(leg)
 	frame.AddItem(leg)
 EndFunction
 
 Function spawnLegs(ObjectReference frame)
-	CheatBunker:PowerArmorOption selectedArmor = getArmor()
-	spawnLeg(frame, selectedArmor.LegLeft)
-	spawnLeg(frame, selectedArmor.LegRight)
+	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
+	spawnLeg(frame, selectedArmor.getLegLeft())
+	spawnLeg(frame, selectedArmor.getLegRight())
 EndFunction
 
 Function buildPieces(ObjectReference frame)
@@ -114,10 +114,20 @@ Function buildPieces(ObjectReference frame)
 EndFunction
 
 Function buildLogic()
-	CheatBunker:PowerArmorOption selectedArmor = getArmor()
-	ObjectReference frame = spawnFrame(selectedArmor.Frame)
-	if (frame != None)
-		buildPieces(frame)
-		mSpawned.Show()
+	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
+	
+	if (selectedArmor.canLoad())
+		Furniture frameToSpawn = selectedArmor.getCustomFrame()
+		if (None == frameToSpawn)
+			frameToSpawn = PowerArmorFrame
+		endif
+		
+		ObjectReference frame = spawnFrame(frameToSpawn)
+		if (None != frame)
+			buildPieces(frame)
+			mSpawned.Show()
+		endif
 	endif
+	
+	selectedArmor.clean()
 EndFunction

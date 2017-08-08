@@ -92,6 +92,8 @@
 	"Data\\SCRIPTS\\CheatBunker\\PowerArmorMaterialSelection.pex",
 	"Data\\SCRIPTS\\CheatBunker\\PowerArmorModQuest.pex",
 	"Data\\SCRIPTS\\CheatBunker\\PowerArmorModsFilter.pex",
+	"Data\\SCRIPTS\\CheatBunker\\PowerArmorOption\\Abstract.pex",
+	"Data\\SCRIPTS\\CheatBunker\\PowerArmorOption\\Remote.pex",
 	"Data\\SCRIPTS\\CheatBunker\\PowerArmorOption.pex",
 	"Data\\SCRIPTS\\CheatBunker\\PowerArmorScript.pex",
 	"Data\\SCRIPTS\\CheatBunker\\PowerArmorSelector.pex",

@@ -31,7 +31,7 @@ EndFunction
 Function updateLogic()
 	if (!bHasArmor && getComponent(iArmorID).isComplete())
 		bHasArmor = true
-		CheatBunker:PowerArmorOption armorOption = getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption
+		CheatBunker:PowerArmorOption:Abstract armorOption = getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption:Abstract
 		getComponent(iHelmetID).setOptions(armorOption.HelmetMods)
 		getComponent(iHeadlampID).setOptions(armorOption.HeadlampMods)
 		getComponent(iTorsoID).setOptions(armorOption.TorsoMods)

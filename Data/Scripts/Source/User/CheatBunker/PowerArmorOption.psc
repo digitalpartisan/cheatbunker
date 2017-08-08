@@ -1,7 +1,6 @@
-Scriptname CheatBunker:PowerArmorOption extends Quest Conditional
+Scriptname CheatBunker:PowerArmorOption extends CheatBunker:PowerArmorOption:Abstract
 
 Furniture Property Frame Auto Const
-{Because some power armor sets might use a frame other than the game's default and it's a bad idea to }
 
 Group Parts
 	Armor Property Helmet Auto Const
@@ -19,14 +18,51 @@ Group PartLevels
 	ObjectMod Property LegLining Auto Const
 EndGroup
 
-Bool Property HasMods = false Auto Const
+Furniture Function getCustomFrame()
+{Existing PA options had this set.  Removing properties or changing their values is not feasible at the time of writing the Remote Loading features, so the Frame property stays around on this script.}
+	if (None != Frame)
+		return Frame
+	else
+		return None
+	endif
+EndFunction
 
-Group PartMods
-	DynamicTerminal:ListWrapper Property HeadlampMods Auto Const
-	DynamicTerminal:ListWrapper Property HelmetMods Auto Const
-	DynamicTerminal:ListWrapper Property TorsoMods Auto Const
-	DynamicTerminal:ListWrapper Property ArmMods Auto Const
-	DynamicTerminal:ListWrapper Property LegMods Auto Const
-EndGroup
+Armor Function getHelmet()
+	return Helmet
+EndFunction
 
-DynamicTerminal:ListWrapper Property MaterialOptions Auto Const
+Armor Function getTorso()
+	return Torso
+EndFunction
+
+Armor Function getArmLeft()
+	return ArmLeft
+EndFunction
+
+Armor Function getArmRight()
+	return ArmRight
+EndFunction
+
+Armor Function getLegLeft()
+	return LegLeft
+EndFunction
+
+Armor Function getLegRight()
+	return LegRight
+EndFunction
+
+ObjectMod Function getHelmetLining()
+	return HelmetLining
+EndFunction
+
+ObjectMod Function getTorsoLining()
+	return TorsoLining
+EndFunction
+
+ObjectMod Function getArmLining()
+	return ArmLining
+EndFunction
+
+ObjectMod Function getLegLining()
+	return LegLining
+EndFunction
