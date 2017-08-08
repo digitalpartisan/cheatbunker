@@ -43,6 +43,7 @@
 	"Data\\SCRIPTS\\DynamicTerminal\\Builder\\Component.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\Builder\\Menu.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\ListWrapper\\DynamicArray.pex",
+	"Data\\SCRIPTS\\DynamicTerminal\\ListWrapper\\DynamicList.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\ListWrapper\\FormArray.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\ListWrapper\\FormList.pex",
 	"Data\\Scripts\\DynamicTerminal\\Logger\\Builder.pex",
