@@ -1,8 +1,12 @@
+v1.6.2
+Corrected packaging errors in v1.6.0 and v1.6.1 releases
+
 v1.6.1
 Corrected a bug where the Power Armor workbench in the Bunker did not have access to the resources in the workshop
 
 v1.6.0
 Integrated Dynamic Terminal v1.2.0
+Major architecture work on Remote Loading functionality started
 
 v1.5.1
 Fixed a bug where the first option of the Spawn Workshop NPCs terminal wouldn't redraw the screen
