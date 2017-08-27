@@ -17,7 +17,7 @@ Group Messaging
 	Message Property RunningMessage Auto Const
 	Message Property FinishedMessage Auto Const
 	Message Property HaltMessage Auto Const
-	Message Property Description Auto Const
+	Message Property Description Auto Const Mandatory
 	Message Property SpecialInstructions Auto Const
 	Message Property AvailabilityMessage Auto Const
 EndGroup

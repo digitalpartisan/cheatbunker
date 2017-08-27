@@ -1,3 +1,7 @@
+v1.7.0
+Added Railroad Ballistic Weave Auto-completion option
+Fixed a bug where the Character Development terminal wouldn't refresh when certain options were selected
+
 v1.6.2
 Corrected packaging errors in v1.6.0 and v1.6.1 releases
 
