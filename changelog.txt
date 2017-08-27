@@ -1,3 +1,6 @@
+v1.6.1
+Corrected a bug where the Power Armor workbench in the Bunker did not have access to the resources in the workshop
+
 v1.6.0
 Integrated Dynamic Terminal v1.2.0
 
