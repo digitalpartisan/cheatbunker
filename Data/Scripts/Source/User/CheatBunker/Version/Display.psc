@@ -1,5 +1,7 @@
 Scriptname CheatBunker:Version:Display extends Quest
-{In previous iterations of this library, this extended the CheatBunker:Version:Static script, but a composite solution ended up being preferred to prevent bugs from duplicated data disagreeing.}
+{This script is a relic from a poitn in time where the static version forms did not have their version numbers as their name.  In order to avoid something horrendously bad in the way of upgrade issues from having upgraded the base package but not DLCor vice versa, this was left around so that the package script could detect what's what.
+
+In previous iterations of this library, this extended the CheatBunker:Version:Static script, but a composite solution ended up being preferred to prevent bugs from duplicated data disagreeing.}
 
 CheatBunker:Version:Static Property VersionData Auto Const
 {The actual version used for comparisons.}

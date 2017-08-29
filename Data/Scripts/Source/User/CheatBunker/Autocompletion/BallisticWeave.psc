@@ -22,3 +22,11 @@ Function runBehavior()
 	makeWeaveAvailable()
 	finish()
 EndFunction
+
+Function install()
+{Overridden to do nothing since there are no messages to show.}
+EndFunction
+
+Function uninstall()
+{Overridden to do nothing since listening never happens.}
+EndFunction

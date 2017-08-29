@@ -1,6 +1,6 @@
 Scriptname CheatBunker:PackageDiagnostics extends DynamicTerminal:Basic Conditional
 
-CheatBunker:QuestScript Property CheatBunkerQuest Auto Const
+CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
 
 CheatBunker:Package myPackage = None ; the package to act on
 
@@ -59,7 +59,7 @@ Function tokenReplacementLogic()
 		replace("PackageDescription", None)
 	else
 		replace("PackageObject", thisPackage)
-		replace("PackageVersion", thisPackage.DisplayVersion.VersionString)
+		replace("PackageVersion", thisPackage.getVersionForDisplay())
 		replace("PackageDescription", thisPackage.Description)
 	endif
 EndFunction

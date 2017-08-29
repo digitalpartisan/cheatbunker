@@ -1,28 +1,31 @@
-Scriptname CheatBunker:Version extends Quest Conditional
+Scriptname CheatBunker:Version extends Quest Conditional Hidden
 {Used for tracking version information and easily comparing versions in order to see what changes (if any) need to be made across the Cheat Bunker mod.}
 
 Int Function getMajor()
+	CheatBunker:Logger.logBehaviorUndefined(self, "getMajor()")
 	return 0
 EndFunction
 
 Function setMajor(Int iValue)
-	
+	CheatBunker:Logger.logBehaviorUndefined(self, "setMajor()")
 EndFunction
 
 Int Function getMinor()
+	CheatBunker:Logger.logBehaviorUndefined(self, "getMinor()")
 	return 0
 EndFunction
 
 Function setMinor(Int iValue)
-	
+	CheatBunker:Logger.logBehaviorUndefined(self, "setMinor()")
 EndFunction
 
 Int Function getBugfix()
+	CheatBunker:Logger.logBehaviorUndefined(self, "getBugfix()")
 	return 0
 EndFunction
 
 Function setBugfix(Int iValue)
-	
+	CheatBunker:Logger.logBehaviorUndefined(self, "setBugfix()")
 EndFunction
 
 Bool Function validate()

@@ -1,4 +1,7 @@
 v1.7.0
+Introduced AWKCR dependency
+Introduced VIS compatability
+Corrected a design error involving package version numbers, update detection, and the Diagnostics terminal
 Added Railroad Ballistic Weave Auto-completion option
 Fixed a bug where the Character Development terminal wouldn't refresh when certain options were selected
 

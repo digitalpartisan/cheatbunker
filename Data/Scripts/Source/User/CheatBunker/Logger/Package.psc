@@ -39,7 +39,7 @@ Bool Function notRunningUpdate(CheatBunker:Package myPackage, CheatBunker:Packag
 EndFunction
 
 Bool Function updateDetected(CheatBunker:Package myPackage) Global
-	return log(myPackage.toString() + " detected update to " + myPackage.DisplayVersion.VersionData.toString())
+	return log(myPackage.toString() + " detected update to " + myPackage.getVersionSetting().toString())
 EndFunction
 
 Bool Function uninstall(CheatBunker:Package myPackage) Global

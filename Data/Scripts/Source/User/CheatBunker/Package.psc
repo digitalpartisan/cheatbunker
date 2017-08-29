@@ -23,10 +23,12 @@ Group Metadata
 EndGroup
 
 Group Versions
-	CheatBunker:Version:Stored Property StoredVersion Auto Const
+	CheatBunker:Version:Stored Property StoredVersion Auto Const Mandatory
 	{This value is the actual version of the package at runtime.  Its values are preserved in the save file so that updated packages can be detected when a save is loaded.}
-	CheatBunker:Version:Display Property DisplayVersion Auto Const
-	{In addition to containing the message used to display the version in the package details terminal, this version is used to detect updates to the package.  Incrememting the values in this version object will cause an update cycle to run.}
+	CheatBunker:Version:Display Property DisplayVersion = None Auto Const
+	{This property is a relic from the past where (for some stupid reason) the static value forms did not have their version value as their name.  It's sticking around so that packages not yet upgraded can still function in the bunker.  Should be cleared out to None.}
+	CheatBunker:Version:Static Property VersionSetting Auto Const
+	{This version is used to detect updates to the package.  Incrememting the values in this version object will cause an update cycle to run.}
 EndGroup
 
 Bool Function isInstalled()
@@ -37,21 +39,54 @@ Bool Function isInstalled()
 	return StoredVersion.validate()
 EndFunction
 
+Bool Function isVersionLogicUpgraded()
+{Returns true if the use of the CheatBunker:Version:Display script has been abandoned and the VersionSetting property has been populated to replace the deprecated display version.}
+	return None != VersionSetting
+EndFunction
+
+CheatBunker:Version Function getVersionSetting()
+	if (isVersionLogicUpgraded())
+		return VersionSetting
+	endif
+	
+	if (None == DisplayVersion || None == DisplayVersion.VersionData)
+		return None
+	else
+		return DisplayVersion.VersionData
+	endif
+	
+	return None
+EndFunction
+
+Form Function getVersionForDisplay()
+{Returns a form which will have a name matching the version value to be displayed}
+	if (isVersionLogicUpgraded())
+		return VersionSetting
+	else
+		if (None == DisplayVersion)
+			return None ; just being careful
+		else
+			return DisplayVersion.VersionString
+		endif
+	endif
+EndFunction
+
 Bool Function isCurrent()
 	if (!isInstalled())
 		return false
 	endif
 
-	if (DisplayVersion == None || DisplayVersion.VersionData == None || !DisplayVersion.VersionData.validate())
+	CheatBunker:Version currentSetting = getVersionSetting()
+	if (None == currentSetting || !currentSetting.validate())
 		return true ; technically accurate since there's no way to proceed with becoming current
 	endif
 
-	if (StoredVersion.greaterThan(DisplayVersion.VersionData)) ; true, but U DID WOT, M8?
-		CheatBunker:Logger:Package.internalVersionError(self)
+	if (StoredVersion.greaterThan(currentSetting)) ; true, but U DID WOT, M8?
+		CheatBunker:Logger:Package.internalVersionError(self) ; cannot upgrade to a previous version
 		return true
 	endif
 
-	return !StoredVersion.lessThan(DisplayVersion.VersionData)
+	return !StoredVersion.lessThan(currentSetting) ; true if the setting is greater than the stored version
 EndFunction
 
 Function registerImporters()
@@ -116,8 +151,8 @@ Bool Function canInstall()
 		return false
 	endif
 
-	if (DisplayVersion == None || DisplayVersion.VersionData == None || !DisplayVersion.VersionData.validate())
-		CheatBunker:Logger:Package.displayVersionError(self)
+	CheatBunker:Version currentSetting = getVersionSetting()
+	if (None == currentSetting || !currentSetting.validate())
 		return false
 	endif
 
@@ -137,7 +172,7 @@ Bool Function install()
 	InstallationMessage.Show()
 	postInstallationBehavior()
 
-	StoredVersion.setTo(DisplayVersion.VersionData)
+	StoredVersion.setTo(getVersionSetting())
 	
 	return true
 EndFunction
@@ -147,7 +182,7 @@ Bool Function canUpdate()
 		return false
 	endif
 
-	if (isCurrent()) ; this call encompasses all sorts of hinky issues with the DisplayVersion that would inhibit an upgrade
+	if (isCurrent())
 		return false
 	endif
 
@@ -159,7 +194,8 @@ Bool Function isUpdateRelevant(CheatBunker:PackageUpdater updater)
 		return false
 	endif
 
-	if (DisplayVersion.VersionData.lessThan(updater.FromVersion) || DisplayVersion.VersionData.lessThan(updater.ToVersion)) ; the updater wants to upgrade from and/or to a version that doesn't even exist
+	CheatBunker:Version currentSetting = getVersionSetting()
+	if (currentSetting.lessThan(updater.FromVersion) || currentSetting.lessThan(updater.ToVersion)) ; the updater wants to upgrade from and/or to a version that doesn't even exist
 		return false
 	endif
 
@@ -203,7 +239,7 @@ Bool Function update()
 	installAutocompletions() ; yet more "soft" behavior.  autocompletions won't be repeatedly added to the list
 	runUpdaters()
 
-	StoredVersion.setTo(DisplayVersion.VersionData) ; regardless of what version we're at after running the updaters, this package needs to fully update so that update cycles don't kick off for no reason
+	StoredVersion.setTo(getVersionSetting()) ; regardless of what version we're at after running the updaters, this package needs to fully update so that update cycles don't kick off for no reason
 
 	return true
 EndFunction
