@@ -1,4 +1,5 @@
 Scriptname CheatBunker:PowerArmorOption extends CheatBunker:PowerArmorOption:Abstract
+{This script loads an local set of Power Armor (i.e. which does not require loading resources from third-party plugins.}
 
 Furniture Property Frame Auto Const
 
