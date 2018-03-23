@@ -129,7 +129,7 @@ Bool Function canExecuteLogic()
 {Override this to suite your specific case.
 This is left in the empty state precisely because it may need to be customized to a specific purpose that this general logic cannot address.
 Default logic: if the autocompleter is operating or finished, false.  If there is a target quest, it must be running and have an accessible objective displayed.  True in all other cases.}
-	if (isRunning() || isCompleted())
+	if (isExecuting() || isConcluded())
 		return false ; don't allow such a thing to happen
 	endif
 	
