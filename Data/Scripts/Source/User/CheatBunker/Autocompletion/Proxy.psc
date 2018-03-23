@@ -30,12 +30,12 @@ EndFunction
 
 Function updateConditionals()
 	if (!setCheck())
-		return
-	else
 		bCanRun = false
 		bRunning = false
 		bCanHalt = false
 		bFinished = false
+		
+		return
 	endif
 
 	CheatBunker:Autocompletion thisAutocompletion = getAutocompletion()
