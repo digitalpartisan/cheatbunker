@@ -89,56 +89,58 @@ Bool Function isCurrent()
 	return !StoredVersion.lessThan(currentSetting) ; true if the setting is greater than the stored version
 EndFunction
 
-Function registerImporters()
+Function handleImporters(Bool bRun = true)
 	if (Importers == None)
 		return
 	endif
 
 	Int iCounter = 0
 	Int iSize = Importers.GetSize()
+	CheatBunker:Importer targetImporter = None
 	While (iCounter < iSize)
-		CheatBunkerQuest.registerImporter(Importers.GetAt(iCounter) as CheatBunker:Importer)
+		targetImporter = Importers.GetAt(iCounter) as CheatBunker:Importer
+		if (bRun)
+			targetImporter.Injections.inject()
+		else
+			targetImporter.Injections.revert()
+		endif
 		iCounter += 1
 	EndWhile
 EndFunction
 
-Function deregisterImporters()
-	if (Importers == None)
-		return
-	endif
-
-	Int iCounter = 0
-	Int iSize = Importers.GetSize()
-	While (iCounter < iSize)
-		CheatBunkerQuest.deregisterImporter(Importers.GetAt(iCounter) as CheatBunker:Importer)
-		iCounter += 1
-	EndWhile
+Function runImporters()
+	handleImporters()
 EndFunction
 
-Function installAutocompletions()
+Function revertImporters()
+	handleImporters(false)
+EndFunction
+
+Function handleAutocompletions(Bool bInitialize = true)
 	if (Autocompletions == None)
 		return
 	endif
-
+	
 	Int iCounter = 0
 	Int iSize = Autocompletions.GetSize()
+	CheatBunker:Autocompletion targetAutocompletion = None
 	While (iCounter < iSize)
-		CheatBunkerQuest.installAutocompletion(Autocompletions.GetAt(iCounter) as CheatBunker:Autocompletion)
+		targetAutocompletion = Autocompletions.GetAt(iCounter) as CheatBunker:Autocompletion
+		if (bInitialize)
+			targetAutocompletion.initialize()
+		else
+			targetAutocompletion.terminate()
+		endif
 		iCounter += 1
 	EndWhile
 EndFunction
 
-Function uninstallAutocompletions()
-	if (Autocompletions == None)
-		return
-	endif
+Function initializeAutocompletions()
+	handleAutocompletions()
+EndFunction
 
-	Int iCounter = 0
-	Int iSize = Autocompletions.GetSize()
-	While (iCounter < iSize)
-		CheatBunkerQuest.uninstallAutocompletion(Autocompletions.GetAt(iCounter) as CheatBunker:Autocompletion)
-		iCounter += 1
-	EndWhile
+Function terminateAutocompletions()
+	handleAutocompletions(false)
 EndFunction
 
 Function postInstallationBehavior()
@@ -167,9 +169,10 @@ Bool Function install()
 	CheatBunker:Logger:Package.install(self)
 	
 	Injections.inject()
-	registerImporters()
-	installAutocompletions()
+	runImporters()
+	initializeAutocompletions()
 	InstallationMessage.Show()
+	
 	postInstallationBehavior()
 
 	StoredVersion.setTo(getVersionSetting())
@@ -234,14 +237,19 @@ Bool Function update()
 	endif
 	
 	CheatBunker:Logger:Package.updateDetected(self)
-	Injections.inject() ; this is soft behavior and won't do a whole lot other than run injections which haven't been run yet
-	registerImporters() ; this is also soft behavior and won't double-add an existing injector or run injections which have already been run
-	installAutocompletions() ; yet more "soft" behavior.  autocompletions won't be repeatedly added to the list
 	runUpdaters()
+	Injections.inject() ; this is soft behavior and won't do a whole lot other than run injections which haven't been run yet, not in postLoadBehavior() because injections are only added during updates
 
 	StoredVersion.setTo(getVersionSetting()) ; regardless of what version we're at after running the updaters, this package needs to fully update so that update cycles don't kick off for no reason
 
 	return true
+EndFunction
+
+Function postLoadBehavior()
+	CheatBunker:Logger:Package.runningPostLoadBehavior(self)
+	
+	runImporters() ; soft behavior, already-run importers won't rerun their injections thanks to Inject-Tec
+	initializeAutocompletions() ; soft behavior, already-initialized autocompletions won't be re-initialized
 EndFunction
 
 Function customUninstallBehavior()
@@ -256,9 +264,11 @@ Function prepareUninstall()
 	CheatBunker:Logger:Package.uninstall(self)
 	
 	Injections.revert()
-	deregisterImporters()
-	uninstallAutocompletions()
+	revertImporters()
+	terminateAutocompletions()
+	
 	customUninstallBehavior()
+	
 	StoredVersion.invalidate()
 EndFunction
 

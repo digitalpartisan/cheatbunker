@@ -1,15 +1,12 @@
 Scriptname CheatBunker:QuestScript extends Quest Conditional
 
 Group Metadata
-	Quest Property CheatBunkerQuest Auto Const Mandatory
 	ReferenceAlias Property PlayerAlias Auto Const Mandatory
 	Bool Property AIOMode = False Auto Const
 EndGroup
 
 Group PackagesAndPackageSupport
 	FormList Property Packages Auto Const Mandatory
-	FormList Property Importers Auto Const Mandatory
-	FormList Property Autocompletions Auto Const Mandatory
 	
 	CheatBunker:Package Property BasePackage Auto Const Mandatory
 	
@@ -27,8 +24,6 @@ EndGroup
 
 Group ItemSpawning
 	ObjectReference Property SpawnItemsContainer Auto Const Mandatory
-	ObjectReference Property SpawnItemsMarker Auto Const Mandatory
-	ObjectReference Property SpawnWeaponMarker Auto Const Mandatory
 	ObjectReference Property Workshop Auto Const Mandatory
 EndGroup
 
@@ -89,9 +84,10 @@ Function checkForUpdates()
 
 	Int iCounter = 0
 	Int iSize = Packages.GetSize()
+	CheatBunker:Package targetPackage = None
 	While (iCounter < iSize)
-		CheatBunker:Package thisPackage = checkForPackage(iCounter)
-		if ( None != thisPackage && !thisPackage.isCurrent() && thisPackage.update() ) ; running unneeded updates will trigger stack traces, don't do it
+		targetPackage = checkForPackage(iCounter)
+		if ( targetPackage && !targetPackage.isCurrent() && targetPackage.update() ) ; running unneeded updates will trigger stack traces, don't do it
 			bUpdateRun = true
 		endif
 		iCounter += 1
@@ -103,41 +99,26 @@ Function checkForUpdates()
 	endif
 EndFunction
 
-Function registerImporter(CheatBunker:Importer newImporter)
-	if (Importers.HasForm(newImporter))
-		return
-	endif
-
-	Importers.AddForm(newImporter)
-	newImporter.Injections.inject()
-EndFunction
-
-Function deregisterImporter(CheatBunker:Importer importer)
-	if (Importers.HasForm(importer))
-		Importers.RemoveAddedForm(importer)
-		importer.Injections.revert()
-	endif
-EndFunction
-
-Function installAutocompletion(CheatBunker:Autocompletion autocompletion)
-	if (Autocompletions.HasForm(autocompletion))
-		return
-	endif
-	
-	Autocompletions.AddForm(autocompletion)
-	autocompletion.install()
-EndFunction
-
-Function uninstallAutocompletion(CheatBunker:Autocompletion autocompletion)
-	if (Autocompletions.HasForm(autocompletion))
-		Autocompletions.RemoveAddedForm(autocompletion)
-		autocompletion.uninstall()
-	endif
+Function postLoadBehavior()
+	Int iCounter = 0
+	Int iSize = Packages.GetSize()
+	CheatBunker:Package targetPackage = None
+	while (iCounter < iSize)
+		targetPackage = checkForPackage(iCounter)
+		if (targetPackage)
+			targetPackage.postLoadBehavior()
+		endif
+		
+		iCounter += 1
+	endWhile
 EndFunction
 
 Function loadGameHandler()
+	CheatBunker:Logger.handlingLoadEvent()
+
 	checkForUpdates()
 	CheatBunkerTransitQuest.forcePreloadCell()
+	postLoadBehavior()
 EndFunction
 
 Event Actor.OnPlayerLoadGame(Actor aActorRef)

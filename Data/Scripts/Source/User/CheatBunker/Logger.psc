@@ -36,6 +36,10 @@ Bool Function preloadingCell() Global
 	return log("preloading interior")
 EndFunction
 
+Bool Function handlingLoadEvent() Global
+	return log("handling load event")
+EndFunction
+
 Bool Function logBehaviorUndefined(ScriptObject script, String sName) Global
 	return warn("Behavior " + sName + " undefined on " + script)
 EndFunction

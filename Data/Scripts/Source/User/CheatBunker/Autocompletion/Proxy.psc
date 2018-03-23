@@ -31,19 +31,23 @@ EndFunction
 Function updateConditionals()
 	if (!setCheck())
 		return
+	else
+		bCanRun = false
+		bRunning = false
+		bCanHalt = false
+		bFinished = false
 	endif
 
 	CheatBunker:Autocompletion thisAutocompletion = getAutocompletion()
 
-	bCanRun = thisAutocompletion.canRun()
-	bRunning = thisAutocompletion.isRunning()
+	bCanRun = thisAutocompletion.canExecute()
+	bRunning = thisAutocompletion.isExecuting()
 	bCanHalt = thisAutocompletion.canHalt()
-	bFinished = thisAutocompletion.isFinished()
+	bFinished = thisAutocompletion.isConcluded()
 EndFunction
 
 Function setAutocompletion(CheatBunker:Autocompletion newValue)
 	myAutocompletion = newValue
-	updateConditionals()
 EndFunction
 
 Function tokenReplacementLogic()
@@ -74,12 +78,11 @@ Function run(ObjectReference akTerminalRef)
 	endif
 	
 	CheatBunker:Autocompletion thisAutocompletion = getAutocompletion()
-	if (!thisAutocompletion.canRun())
+	if (!thisAutocompletion.canExecute())
 		return
 	endif
 
-	thisAutocompletion.run()
-	updateConditionals()
+	thisAutocompletion.execute()
 	draw(akTerminalRef)
 EndFunction
 
@@ -94,6 +97,5 @@ Function halt(ObjectReference akTerminalRef)
 	endif
 
 	thisAutocompletion.halt()
-	updateConditionals()
 	draw(akTerminalRef)
 EndFunction

@@ -1,3 +1,6 @@
+v1.8.0
+Rewrote the Autocompletion engine to support future development needs
+
 v1.7.0
 Introduced AWKCR dependency
 Introduced VIS compatability

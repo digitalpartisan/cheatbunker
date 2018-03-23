@@ -6,4 +6,3 @@ Function itemActivation(Int iItem, ObjectReference akTerminalRef)
 	AutocompletionProxy.setAutocompletion(getItem(iItem) as CheatBunker:Autocompletion)
 	AutocompletionProxy.draw(akTerminalRef)
 EndFunction
-

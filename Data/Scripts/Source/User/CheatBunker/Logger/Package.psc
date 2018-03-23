@@ -73,3 +73,7 @@ EndFunction
 Bool Function updateToVersionInvalid(CheatBunker:PackageUpdater myUpdater) Global
 	return error(myUpdater.toString() + " has an invalid to version")
 EndFunction
+
+Bool Function runningPostLoadBehavior(CheatBunker:Package myPackage) Global
+	return log(myPackage + " processing post-load behavior")
+EndFunction
