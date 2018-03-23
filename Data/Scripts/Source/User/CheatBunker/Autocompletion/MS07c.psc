@@ -1,4 +1,4 @@
-Scriptname CheatBunker:Autocompletion:MS07c extends CheatBunker:Autocompletion Conditional
+Scriptname CheatBunker:Autocompletion:MS07c extends CheatBunker:Autocompletion
 
 Struct StageTapeAssociation
 	ReferenceAlias TapeRef
