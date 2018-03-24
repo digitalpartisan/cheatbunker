@@ -30,7 +30,7 @@ Group Messaging
 	Message Property HaltMessage Auto Const
 	Message Property Description Auto Const Mandatory
 	Message Property SpecialInstructions Auto Const
-	Message Property AvailabilityMessage Auto Const
+	Message Property AvailabilityMessage Auto Const Mandatory
 EndGroup
 
 Int[] Property StagesToComplete Auto Const
