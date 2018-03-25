@@ -12,7 +12,9 @@ Struct StageResponse
 	Note that it is possible to program your custom executionStageHandler() function to handle relatively simple tasks.
 	This feature is intended to support incredibly complicated side tasks and the like.}
 	Bool ConcludeExecution = false
-	{If true, thie StageResponse value will, when utilized, call conclude() on the autocompletion option.}
+	{If true, this StageResponse value will, when utilized, call conclude() on the autocompletion option.}
+	Bool HaltExecution = false
+	{If true, this StageResponse value will call halt() on the autocompletion option.}
 EndStruct
 
 StageResponse[] Property ResponseSet Auto Const Mandatory
@@ -59,6 +61,10 @@ Function processStageResponse(StageResponse myResponse)
 	
 	if (myResponse.ConcludeExecution)
 		conclude()
+	endif
+	
+	if (myResponse.HaltExecution)
+		halt()
 	endif
 EndFunction
 
