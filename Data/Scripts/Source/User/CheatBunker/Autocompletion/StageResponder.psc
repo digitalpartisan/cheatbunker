@@ -9,7 +9,7 @@ Struct StageResponse
 	{The objective ID to complete when this StageResponse is utilitzed.  A zero value results in no call to SetObjectiveCompleted().}
 	CheatBunker:Autocompletion:StageResponder:CustomResponse CustomResponseBehavior = None
 	{A scripted response to be run when this StageResponse is utilized should the stage and objective options be insufficient to cause the desired outcome.
-	Note that it is possible to program your custom executionStageHandler() function to handle relatively simple tasks.
+	Note that it is possible to program your custom processStageResponse() function to handle relatively simple tasks.
 	This feature is intended to support incredibly complicated side tasks and the like.}
 	Bool ConcludeExecution = false
 	{If true, this StageResponse value will, when utilized, call conclude() on the autocompletion option.}
@@ -42,28 +42,35 @@ StageResponse Function getCurrentStageResponse()
 EndFunction
 
 Function processStageResponse(StageResponse myResponse)
+	Utility.Wait(0.001) ; a filthy hack, but testing has demonstrated odd race conditions and timing problems that this solves nicely
+	
 	Quest targetQuest = getQuest()
 	if (!targetQuest || !myResponse)
 		return
 	endif
 
 	if (myResponse.CustomResponseBehavior)
+		CheatBunker:Logger:Autocompletion.responseCustomBehavior(self, myResponse.StageID, myResponse.CustomResponseBehavior)
 		myResponse.CustomResponseBehavior.respond()
 	endif
 	
 	if (0 != myResponse.CompleteObjectiveID)
+		CheatBunker:LOgger:Autocompletion.responseCompleteObjective(self, myResponse.StageID, myResponse.CompleteObjectiveID)
 		targetQuest.SetObjectiveCompleted(myResponse.CompleteObjectiveID)
 	endif
 	
 	if (0 != myResponse.SetStageID)
+		CheatBunker:Logger:Autocompletion.responseSetStage(self, myResponse.StageID, myResponse.SetStageID)
 		targetQuest.SetStage(myResponse.SetStageID)
 	endif
 	
 	if (myResponse.ConcludeExecution)
+		CheatBunker:Logger:Autocompletion.responseConclude(self, myResponse.StageID)
 		conclude()
 	endif
 	
 	if (myResponse.HaltExecution)
+		CheatBunker:Logger:Autocompletion.responseHalt(self, myResponse.StageID)
 		halt()
 	endif
 EndFunction

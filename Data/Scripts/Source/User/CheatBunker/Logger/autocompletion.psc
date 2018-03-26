@@ -72,6 +72,30 @@ Bool Function foundTriggerStage(CheatBunker:Autocompletion myAutocompleter, Int 
 	return log(myAutocompleter + " acknowledges trigger stage: " + aiStageID)
 EndFunction
 
+Bool Function processingStageResponse(CheatBunker:AutoCompletion myAutocompleter, Int aiStageID) Global
+	return log(myAutocompleter + " processing stage: " + aiStageID)
+EndFunction
+
+Bool Function responseSetStage(CheatBunker:AutoCompletion myAutocompleter, Int aiStageID, Int aiSetStageID) Global
+	return log(myAutocompleter + " processing stage " + aiStageID + " setting stage " + aiSetStageID)
+EndFunction
+
+Bool Function responseCompleteObjective(CheatBunker:AutoCompletion myAutocompleter, Int aiStageID, Int aiObjectiveID) Global
+	return log(myAutocompleter + " processing stage " + aiStageID + " completed objective " + aiObjectiveID)
+EndFunction
+
+Bool Function responseCustomBehavior(CheatBunker:AutoCompletion myAutocompleter, Int aiStageID, CheatBunker:Autocompletion:StageResponder:CustomResponse aCustomBehavior) Global
+	return log(myAutocompleter + " processing stage " + aiStageID + " custom behavior " + aCustomBehavior)
+EndFunction
+
+Bool Function responseConclude(CheatBunker:Autocompletion myAutocompleter, Int aiStageID) Global
+	return log(myAutocompleter + " processing stage " + aiStageID + " concluding execution")
+EndFunction
+
+Bool Function responseHalt(CheatBunker:Autocompletion myAutocompleter, Int aiStageID) Global
+	return log(myAutocompleter + " processing stage " + aiStageID + " halting execution")
+EndFunction
+
 Bool Function retrofittingPackage(CheatBunker:Package targetPackage) Global
 	return log("Retrofitting package: " + targetPackage)
 EndFunction
@@ -82,4 +106,8 @@ EndFunction
 
 Bool Function nothingToProxy() Global
 	return error("proxy script has not set an autocompleter")
+EndFunction
+
+Bool Function logProxyState(CheatBunker:Autocompletion:Proxy myProxy, Bool bCanRun, Bool bRunning, Bool bCanHalt, Bool bFinished) Global
+	return log(myProxy + " proxy state can run: " + bCanRun + " running: " + bRunning + " can halt: " + bCanHalt + " finished: " + bFinished)
 EndFunction

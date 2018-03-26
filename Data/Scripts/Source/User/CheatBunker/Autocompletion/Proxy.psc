@@ -57,6 +57,8 @@ Function tokenReplacementLogic()
 	
 	updateConditionals()
 
+	CheatBunker:Logger:Autocompletion.logProxyState(self, bCanRun, bRunning, bCanHalt, bFinished)
+	
 	CheatBunker:Autocompletion thisAutocompletion = getAutocompletion()
 	replace("AutocompletionObject", thisAutocompletion)
 	replace("Description", thisAutocompletion.Description)

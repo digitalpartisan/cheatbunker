@@ -278,6 +278,9 @@ State Executing
 			CheatBunker:Logger:Autocompletion.running(self)
 			bRunning = true ; necessary evil, see comment on variable declaration
 			RunningMessage.Show()
+			if (SpecialInstructions)
+				SpecialInstructions.Show()
+			endif
 			executeBehavior()
 		endif
 	EndEvent
@@ -295,7 +298,7 @@ State Executing
 	EndFunction
 	
 	Function halt()
-		if (!canHalt())
+		if (canHalt())
 			CheatBunker:Logger:Autocompletion.halting(self)
 			GoToState(sStateInitialized)
 		endif
