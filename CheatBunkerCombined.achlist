@@ -62,6 +62,7 @@
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\PackagePaginator.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\Paginator.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\Proxy.pex",
+	"Data\\Scripts\\CheatBunker\\Autocompletion\\Passthrough.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\StageResponder.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\StageResponder\\CustomResponse.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\ValidList.pex",

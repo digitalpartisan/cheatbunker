@@ -277,6 +277,9 @@ State Executing
 		else
 			CheatBunker:Logger:Autocompletion.running(self)
 			bRunning = true ; necessary evil, see comment on variable declaration
+			
+			Utility.Wait(0.01) ; filthy hack meant to force the player out of the terminal so any quest events or UI events aren't happening on top of said terminal controls
+			
 			RunningMessage.Show()
 			if (SpecialInstructions)
 				SpecialInstructions.Show()
