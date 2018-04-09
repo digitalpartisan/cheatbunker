@@ -111,3 +111,11 @@ EndFunction
 Bool Function logProxyState(CheatBunker:Autocompletion:Proxy myProxy, Bool bCanRun, Bool bRunning, Bool bCanHalt, Bool bFinished) Global
 	return log(myProxy + " proxy state can run: " + bCanRun + " running: " + bRunning + " can halt: " + bCanHalt + " finished: " + bFinished)
 EndFunction
+
+Bool Function logListeningToVaultExit(CheatBunker:Autocompletion myAutocompleter) Global
+	return log(myAutocompleter + " is listening for Vault 111 exit")
+EndFunction
+
+Bool Function logStopListeningToVaultExit(CheatBunker:Autocompletion myAutocompleter) Global
+	return log(myAutocompleter + " is no longer listening for Vault 111 exit")
+EndFunction

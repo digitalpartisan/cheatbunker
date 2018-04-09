@@ -28,7 +28,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_06
 Function Fragment_Terminal_06(ObjectReference akTerminalRef)
 ;BEGIN CODE
-PaginationProxy.init(akTerminalRef, PackagePaginator, PackageData)
+PackagePaginator.init(akTerminalRef, PackageData)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -36,8 +36,6 @@ EndFunction
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 CheatBunker:DevelopmentScript Property CheatBunkerDevelopmentQuest Auto Const
-
-DynamicTerminal:PaginationProxy Property PaginationProxy Auto Const
 
 CheatBunker:Autocompletion:PackagePaginator Property PackagePaginator Auto Const
 

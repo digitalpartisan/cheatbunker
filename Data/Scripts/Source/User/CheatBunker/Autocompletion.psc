@@ -38,6 +38,8 @@ Int[] Property StagesToComplete Auto Const
 These stages are checked and, if necessary, set after the setstage() event listener is deactivated prior to the autocompletion option finishing its work.
 Any work to do on a specific stage or other event should be taken care of elsewhere because this is a fallback mechanism to tie up loose ends that only require a call to setStage() and no other work.}
 
+Vault111ExitDetector Property CheatBunkerVault111ExitDetector Auto Const Mandatory
+
 String sStateEmpty = "" Const
 String sStatePreinitialized = "Preinitialized" Const
 String sStateInitialized = "Initialized" Const
@@ -51,7 +53,7 @@ Bool bRunning = false ; artifact from prior version of the autocompletion logic.
 Bool bFinished = false  ; artifact from prior version of the autocompletion logic.  Retained to track state of existing autocompletion instances.
 
 Bool Function isValid()
-{It is theoretically valid to have no quest object, but if }
+{It is theoretically valid to have no quest object.  If a set quest is in another plugin, though, that plugin must be installed for the autocompletion option will display in the terminal.}
 	if (LocalQuest)
 		return true ; 
 	elseif (!QuestPlugin.isInstalled())
@@ -114,6 +116,16 @@ Function stopListeningToQuest()
 	endif
 EndFunction
 
+Function listenForVaultExit()
+	CheatBunker:Logger:Autocompletion.logListeningToVaultExit(self)
+	RegisterForRemoteEvent(CheatBunkerVault111ExitDetector, "OnQuestShutdown")
+EndFunction
+
+Function stopListeningForVaultExit()
+	CheatBunker:Logger:Autocompletion.logStopListeningToVaultExit(self)
+	UnregisterForRemoteEvent(CheatBunkerVault111ExitDetector, "OnQuestShutdown")
+EndFunction
+
 Function handleStageEvent(Int aiStageID)
 	; TODO: error log about how this shouldn't be able to happen in the default state
 EndFunction
@@ -125,11 +137,22 @@ Event Quest.OnStageSet(Quest akSender, int auiStageID, int auiItemID)
 	endif
 EndEvent
 
+Event Quest.OnQuestShutdown(Quest akSender)
+	if (CheatBunkerVault111ExitDetector == akSender)
+		stopListeningForVaultExit()
+		stateCheck()
+	endif
+EndEvent
+
+Bool Function hasLeftVault()
+	return CheatBunkerVault111ExitDetector.IsStopped()
+EndFunction
+
 Bool Function canExecuteLogic()
 {Override this to suite your specific case.
 This is left in the empty state precisely because it may need to be customized to a specific purpose that this general logic cannot address.
 Default logic: if the autocompleter is operating or finished, false.  If there is a target quest, it must be running and have an accessible objective displayed.  True in all other cases.}
-	if (isExecuting() || isConcluded())
+	if (!hasLeftVault() || isExecuting() || isConcluded())
 		return false ; don't allow such a thing to happen
 	endif
 	
@@ -155,6 +178,16 @@ EndFunction
 
 Function executionStageHandler(Int aiStageID)
 {Override this with your own behavior.}
+EndFunction
+
+Function initiateListening()
+	
+EndFunction
+
+Function stateCheck()
+	if (canExecute())
+		AvailabilityMessage.Show()
+	endif
 EndFunction
 
 Bool Function canHalt()
@@ -241,19 +274,18 @@ State Initialized
 		if (sStateExecuting == asOldState) ; halt detected, behave accordingly
 			haltBehavior()
 			HaltMessage.Show()
-		else
-			listenToQuest() ; first-time initializations, even if non-organic (i.e. coming from Empty state) need to listen for quest events
+		else ; first time we're coming in here
+			listenToQuest()
+			listenForVaultExit()
 			
-			if (canExecute()) ; If the autocompletion option can run immediately, show the messages since the listener is not likely to "hear" the trigger stage(s)
-				AvailabilityMessage.Show()
-			endif
+			stateCheck()
 		endif
 	EndEvent
 	
 	Function handleStageEvent(Int aiStageID)
 		if (detectTriggerStage(aiStageID))
 			CheatBunker:Logger:Autocompletion.foundTriggerStage(self, aiStageID)
-			AvailabilityMessage.Show()
+			stateCheck()
 		endif
 	EndFunction
 	

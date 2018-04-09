@@ -56,6 +56,9 @@
 	"Data\\Scripts\\DynamicTerminal\\Logger.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\PaginationProxy.pex",
 	"Data\\SCRIPTS\\DynamicTerminal\\Paginator.pex",
+	"Data\\Scripts\\DynamicTerminal\\paginator\\Nested\\DynamicArray.pex"
+	"Data\\Scripts\\DynamicTerminal\\paginator\\Nested\\DynamicList.pex",
+	"Data\\Scripts\\DynamicTerminal\\paginator\\Nested.pex",
 	"Data\\SCRIPTS\\cheatbunker\\autocompletion\\BallisticWeave.pex",
 	"Data\\SCRIPTS\\cheatbunker\\autocompletion\\MQ206.pex",
 	"Data\\SCRIPTS\\CheatBunker\\Autocompletion\\MS07c.pex",
