@@ -112,10 +112,34 @@ Bool Function logProxyState(CheatBunker:Autocompletion:Proxy myProxy, Bool bCanR
 	return log(myProxy + " proxy state can run: " + bCanRun + " running: " + bRunning + " can halt: " + bCanHalt + " finished: " + bFinished)
 EndFunction
 
-Bool Function logListeningToVaultExit(CheatBunker:Autocompletion myAutocompleter) Global
+Bool Function logListeningForVaultExit(CheatBunker:Autocompletion myAutocompleter) Global
 	return log(myAutocompleter + " is listening for Vault 111 exit")
 EndFunction
 
-Bool Function logStopListeningToVaultExit(CheatBunker:Autocompletion myAutocompleter) Global
+Bool Function logStopListeningForVaultExit(CheatBunker:Autocompletion myAutocompleter) Global
 	return log(myAutocompleter + " is no longer listening for Vault 111 exit")
+EndFunction
+
+Bool Function logCannotExecute(CheatBunker:Autocompletion myAutocompleter, String sReason) Global
+	return log(myAutocompleter + " cannot execute because " + sReason)
+EndFunction
+
+Bool Function logExecutingOrConcluded(CheatBunker:Autocompletion myAutocompleter) Global
+	return logCannotExecute(myAutocompleter, "already running or concluded")
+EndFunction
+
+Bool Function logTargetQuestNotRunning(CheatBunker:Autocompletion myAutocompleter) Global
+	return logCannotExecute(myAutocompleter, "target quest is not running")
+EndFunction
+
+Bool Function logNoAccessibleObjective(CheatBunker:Autocompletion myAutocompleter) Global
+	return logCannotExecute(myAutocompleter, "no accessible objective in set " + myAutocompleter.AccessibleObjectives)
+EndFunction
+
+Bool Function logStillInVault(CheatBunker:Autocompletion myAutocompleter) Global
+	return logCannotExecute(myAutocompleter, "player still in vault")
+EndFunction
+
+Bool Function logFoundAccessibleObjective(CheatBunker:Autocompletion myAutocompleter, Int iObjectiveID) Global
+	return log(myAutocompleter + " found accessible objective " + iObjectiveID)
 EndFunction

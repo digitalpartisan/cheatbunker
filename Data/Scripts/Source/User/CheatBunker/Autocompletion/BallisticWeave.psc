@@ -3,7 +3,7 @@ Scriptname cheatbunker:autocompletion:BallisticWeave extends cheatbunker:autocom
 GlobalVariable Property RailroadClothingArmorModAvailable Auto Const Mandatory
 
 Bool Function canExecuteLogic()
-	return hasLeftVault() && 1 != RailroadClothingArmorModAvailable.GetValueInt()
+	return playerLeftVault() && 1 != RailroadClothingArmorModAvailable.GetValueInt()
 EndFunction
 
 Function executeBehavior()

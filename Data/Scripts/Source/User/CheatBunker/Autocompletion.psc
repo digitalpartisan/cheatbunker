@@ -51,6 +51,7 @@ Bool Property CanHalt = false Auto Const
 
 Bool bRunning = false ; artifact from prior version of the autocompletion logic.  Retained to track state of existing autocompletion instances.
 Bool bFinished = false  ; artifact from prior version of the autocompletion logic.  Retained to track state of existing autocompletion instances.
+Bool bAnnounced = false
 
 Bool Function isValid()
 {It is theoretically valid to have no quest object.  If a set quest is in another plugin, though, that plugin must be installed for the autocompletion option will display in the terminal.}
@@ -75,6 +76,15 @@ Quest Function getQuest()
 	return None
 EndFunction
 
+Bool Function playerLeftVault()
+	if (CheatBunkerVault111ExitDetector.IsStopped())
+		return true
+	else
+		CheatBunker:Logger:Autocompletion.logStillInVault(self)
+		return false
+	endif
+EndFunction
+
 Bool Function detectTriggerStage(Int aiStageID)
 	return -1 < TriggerStages.Find(aiStageID) ; true if the aiStageID is in the TriggerStates array and false otherwise
 EndFunction
@@ -90,13 +100,17 @@ Bool Function detectAccessibleObjective()
 	endif
 	
 	Int iCounter = 0
+	Int iObjectiveID = 0
 	while (iCounter < AccessibleObjectives.Length)
-		if (targetQuest.IsObjectiveDisplayed(AccessibleObjectives[iCounter]))
-			return true ; the quest's current objective is one we're allowed to run
+		iObjectiveID = AccessibleObjectives[iCounter]
+		if (targetQuest.IsObjectiveDisplayed(iObjectiveID))
+			CheatBunker:Logger:Autocompletion.logFoundAccessibleObjective(self, iObjectiveID)
+			return true ; the quest's current objective is one we're allowed to run against
 		endif
 		iCounter += 1
 	endWhile
 	
+	CheatBunker:Logger:Autocompletion.logNoAccessibleObjective(self)
 	return false
 EndFunction
 
@@ -112,22 +126,22 @@ Function stopListeningToQuest()
 	Quest targetQuest = getQuest()
 	if (targetQuest)
 		CheatBunker:Logger:Autocompletion.notListening(self)
-		UnregisterForRemoteEvent(getQuest(), "OnStageSet")
+		UnregisterForRemoteEvent(targetQuest, "OnStageSet")
 	endif
 EndFunction
 
 Function listenForVaultExit()
-	CheatBunker:Logger:Autocompletion.logListeningToVaultExit(self)
+	CheatBunker:Logger:Autocompletion.logListeningForVaultExit(self)
 	RegisterForRemoteEvent(CheatBunkerVault111ExitDetector, "OnQuestShutdown")
 EndFunction
 
 Function stopListeningForVaultExit()
-	CheatBunker:Logger:Autocompletion.logStopListeningToVaultExit(self)
+	CheatBunker:Logger:Autocompletion.logStopListeningForVaultExit(self)
 	UnregisterForRemoteEvent(CheatBunkerVault111ExitDetector, "OnQuestShutdown")
 EndFunction
 
 Function handleStageEvent(Int aiStageID)
-	; TODO: error log about how this shouldn't be able to happen in the default state
+	
 EndFunction
 
 Event Quest.OnStageSet(Quest akSender, int auiStageID, int auiItemID)
@@ -140,28 +154,34 @@ EndEvent
 Event Quest.OnQuestShutdown(Quest akSender)
 	if (CheatBunkerVault111ExitDetector == akSender)
 		stopListeningForVaultExit()
-		stateCheck()
+		availabilityCheck()
 	endif
 EndEvent
 
-Bool Function hasLeftVault()
-	return CheatBunkerVault111ExitDetector.IsStopped()
+Bool Function isExecutingOrConcluded()
+	Bool bResult = isExecuting() || isConcluded()
+	if (bResult)
+		CheatBunker:Logger:Autocompletion.logExecutingOrConcluded(self)
+	endif
+	
+	return bResult
+EndFunction
+
+Bool Function isTargetQuestRunning()
+	Quest targetQuest = getQuest()
+	if (targetQuest && !(targetQuest.IsStarting() || targetQuest.IsRunning()) )
+		CheatBunker:Logger:Autocompletion.logTargetQuestNotRunning(self)
+		return false
+	endif
+	
+	return true ; this is "wrong" but just barely.  No target quest means this logic should not inhibit other things from happening
 EndFunction
 
 Bool Function canExecuteLogic()
 {Override this to suite your specific case.
 This is left in the empty state precisely because it may need to be customized to a specific purpose that this general logic cannot address.
 Default logic: if the autocompleter is operating or finished, false.  If there is a target quest, it must be running and have an accessible objective displayed.  True in all other cases.}
-	if (!hasLeftVault() || isExecuting() || isConcluded())
-		return false ; don't allow such a thing to happen
-	endif
-	
-	Quest targetQuest = getQuest()
-	if (targetQuest)
-		return targetQuest.IsRunning() && detectAccessibleObjective()
-	endif
-	
-	return true
+	return (playerLeftVault() && !isExecutingOrConcluded() && isTargetQuestRunning() && detectAccessibleObjective())
 EndFunction
 
 Bool Function canExecute()
@@ -180,12 +200,10 @@ Function executionStageHandler(Int aiStageID)
 {Override this with your own behavior.}
 EndFunction
 
-Function initiateListening()
-	
-EndFunction
-
-Function stateCheck()
-	if (canExecute())
+Function availabilityCheck()
+	if (canExecute() && !bAnnounced)
+		bAnnounced = true
+		CheatBunker:Logger:Autocompletion.available(self)
 		AvailabilityMessage.Show()
 	endif
 EndFunction
@@ -240,7 +258,7 @@ Function conclude()
 EndFunction
 
 Bool Function isConcluded()
-
+	return false
 EndFunction
 
 Auto State Preinitialized
@@ -276,16 +294,20 @@ State Initialized
 			HaltMessage.Show()
 		else ; first time we're coming in here
 			listenToQuest()
-			listenForVaultExit()
 			
-			stateCheck()
+			if (!playerLeftVault())
+				listenForVaultExit()
+			endif
+			
+			availabilityCheck()
 		endif
 	EndEvent
 	
 	Function handleStageEvent(Int aiStageID)
 		if (detectTriggerStage(aiStageID))
+			Utility.Wait(1) ; Timing to make sure the appropriate objective is displayed for the canExecute() check to succeed
 			CheatBunker:Logger:Autocompletion.foundTriggerStage(self, aiStageID)
-			stateCheck()
+			availabilityCheck()
 		endif
 	EndFunction
 	
@@ -303,19 +325,20 @@ EndState
 State Executing
 	Event OnBeginState(String asOldState)
 		CheatBunker:Logger:Autocompletion.enteringState(self, sStateExecuting, asOldState)
-	
+		
 		if (sStateEmpty == asOldState)
 			listenToQuest() ; Because previous iterations of this script weren't listening in a run state
 		else
 			CheatBunker:Logger:Autocompletion.running(self)
 			bRunning = true ; necessary evil, see comment on variable declaration
 			
-			Utility.Wait(0.01) ; filthy hack meant to force the player out of the terminal so any quest events or UI events aren't happening on top of said terminal controls
-			
 			RunningMessage.Show()
 			if (SpecialInstructions)
 				SpecialInstructions.Show()
 			endif
+			
+			Utility.Wait(0.01) ; filthy hack meant to force the player out of the terminal so any quest events or UI events aren't happening on top of said terminal controls
+			
 			executeBehavior()
 		endif
 	EndEvent
