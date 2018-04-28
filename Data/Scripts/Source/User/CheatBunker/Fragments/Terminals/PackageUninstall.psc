@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:PackageUninstall Extends Terminal Hid
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
 ;BEGIN CODE
-Diagnostics.prepareUninstall()
+Diagnostics.uninstall()
 ;END CODE
 EndFunction
 ;END FRAGMENT

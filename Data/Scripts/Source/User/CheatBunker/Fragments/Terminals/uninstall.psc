@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:uninstall Extends Terminal Hidden Con
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuest.Stop()
+CheatBunkerQuest.uninstall()
 ;END CODE
 EndFunction
 ;END FRAGMENT

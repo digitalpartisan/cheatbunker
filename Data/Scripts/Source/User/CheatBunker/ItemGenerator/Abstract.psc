@@ -50,9 +50,9 @@ Function attachSpecialMod(ObjectReference akInstance)
 	endif
 EndFunction
 
-Function generate(ObjectReference akTarget = None, Bool bForceInContainer = false)
+Bool Function generate(ObjectReference akTarget = None, Bool bForceInContainer = false)
 	if (!canLoad())
-		return
+		return false
 	endif
 	
 	ObjectReference akInstance = getInstance(akTarget)
@@ -64,4 +64,6 @@ Function generate(ObjectReference akTarget = None, Bool bForceInContainer = fals
 	if (bForceInContainer || bInContainer)
 		akTarget.addItem(akInstance)
 	endif
+	
+	return true
 EndFunction

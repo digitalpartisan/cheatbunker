@@ -1,65 +1,43 @@
-Scriptname CheatBunker:PackageDiagnostics extends DynamicTerminal:Basic Conditional
+Scriptname CheatBunker:PackageDiagnostics extends Chronicle:Package:Handler Conditional
 
-CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
-
-CheatBunker:Package myPackage = None ; the package to act on
-
-Bool bUsingBasePackage = false Conditional
-Bool bValid = false Conditional
-Bool bAIOPreventsUninstall = false Conditional
-
-CheatBunker:Package Function getPackage()
-	return myPackage
-EndFunction
-
-Function setPackage(CheatBunker:Package newPackage)
-	myPackage = newPackage
-	bUsingBasePackage = myPackage == CheatBunkerQuest.BasePackage
-	bAIOPreventsUninstall = CheatBunkerQuest.AIOMode && myPackage.InAIO
-	bValid = myPackage.isInstalled()
-EndFunction
-
-Function rerunInjections()
-	CheatBunker:Package thisPackage = getPackage()
-	if (thisPackage == None)
-		CheatBunker:Logger:Package.nothingToProxy()
-		return
+CheatBunker:PackageCustomizations Function getCustomizations()
+	if (isValid())
+		return (getPackage().getCustomizations() as CheatBunker:PackageCustomizations)
+	else
+		return None
 	endif
-	
-	thisPackage.Injections.inject()
+EndFunction
+
+InjectTec:Injector:Bulk Function getInjections()
+	CheatBunker:PackageCustomizations customizations = getCustomizations()
+	if (customizations)
+		return customizations.Injections
+	else
+		return None
+	endif
 EndFunction
 
 Function forceInjections()
-	CheatBunker:Package thisPackage = getPackage()
-	if (thisPackage == None)
-		CheatBunker:Logger:Package.nothingToProxy()
-		return
+	InjectTec:Injector:Bulk injections = getInjections()
+	if (injections)
+		injections.forceInject()
 	endif
-	
-	thispackage.Injections.forceInject()
 EndFunction
 
-Function prepareUninstall()
-	CheatBunker:Package thisPackage = getPackage()
-	if (thisPackage == None)
-		CheatBunker:Logger:Package.nothingToProxy()
-		return
-	endif
-
-	CheatBunkerQuest.uninstallPackage(thisPackage)
-EndFunction
-
-Function tokenReplacementLogic()
-	CheatBunker:Package thisPackage = getPackage()
-	if (thisPackage == None)
-		CheatBunker:Logger:Package.nothingToProxy()
-		
-		replace("PackageObject", None)
-		replace("PackageVersion", None)
-		replace("PackageDescription", None)
+FormList Function getImporters()
+	CheatBunker:PackageCustomizations customizations = getCustomizations()
+	if (customizations)
+		return customizations.Importers
 	else
-		replace("PackageObject", thisPackage)
-		replace("PackageVersion", thisPackage.getVersionForDisplay())
-		replace("PackageDescription", thisPackage.Description)
+		None
+	endif
+EndFunction
+
+Formlist Function getAutocompletions()
+	CheatBunker:PackageCustomizations customizations = getCustomizations()
+	if (customizations)
+		return customizations.Autocompletions
+	else
+		None
 	endif
 EndFunction

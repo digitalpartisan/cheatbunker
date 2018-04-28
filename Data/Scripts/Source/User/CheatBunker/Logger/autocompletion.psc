@@ -42,10 +42,6 @@ Bool Function available(CheatBunker:Autocompletion myAutoCompleter) Global
 	return log(myAutoCompleter + " available")
 EndFunction
 
-Bool Function stateCheck(CheatBunker:Autocompletion myAutocompleter) Global
-	return log(myAutocompleter + " forced state check: " + myAutocompleter.GetState())
-EndFunction
-
 Bool Function enteringState(CheatBunker:Autocompletion myAutocompleter, String asStateName, String asOldState) Global
 	String sOldState = asOldState
 	if ("" == sOldState)
@@ -55,25 +51,12 @@ Bool Function enteringState(CheatBunker:Autocompletion myAutocompleter, String a
 	return log(myAutocompleter + " entering state: " + asStateName + " leaving: " + sOldState + " GetState(): " + myAutocompleter.GetState())
 EndFunction
 
-Bool Function leavingState(CheatBunker:Autocompletion myAutocompleter, String asStateName, String asNewState) Global
-	String sNewState = asNewState
-	if ("" == sNewState)
-		sNewState = "Empty"
-	endif
-	
-	return log(myAutocompleter + " leaving state: " + asStateName + " entering: " + sNewState + " GetState(): " + myAutocompleter.GetState())
-EndFunction
-
 Bool Function stageEvent(CheatBunker:Autocompletion myAutocompleter, Int aiStageID) Global
 	return log(myAutocompleter + " received stage event: " + aiStageID)
 EndFunction
 
 Bool Function foundTriggerStage(CheatBunker:Autocompletion myAutocompleter, Int aiStageID) Global
 	return log(myAutocompleter + " acknowledges trigger stage: " + aiStageID)
-EndFunction
-
-Bool Function processingStageResponse(CheatBunker:AutoCompletion myAutocompleter, Int aiStageID) Global
-	return log(myAutocompleter + " processing stage: " + aiStageID)
 EndFunction
 
 Bool Function responseSetStage(CheatBunker:AutoCompletion myAutocompleter, Int aiStageID, Int aiSetStageID) Global
@@ -96,7 +79,7 @@ Bool Function responseHalt(CheatBunker:Autocompletion myAutocompleter, Int aiSta
 	return log(myAutocompleter + " processing stage " + aiStageID + " halting execution")
 EndFunction
 
-Bool Function retrofittingPackage(CheatBunker:Package targetPackage) Global
+Bool Function retrofittingPackage(Chronicle:Package targetPackage) Global
 	return log("Retrofitting package: " + targetPackage)
 EndFunction
 
@@ -120,7 +103,7 @@ Bool Function logStopListeningForVaultExit(CheatBunker:Autocompletion myAutocomp
 	return log(myAutocompleter + " is no longer listening for Vault 111 exit")
 EndFunction
 
-Bool Function logCannotExecute(CheatBunker:Autocompletion myAutocompleter, String sReason) Global
+Bool Function logCannotExecute(CheatBunker:Autocompletion myAutocompleter, String sReason = "") Global
 	return log(myAutocompleter + " cannot execute because " + sReason)
 EndFunction
 

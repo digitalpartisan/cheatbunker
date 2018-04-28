@@ -39,4 +39,4 @@ CheatBunker:DevelopmentScript Property CheatBunkerDevelopmentQuest Auto Const
 
 CheatBunker:Autocompletion:PackagePaginator Property PackagePaginator Auto Const
 
-DynamicTerminal:ListWrapper Property PackageData Auto Const
+Chronicle:Engine:PackageList Property PackageData Auto Const

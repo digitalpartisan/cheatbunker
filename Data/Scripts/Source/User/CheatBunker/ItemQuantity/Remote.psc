@@ -5,11 +5,13 @@ Int Property FormID Auto Const Mandatory
 
 CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
 
+Message Property CheatBunkerRemoteLoadingFailureMessage Auto Const Mandatory
+
 Form fLoadedForm = None
 
 Function loadingFailure()
 	clean()
-	CheatBunkerQuest.remoteLoadingFailure()
+	CheatBunkerRemoteLoadingFailureMessage.Show()
 EndFunction
 
 Bool Function canLoad()

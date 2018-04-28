@@ -1,5 +1,5 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-Scriptname CheatBunker:Fragments:Terminals:PackageAutocompletions Extends Terminal Hidden Const
+Scriptname CheatBunker:Fragments:Terminals:PackageAutocompletionPaginator Extends Terminal Hidden Const
 
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
@@ -92,7 +92,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_12
 Function Fragment_Terminal_12(ObjectReference akTerminalRef)
 ;BEGIN CODE
-Paginator.forward(akTerminalRef)
+Paginator.activate(10, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -100,7 +100,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_13
 Function Fragment_Terminal_13(ObjectReference akTerminalRef)
 ;BEGIN CODE
-Paginator.activate(10, akTerminalRef)
+Paginator.activate(11, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -108,7 +108,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_14
 Function Fragment_Terminal_14(ObjectReference akTerminalRef)
 ;BEGIN CODE
-Paginator.activate(11, akTerminalRef)
+Paginator.forward(akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT

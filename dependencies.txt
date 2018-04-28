@@ -3,3 +3,4 @@ Vault 111 Exit Detector v1.0.1
 Holotape Retainer v1.1.0
 Inject-Tec v1.3.0
 DynamicTerminal v1.2.0
+Chronicle v1.0.0

@@ -4,15 +4,25 @@ Scriptname CheatBunker:Fragments:Terminals:Diagnostics Extends Terminal Hidden C
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
 ;BEGIN CODE
-Proxy.init(akTerminalRef, PackagesPaginator, PackagesData)
+PackagesPaginator.init(akTerminalRef, PackagesData)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_Terminal_02
+Function Fragment_Terminal_02(ObjectReference akTerminalRef)
+;BEGIN CODE
+EngineHandler.setEngine(Engine)
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
+Chronicle:Package:Paginator Property PackagesPaginator Auto Const
 
-CheatBunker:PackagesPaginator Property PackagesPaginator Auto Const
+Chronicle:Engine:PackageList Property PackagesData Auto Const
 
-DynamicTerminal:ListWrapper Property PackagesData Auto Const
+Chronicle:Engine:Handler Property EngineHandler Auto Const
+
+Chronicle:Engine Property Engine Auto Const

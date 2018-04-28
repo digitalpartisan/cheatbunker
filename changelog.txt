@@ -1,5 +1,6 @@
 v1.8.0
-Incorporated Dynamic Terminal v1.3.0
+Integrated Chronicle v1.0.0
+Integrated Dynamic Terminal v1.3.0
 Rewrote the Autocompletion engine to support future development needs
 Added AWKCR workbenches
 Moved Power Armor workbench & adjusted navmesh so companions can enter armor when so commanded
