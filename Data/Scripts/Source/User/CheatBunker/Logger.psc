@@ -27,3 +27,15 @@ EndFunction
 Bool Function logBehaviorUndefined(ScriptObject script, String sName) Global
 	return warn("Behavior " + sName + " undefined on " + script)
 EndFunction
+
+Bool Function logRetrofittingEngine() Global
+	return log("retrofitting the engine for chronicle functionality")
+EndFunction
+
+Bool Function logRetrofittingPackage(Chronicle:Package packageRef) Global
+	return log("retrofitting package for chronicle functionality: " + packageRef)
+EndFunction
+
+Bool Function logRevertingPackageVersion(Chronicle:Package packageRef, Chronicle:Version versionRef) Global
+	return log("resetting package version to force updates to run package: " + packageRef + " version: " + versionRef)
+EndFunction
