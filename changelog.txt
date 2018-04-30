@@ -4,7 +4,8 @@ Integrated Dynamic Terminal v1.3.0
 Rewrote the Autocompletion engine to support future development needs
 Added AWKCR workbenches
 Moved Power Armor workbench & adjusted navmesh so companions can enter armor when so commanded
-The Cheat Bunker now allows travel from directly inside it
+The Cheat Bunker now allows fast travel from its main interior space
+The Spawn Power Armor Frame feature now ensures the spawned frame is always usable
 
 v1.7.0
 Introduced AWKCR dependency

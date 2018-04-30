@@ -5,18 +5,28 @@ GlobalVariable Property CheatBunkerRemoveSpawnedFrameTimeLimit Auto Const Mandat
 Int Property TimerID = 1 Auto Const
 
 Bool bTimerActive = false Conditional
-ObjectReference akSpawnedFrame = None Conditional
+ObjectReference spawnedFrame = None Conditional
 
 Function startCountdown()
 	StartTimer(CheatBunkerRemoveSpawnedFrameTimeLimit.GetValue(), TimerID)
+	listenToFrame()
 	bTimerActive = true
+EndFunction
+
+Function listenToFrame()
+	RegisterForRemoteEvent(spawnedFrame, "OnActivate")
+EndFunction
+
+Function stopListeningToFrame()
+	UnregisterForRemoteEvent(spawnedFrame, "OnActivate")
 EndFunction
 
 Function endCountdown()
 	CancelTimer(TimerID)
 
+	stopListeningToFrame()
 	bTimerActive = false
-	akSpawnedFrame = None
+	spawnedFrame = None
 EndFunction
 
 Event OnTimer(Int aiTimerID)
@@ -24,8 +34,9 @@ Event OnTimer(Int aiTimerID)
 		return
 	endif
 
+	stopListeningToFrame()
 	bTimerActive = false
-	akSpawnedFrame = None
+	spawnedFrame = None
 EndEvent
 
 Function despawnFrame()
@@ -33,7 +44,8 @@ Function despawnFrame()
 		return
 	endif
 
-	akSpawnedFrame.Delete()
+	stopListeningToFrame()
+	spawnedFrame.Delete()
 	endCountdown()
 EndFunction
 
@@ -42,7 +54,15 @@ Function spawnFrame()
 		return
 	endif
 
-	akSpawnedFrame = Game.GetPlayer().PlaceAtMe(CheatBunkerPowerArmorBuilder.PowerArmorFrame)
-	akSpawnedFrame.AddItem(CheatBunkerPowerArmorBuilder.FusionCore)
+	spawnedFrame = Game.GetPlayer().PlaceAtMe(CheatBunkerPowerArmorBuilder.PowerArmorFrame)
+	spawnedFrame.AddItem(CheatBunkerPowerArmorBuilder.FusionCore)
+	spawnedFrame.SetAngle(0, 0, spawnedFrame.GetAngleZ()) ; make sure the new frame isn't tilted so that it is usable
+	
 	startCountdown()
 EndFunction
+
+Event ObjectReference.OnActivate(ObjectReference akSender, ObjectReference akActionRef)
+	if (akSender == spawnedFrame)
+		endCountdown()
+	endif
+EndEvent
