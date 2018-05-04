@@ -6,6 +6,7 @@ Added AWKCR workbenches
 Moved Power Armor workbench & adjusted navmesh so companions can enter armor when so commanded
 The Cheat Bunker now allows fast travel from its main interior space
 The Spawn Power Armor Frame feature now ensures the spawned frame is always usable
+Implemented the Quest Control Terminal
 
 v1.7.0
 Introduced AWKCR dependency
