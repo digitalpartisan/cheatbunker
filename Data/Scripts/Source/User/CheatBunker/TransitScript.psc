@@ -35,8 +35,8 @@ EndGroup
 
 ObjectReference Property BunkerEntranceDoor Auto Const Mandatory
 {Used to preload the interior of the bunker}
-ObjectReference Property BunkerExitDoor Auto Const Mandatory
-{Used to expedite the uninstallation process}
+ObjectReference Property ForceExitMarker Auto Const Mandatory
+{Used to relocate the player outside the bunker when uninstalling}
 
 Bool bSnapbackPrimed = false Conditional
 Bool bPreloadCell = false Conditional
@@ -132,10 +132,7 @@ Function recoverCompanions()
 EndFunction
 
 Function forceLeaveBunker()
-	Actor aPlayer = Game.GetPlayer()
-	aPlayer.MoveTo(BunkerExitDoor)
-	BunkerExitDoor.Activate(aPlayer)
-	applyEffects()
+	transitToMarker(ForceExitMarker)
 EndFunction
 
 Bool Function placeSnapbackMarker()

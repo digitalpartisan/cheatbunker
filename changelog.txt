@@ -7,6 +7,7 @@ Added AWKCR workbenches
 Moved Power Armor workbench & adjusted navmesh so companions can enter armor when so commanded
 The Spawn Power Armor Frame feature now ensures the spawned frame is always usable
 Implemented the Quest Control Terminal
+Fixed a bug where the player's companion(s) weren't teleported out of the Bunker upon uninstallation
 
 v1.7.0
 Introduced AWKCR dependency
