@@ -1,3 +1,9 @@
+v1.9.0
+Integrated Loggout v1.1.0
+Integrated Inject-Tec v1.6.0
+Integrated Dynamic Terminal v1.4.0
+Integrated Chronicle v1.1.0
+
 v1.8.0
 Integrated Chronicle v1.0.0
 Integrated Inject-Tec v1.4.0

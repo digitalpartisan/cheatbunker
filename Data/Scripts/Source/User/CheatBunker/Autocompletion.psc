@@ -424,11 +424,19 @@ Function retrofitState()
 EndFunction
 
 Function retrofitPackage(Chronicle:Package packageRef) Global
-	; CheatBunker:Logger:Autocompletion.retrofittingPackage(targetPackage)
-	FormList packageAutocompletions = (packageRef.GetCustomizations() as CheatBunker:PackageCustomizations).Autocompletions
+	CheatBunker:Logger:Autocompletion.retrofittingPackage(packageRef)
+	
+	CheatBunker:PackageData packageData = packageRef.getCustomData() as CheatBunker:PackageData
+	if (!packageData)
+		return
+	endif
+	FormList packageAutocompletions = packageData.getAutocompletions()
+	if (!packageAutocompletions)
+		return
+	endif
+	
 	Int iCounter = 0
 	Int iSize = packageAutocompletions.GetSize()
-	
 	while (iCounter < iSize)
 		(packageAutocompletions.GetAt(iCounter) as CheatBunker:Autocompletion).retrofitState()
 		iCounter += 1

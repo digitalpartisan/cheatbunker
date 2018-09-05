@@ -1,8 +1,6 @@
 Scriptname CheatBunker:PackageCustomizations extends Chronicle:Package:CustomBehavior
 
 Group PackageFeatureSettings
-	InjectTec:Injector:Bulk Property Injections  Auto Const
-	{Injections required to make the CheatBunker and it's optional packages work as expected}
 	FormList Property Importers Auto Const
 	{These need to be treated as individual items unlike injections, so they're not bundled in a convenient object}
 	FormList Property Autocompletions Auto Const
@@ -33,14 +31,6 @@ Function handleImporters(Bool bRun = true)
 	EndWhile
 EndFunction
 
-Function runImporters()
-	handleImporters()
-EndFunction
-
-Function revertImporters()
-	handleImporters(false)
-EndFunction
-
 Function handleAutocompletions(Bool bInitialize = true)
 	if (Autocompletions == None)
 		return
@@ -60,29 +50,6 @@ Function handleAutocompletions(Bool bInitialize = true)
 	EndWhile
 EndFunction
 
-Function initializeAutocompletions()
-	handleAutocompletions()
-EndFunction
-
-Function terminateAutocompletions()
-	handleAutocompletions(false)
-EndFunction
-
-Bool Function installBehavior()
-	Injections.inject()
-	runImporters()
-	initializeAutocompletions()
-	
-	return true
-EndFunction
-
-Bool Function postloadBehavior()
-	runImporters() ; soft behavior, already-run importers won't rerun their injections thanks to Inject-Tec
-	initializeAutocompletions() ; soft behavior, already-initialized autocompletions won't be re-initialized
-	
-	return true
-EndFunction
-
 Function disableDoors()
 	if (ExteriorDoor)
 		ExteriorDoor.disable()
@@ -93,12 +60,25 @@ Function disableDoors()
 	endif
 EndFunction
 
+Bool Function installBehavior()
+	handleImporters()
+	handleAutocompletions()
+	
+	return true
+EndFunction
+
+Bool Function postloadBehavior()
+	handleImporters() ; soft behavior, already-run importers won't rerun their injections thanks to Inject-Tec
+	handleAutocompletions() ; soft behavior, already-initialized autocompletions won't be re-initialized
+	
+	return true
+EndFunction
+
 Bool Function uninstallBehavior()
 	disableDoors()
 
-	Injections.revert()
-	revertImporters()
-	terminateAutocompletions()
+	handleImporters(false)
+	handleAutocompletions(false)
 	
 	return true
 EndFunction
