@@ -83,6 +83,7 @@
 	"Data\\Scripts\\CheatBunker\\ManualTerminal.pex",
 	"Data\\Scripts\\CheatBunker\\PackageCustomizations\\Core.pex",
 	"Data\\Scripts\\CheatBunker\\PackageCustomizations.pex",
+	"Data\\Scripts\\CheatBunker\\PackageData.pex",
 	"Data\\Scripts\\CheatBunker\\PackageDiagnostics.pex",
 	"Data\\Scripts\\CheatBunker\\PackageShepherd.pex",
 	"Data\\Scripts\\CheatBunker\\PaginationProxyGiveAll.pex",
