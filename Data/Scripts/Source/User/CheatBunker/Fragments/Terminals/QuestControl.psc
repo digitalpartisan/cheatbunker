@@ -49,6 +49,30 @@ QuestControl.forceStageSetting(akTerminalRef)
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_Terminal_09
+Function Fragment_Terminal_09(ObjectReference akTerminalRef)
+;BEGIN CODE
+QuestControl.startTarget()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_Terminal_10
+Function Fragment_Terminal_10(ObjectReference akTerminalRef)
+;BEGIN CODE
+QuestControl.stopTarget()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_Terminal_11
+Function Fragment_Terminal_11(ObjectReference akTerminalRef)
+;BEGIN CODE
+QuestControl.completeTarget()
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 CheatBunker:QuestControl Property QuestControl Auto Const Mandatory

@@ -30,6 +30,9 @@ String sTokenStageIDPrefix = "StageID" Const
 Bool bHasPlugin = false Conditional
 Bool bHasQuestID = false Conditional
 Bool bHasQuest = false Conditional
+Bool bCanStart = false Conditional
+Bool bCanStop = false Conditional
+Bool bCanComplete = false Conditional
 Bool bHasStageID = false Conditional
 Bool bAcceptingHexidecimalInput = false Conditional
 
@@ -74,15 +77,51 @@ Function setQuest(Quest questRef)
 	CheatBunker:Logger.logBehaviorUndefined(self, "setQuest()")
 EndFunction
 
+Function startTarget()
+
+EndFunction
+
+Function stopTarget()
+
+EndFunction
+
+Function completeTarget()
+
+EndFunction
+
+Function resetQuestStateLogic()
+	bCanStart = false
+	bCanStop = false
+	bCanComplete = false
+
+	Quest targetQuest = getQuest()
+	if (!targetQuest)
+		return
+	endif
+	
+	if (targetQuest.IsStarting() || targetQuest.IsRunning())
+		bCanStop = true
+		bCanComplete = true
+	elseif (!targetQuest.IsCompleted())
+		bCanStart = true
+	endif
+	
+	replaceQuestData()
+EndFunction
+
 Function resetQuestIDLogic()
 	bAcceptingHexidecimalInput = true
 	bHasQuestID = false
 	bHasQuest = false
+	
+	resetQuestStateLogic()
+	
 	QuestID.initialize()
 EndFunction
 
 Function resetStageIDLogic()
 	bHasStageID = false
+	resetQuestStateLogic()
 	StageID.initialize()
 EndFunction
 
@@ -120,6 +159,7 @@ Function replaceQuestData()
 	else
 		statusMessage = CheatBunkerQuestControlStateNotRunningMessage
 	endif
+	
 	replace(sTokenQuestStatus, statusMessage)
 EndFunction
 
@@ -232,6 +272,21 @@ State Stage
 	Function resetStageID(ObjectReference akTerminalRef)
 		resetStageIDLogic()
 		draw(akTerminalRef)
+	EndFunction
+	
+	Function startTarget()
+		getQuest().Start()
+		resetQuestStateLogic()
+	EndFunction
+
+	Function stopTarget()
+		getQuest().Stop()
+		resetQuestStateLogic()
+	EndFunction
+
+	Function completeTarget()
+		getQuest().CompleteQuest()
+		resetQuestStateLogic()
 	EndFunction
 	
 	Function forceStageSetting(ObjectReference akTerminalRef) ; because setStage() was taken, apparently...
