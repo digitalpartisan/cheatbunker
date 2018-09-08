@@ -3,6 +3,7 @@ Integrated Loggout v1.1.0
 Integrated Inject-Tec v1.6.0
 Integrated Dynamic Terminal v1.4.0
 Integrated Chronicle v1.1.0
+Added more options to the quest control terminal
 
 v1.8.0
 Integrated Chronicle v1.0.0
