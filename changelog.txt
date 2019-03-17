@@ -1,5 +1,8 @@
 v1.10.0
 Switched to Jiffy to simplify library dependencies
+Eliminated secret Workshop and directly linked Workbench contents to prevent possible bugs
+Re-implemented entrance to the Cheat Bunker to prevent breaking pre-combined meshes for performance reasons
+Generated interior pre-combined meshes to prevent possible performance issues
 
 v1.9.0
 Integrated Loggout v1.1.0

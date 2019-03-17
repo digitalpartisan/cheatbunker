@@ -8,7 +8,6 @@ EndGroup
 
 Group ItemSpawning
 	ObjectReference Property SpawnItemsContainer Auto Const Mandatory
-	ObjectReference Property Workshop Auto Const Mandatory
 EndGroup
 
 ; some filthy hacks to make the retrofit work
