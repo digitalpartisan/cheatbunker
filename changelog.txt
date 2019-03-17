@@ -1,3 +1,6 @@
+v1.10.0
+Switched to Jiffy to simplify library dependencies
+
 v1.9.0
 Integrated Loggout v1.1.0
 Integrated Inject-Tec v1.6.0
