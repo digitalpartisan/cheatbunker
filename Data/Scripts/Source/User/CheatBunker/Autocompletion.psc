@@ -24,13 +24,13 @@ Group AvailabilitySettings
 EndGroup
 
 Group Messaging
-	Message Property RunConditions Auto Const Mandatory
-	Message Property RunningMessage Auto Const Mandatory
+	Message Property AvailabilityMessage Auto Const Mandatory
+	Message Property Description Auto Const Mandatory
 	Message Property FinishedMessage Auto Const Mandatory
 	Message Property HaltMessage Auto Const
-	Message Property Description Auto Const Mandatory
+	Message Property RunConditions Auto Const Mandatory
+	Message Property RunningMessage Auto Const Mandatory
 	Message Property SpecialInstructions Auto Const
-	Message Property AvailabilityMessage Auto Const Mandatory
 EndGroup
 
 Int[] Property StagesToComplete Auto Const
@@ -47,11 +47,18 @@ String sStateExecuting = "Executing" Const
 String sStateConcluded = "Concluded" Const
 String sStateTerminated = "Terminated" Const
 
-Bool Property CanHalt = false Auto Const
+Group HaltOptions
+	Bool Property CanHalt = false Auto Const
+	Bool Property UserCanHalt = false Auto Const
+EndGroup
 
 Bool bRunning = false ; artifact from prior version of the autocompletion logic.  Retained to track state of existing autocompletion instances.
 Bool bFinished = false  ; artifact from prior version of the autocompletion logic.  Retained to track state of existing autocompletion instances.
 Bool bAnnounced = false
+
+Bool Function canUserHalt()
+	return UserCanHalt
+EndFunction
 
 Bool Function isValid()
 {It is theoretically valid to have no quest object.  If a set quest is in another plugin, though, that plugin must be installed for the autocompletion option will display in the terminal.}
@@ -77,26 +84,28 @@ Quest Function getQuest()
 EndFunction
 
 Bool Function playerLeftVault()
-	if (CheatBunkerVault111ExitDetector.IsStopped())
-		return true
-	else
-		CheatBunker:Logger:Autocompletion.logStillInVault(self)
-		return false
-	endif
+	Bool bResult = CheatBunkerVault111ExitDetector.IsStopped()
+	
+	return bResult
 EndFunction
 
 Bool Function detectTriggerStage(Int aiStageID)
 	return -1 < TriggerStages.Find(aiStageID) ; true if the aiStageID is in the TriggerStates array and false otherwise
 EndFunction
 
-Bool Function detectAccessibleObjective()
+Bool Function isStageReady()
 	Quest targetQuest = getQuest()
-	if (!targetQuest)
-		return true ; since there's nothing specific that stops the autocompletion option from running
+	if (!targetQuest || 0 == TriggerStages.Length)
+		return false ; this method will only allow the autocompletion to run if a quest is specified and 
 	endif
 	
-	if (0 == AccessibleObjectives.Length)
-		return true ; because there's no cause to invalidate the autocompletion option, if no objective is accessible, then they all are.
+	return detectTriggerStage(targetQuest.GetStage())
+EndFunction
+
+Bool Function detectAccessibleObjective()
+	Quest targetQuest = getQuest()
+	if (!targetQuest || 0 == AccessibleObjectives.Length)
+		return false ; this logic has been adjusted in favor of refusing the autocompletion option to run unless a quest is specified and has an appropriate objective displayed to tighten down false ready notifications
 	endif
 	
 	Int iCounter = 0
@@ -104,14 +113,29 @@ Bool Function detectAccessibleObjective()
 	while (iCounter < AccessibleObjectives.Length)
 		iObjectiveID = AccessibleObjectives[iCounter]
 		if (targetQuest.IsObjectiveDisplayed(iObjectiveID))
-			CheatBunker:Logger:Autocompletion.logFoundAccessibleObjective(self, iObjectiveID)
-			return true ; the quest's current objective is one we're allowed to run against
+			return true
 		endif
 		iCounter += 1
 	endWhile
 	
-	CheatBunker:Logger:Autocompletion.logNoAccessibleObjective(self)
 	return false
+EndFunction
+
+Bool Function isQuestReady()
+	Quest targetQuest = getQuest()
+	if (!targetQuest)
+		CheatBunker:Logger:Autocompletion.logReadyByDefault(self)
+		return true ; no quest means this is a special sort of auto-completion that is a one-off settings change or toggle flip, so don't run the rest of the logic
+	endif
+	
+	Bool bIsTargetQuestRunning = isTargetQuestRunning()
+	Bool bIsStageReady = isStageReady()
+	Bool bDetectAccessibleObjective = detectAccessibleObjective()
+	Bool bResult = bIsTargetQuestRunning && ( bIsStageReady || bDetectAccessibleObjective )
+	
+	CheatBunker:Logger:Autocompletion.logIsQuestReady(self, bResult, bIsTargetQuestRunning, bIsStageReady, bDetectAccessibleObjective)
+	
+	return bResult
 EndFunction
 
 Function listenToQuest()
@@ -160,28 +184,27 @@ EndEvent
 
 Bool Function isExecutingOrConcluded()
 	Bool bResult = isExecuting() || isConcluded()
-	if (bResult)
-		CheatBunker:Logger:Autocompletion.logExecutingOrConcluded(self)
-	endif
 	
 	return bResult
 EndFunction
 
 Bool Function isTargetQuestRunning()
 	Quest targetQuest = getQuest()
-	if (targetQuest && !(targetQuest.IsStarting() || targetQuest.IsRunning()) )
-		CheatBunker:Logger:Autocompletion.logTargetQuestNotRunning(self)
-		return false
-	endif
-	
-	return true ; this is "wrong" but just barely.  No target quest means this logic should not inhibit other things from happening
+	return targetQuest && (targetQuest.IsStarting() || targetQuest.IsRunning())
 EndFunction
 
 Bool Function canExecuteLogic()
 {Override this to suite your specific case.
 This is left in the empty state precisely because it may need to be customized to a specific purpose that this general logic cannot address.
 Default logic: if the autocompleter is operating or finished, false.  If there is a target quest, it must be running and have an accessible objective displayed.  True in all other cases.}
-	return (playerLeftVault() && !isExecutingOrConcluded() && isTargetQuestRunning() && detectAccessibleObjective())
+	Bool bPlayerLeftVault = playerLeftVault()
+	Bool bIsExecutingOrConcluded = isExecutingOrConcluded()
+	Bool bIsQuestReady = isQuestReady()
+	Bool bResult = bPlayerLeftVault && !bIsExecutingOrConcluded && bIsQuestReady
+	
+	CheatBunker:Logger:Autocompletion.logCanExecuteLogic(self, bResult, bPlayerLeftVault, bIsExecutingOrConcluded, bIsQuestReady)
+	
+	return bResult
 EndFunction
 
 Bool Function canExecute()
@@ -292,6 +315,7 @@ State Initialized
 		if (sStateExecuting == asOldState) ; halt detected, behave accordingly
 			haltBehavior()
 			HaltMessage.Show()
+			bAnnounced = false
 		else ; first time we're coming in here
 			listenToQuest()
 			
@@ -306,7 +330,6 @@ State Initialized
 	Function handleStageEvent(Int aiStageID)
 		if (detectTriggerStage(aiStageID))
 			Utility.Wait(1) ; Timing to make sure the appropriate objective is displayed for the canExecute() check to succeed
-			CheatBunker:Logger:Autocompletion.foundTriggerStage(self, aiStageID)
 			availabilityCheck()
 		endif
 	EndFunction
@@ -337,7 +360,7 @@ State Executing
 				SpecialInstructions.Show()
 			endif
 			
-			Utility.Wait(0.01) ; filthy hack meant to force the player out of the terminal so any quest events or UI events aren't happening on top of said terminal controls
+			Utility.Wait(1) ; filthy hack meant to force the player out of the terminal so any quest events or UI events aren't happening on top of said terminal controls
 			
 			executeBehavior()
 		endif
@@ -374,7 +397,7 @@ EndState
 State Concluded
 	Event OnBeginState(String asOldState)
 		CheatBunker:Logger:Autocompletion.enteringState(self, sStateConcluded, asOldState)
-	
+		
 		if (sStateEmpty != asOldState)
 			CheatBunker:Logger:Autocompletion.finished(self)
 			

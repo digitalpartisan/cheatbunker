@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:CellPreloading Extends Terminal Hidde
 ;BEGIN FRAGMENT Fragment_Terminal_06
 Function Fragment_Terminal_06(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerTransitQuest.preloadCell(true)
+CheatBunkerSettings.preloadInterior(true)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -12,11 +12,11 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_07
 Function Fragment_Terminal_07(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerTransitQuest.preloadCell(false)
+CheatBunkerSettings.preloadInterior(false)
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const
+CheatBunker:Settings Property CheatBunkerSettings Auto Const

@@ -33,24 +33,18 @@ Group Transit
 	ObjectReference Property FastTravelMarker Auto Const Mandatory
 EndGroup
 
+CheatBunker:Settings Property CheatBunkerSettings Auto Const Mandatory
+
 ObjectReference Property BunkerEntranceDoor Auto Const Mandatory
 {Used to preload the interior of the bunker}
 ObjectReference Property ForceExitMarker Auto Const Mandatory
 {Used to relocate the player outside the bunker when uninstalling}
 
 Bool bSnapbackPrimed = false Conditional
-Bool bPreloadCell = false Conditional
+Bool bPreloadCell = false Conditional; legacy, required for 1.10.0 update to process correctly
 
-Bool Function preloadingCell()
+Bool Function preloadingCell() ; also a legacy item, used to handle 1.10.0 update script and is vestigial after that
 	return bPreloadCell
-EndFunction
-
-Function preloadCell(Bool bValue = true)
-	bPreloadCell = bValue
-
-	if (preloadingCell())
-		forcePreloadCell()
-	endif
 EndFunction
 
 Event OnQuestShutdown()
@@ -160,6 +154,7 @@ Function initiateSnapback()
 		CheatBunkerSnapbackFailMessage.Show()
 		return
 	endif
+	
 	transitToInterior()
 	CheatBunkerSnapbackInitMessage.Show()
 	bSnapbackPrimed = true
@@ -167,6 +162,7 @@ Function initiateSnapback()
 EndFunction
 
 Function cancelSnapback()
+	CancelTimer(iSnapbackTimerID)
 	destroySnapbackMarker()
 	bSnapbackPrimed = false
 	CheatBunkerSnapbackCancelledMessage.Show()
@@ -193,7 +189,7 @@ EndFunction
 
 Function forcePreloadCell()
 	CheatBunker:Logger.preloadingCell()
-
+	
 	if (CheatBunkerInterior.IsAttached()) ; player is in the bunker, cell is loaded, do nothing
 		return
 	endif
@@ -203,8 +199,8 @@ Function forcePreloadCell()
 	endif
 	
 	BunkerEntranceDoor.PreloadTargetArea()
-
-	if (preloadingCell())
+	
+	if (CheatBunkerSettings.getPreloadInterior())
 		StartTimer(CheatBunkerLoadCellTimerDuration.GetValue(), LoadCellTimerID)
 	endif
 EndFunction

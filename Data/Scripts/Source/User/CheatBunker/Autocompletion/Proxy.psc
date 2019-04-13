@@ -4,6 +4,7 @@ Bool bCanRun = false Conditional
 Bool bRunning = false Conditional
 Bool bCanHalt = false Conditional
 Bool bFinished = false Conditional
+Bool bUserCanHalt = false Conditional
 
 CheatBunker:Autocompletion myAutocompletion = None
 
@@ -44,6 +45,7 @@ Function updateConditionals()
 	bRunning = thisAutocompletion.isExecuting()
 	bCanHalt = thisAutocompletion.canHalt()
 	bFinished = thisAutocompletion.isConcluded()
+	bUserCanHalt = thisAutocompletion.canUserHalt()
 EndFunction
 
 Function setAutocompletion(CheatBunker:Autocompletion newValue)
@@ -56,7 +58,7 @@ Function tokenReplacementLogic()
 	endif
 	
 	updateConditionals()
-
+	
 	CheatBunker:Logger:Autocompletion.logProxyState(self, bCanRun, bRunning, bCanHalt, bFinished)
 	
 	CheatBunker:Autocompletion thisAutocompletion = getAutocompletion()
@@ -83,7 +85,7 @@ Function run(ObjectReference akTerminalRef)
 	if (!thisAutocompletion.canExecute())
 		return
 	endif
-
+	
 	thisAutocompletion.execute()
 	draw(akTerminalRef)
 EndFunction

@@ -51,6 +51,18 @@ Bool Function enteringState(CheatBunker:Autocompletion myAutocompleter, String a
 	return log(myAutocompleter + " entering state: " + asStateName + " leaving: " + sOldState + " GetState(): " + myAutocompleter.GetState())
 EndFunction
 
+Bool Function logCanExecuteLogic(CheatBunker:Autocompletion myAutocompleter, Bool bResult, Bool bPlayerLeftVault, Bool bIsExecutingOrConcluded, Bool bIsQuestReady) Global
+	return log(myAutocompleter + " can execute: " + bResult + " with playerLeftVault() " + bPlayerLeftVault + " isExecutingOrConcluded() " + bIsExecutingOrConcluded + " isQuestReady() " + bIsQuestReady)
+EndFunction
+
+Bool Function logReadyByDefault(CheatBunker:Autocompletion myAutocompleter) Global
+	return log(myAutocompleter + " is ready by default")
+EndFunction
+
+Bool Function logIsQuestReady(CheatBunker:Autocompletion myAutocompleter, Bool bResult, Bool bIsTargetQuestRunning, Bool bIsStageReady, Bool bDetectAccessibleObjective) Global
+	return log(myAutocompleter + " is ready: " + bResult + " with isTargetQuestRunning() " + bIsTargetQuestRunning + " isStageReady() " + bIsStageReady + " detectAccessibleObjective() " + bDetectAccessibleObjective)
+EndFunction
+
 Bool Function stageEvent(CheatBunker:Autocompletion myAutocompleter, Int aiStageID) Global
 	return log(myAutocompleter + " received stage event: " + aiStageID)
 EndFunction
@@ -103,26 +115,10 @@ Bool Function logStopListeningForVaultExit(CheatBunker:Autocompletion myAutocomp
 	return log(myAutocompleter + " is no longer listening for Vault 111 exit")
 EndFunction
 
-Bool Function logCannotExecute(CheatBunker:Autocompletion myAutocompleter, String sReason = "") Global
-	return log(myAutocompleter + " cannot execute because " + sReason)
+Bool Function logKillingAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias target) Global
+	return log(response + " is killing the alias " + target)
 EndFunction
 
-Bool Function logExecutingOrConcluded(CheatBunker:Autocompletion myAutocompleter) Global
-	return logCannotExecute(myAutocompleter, "already running or concluded")
-EndFunction
-
-Bool Function logTargetQuestNotRunning(CheatBunker:Autocompletion myAutocompleter) Global
-	return logCannotExecute(myAutocompleter, "target quest is not running")
-EndFunction
-
-Bool Function logNoAccessibleObjective(CheatBunker:Autocompletion myAutocompleter) Global
-	return logCannotExecute(myAutocompleter, "no accessible objective in set " + myAutocompleter.AccessibleObjectives)
-EndFunction
-
-Bool Function logStillInVault(CheatBunker:Autocompletion myAutocompleter) Global
-	return logCannotExecute(myAutocompleter, "player still in vault")
-EndFunction
-
-Bool Function logFoundAccessibleObjective(CheatBunker:Autocompletion myAutocompleter, Int iObjectiveID) Global
-	return log(myAutocompleter + " found accessible objective " + iObjectiveID)
+Bool Function logGivingAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias target) Global
+	return log(response + " is giving the player " + target)
 EndFunction

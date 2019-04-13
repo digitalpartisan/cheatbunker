@@ -1,6 +1,7 @@
 Scriptname CheatBunker:PowerArmorScript extends DynamicTerminal:Builder:Menu Conditional
 
 ObjectReference Property Workbench Auto Const Mandatory
+ObjectReference Property MoveTarget Auto Const Mandatory
 Furniture Property PowerArmorFrame Auto Const Mandatory
 Ammo Property FusionCore Auto Const Mandatory
 Message Property mSpawned Auto Const Mandatory
@@ -16,7 +17,7 @@ Bool bHasMaterial = false Conditional
 
 Function clearState()
 	parent.clearState()
-
+	
 	bHasArmor = false
 	bHasMaterial = false
 EndFunction
@@ -38,8 +39,26 @@ CheatBunker:PowerArmorOption:Abstract Function getArmor()
 	return getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption:Abstract
 EndFunction
 
-ObjectReference Function spawnFrame(Furniture FrameToSpawn)
+ObjectReference[] Function searchNearbyFrames()
 	ObjectReference[] nearbyPowerArmors = Workbench.FindAllReferencesWithKeyword(FurnitureTypePowerArmor, iPowerArmorSearchRadius)
+	CheatBunker:Logger:PowerArmor.logPreSpawnSearchResults(nearbyPowerArmors)
+	return nearbyPowerArmors
+EndFunction
+
+Function moveNearbyFrames()
+	ObjectReference[] nearbyPowerArmors = searchNearbyFrames()
+	Int iCounter = 0
+	
+	while (iCounter < nearbyPowerArmors.Length)
+		nearbyPowerArmors[iCounter].MoveTo(MoveTarget)
+		nearbyPowerArmors[iCounter].DeleteWhenAble()
+		iCounter += 1
+	endWhile
+EndFunction
+
+ObjectReference Function spawnFrame(Furniture FrameToSpawn)
+	ObjectReference[] nearbyPowerArmors = searchNearbyFrames()
+	
 	if (nearbyPowerArmors.Length > 0)
 		mCannotSpawn.Show()
 		return None

@@ -42,7 +42,7 @@ StageResponse Function getCurrentStageResponse()
 EndFunction
 
 Function processStageResponse(StageResponse myResponse)
-	Utility.Wait(0.001) ; a filthy hack, but testing has demonstrated odd race conditions and timing problems that this solves nicely
+	Utility.Wait(1) ; a filthy hack, but testing has demonstrated odd race conditions and timing problems that this solves nicely even if it causes the player to hang at the terminal
 	
 	Quest targetQuest = getQuest()
 	if (!targetQuest || !myResponse)
@@ -64,14 +64,14 @@ Function processStageResponse(StageResponse myResponse)
 		targetQuest.SetStage(myResponse.SetStageID)
 	endif
 	
+	if (myResponse.HaltExecution) ; halt comes before conclude because it is a less common and more specific thing to do, so it should take priority so that the autocompleter ends up in a state where conclude() does nothing
+		CheatBunker:Logger:Autocompletion.responseHalt(self, myResponse.StageID)
+		halt()
+	endif
+	
 	if (myResponse.ConcludeExecution)
 		CheatBunker:Logger:Autocompletion.responseConclude(self, myResponse.StageID)
 		conclude()
-	endif
-	
-	if (myResponse.HaltExecution)
-		CheatBunker:Logger:Autocompletion.responseHalt(self, myResponse.StageID)
-		halt()
 	endif
 EndFunction
 
