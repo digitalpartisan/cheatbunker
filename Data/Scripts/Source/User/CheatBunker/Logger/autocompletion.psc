@@ -122,3 +122,7 @@ EndFunction
 Bool Function logGivingAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias target) Global
 	return log(response + " is giving the player " + target)
 EndFunction
+
+Bool Function logActivatingAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias target) Global
+	return log(response + " is activating " + target)
+EndFunction
