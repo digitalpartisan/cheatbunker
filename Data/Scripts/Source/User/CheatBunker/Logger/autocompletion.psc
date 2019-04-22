@@ -119,6 +119,10 @@ Bool Function logKillingAlias(CheatBunker:Autocompletion:StageResponder:CustomRe
 	return log(response + " is killing the alias " + target)
 EndFunction
 
+Bool Function logKillingAliases(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias[] targets) Global
+	return log(response + " is killing these aliases " + targets)
+EndFunction
+
 Bool Function logGivingAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias target) Global
 	return log(response + " is giving the player " + target)
 EndFunction
