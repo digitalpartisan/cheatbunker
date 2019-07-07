@@ -12,6 +12,7 @@ Prevented NPCs from using the door in and out of the Bunker
 Implemented a Settings menu in the main terminal to handle global settings
 Fixed a bug where the Snapback teleportation timer was not stopped when the Snapback was manually cancelled
 Rewrote remote record scripts to use Inject-Tec's hexidecimal digit logic only for ease of third-party content imports
+Removed item generator code artifacts and unmaintained code
 
 v1.9.0
 Integrated Loggout v1.1.0

@@ -2,7 +2,6 @@ Scriptname CheatBunker:ItemGenerator:Abstract extends Quest Hidden
 {Under a sane scheme, this would be named CheatBunker:ItemGenerator, but the local/remote disctinction wasn't introduced until a few versions after release.  Existing definitions of CheatBuker:ItemGenerator need to remain as they are to prevent a massive re-association job in every related object.}
 
 ObjectMod Property SpecialMod = None Auto Const
-Bool Property bInContainer = false Auto Const
 
 Bool Function canLoad()
 {Override this functionality in the remote generator script.}
@@ -50,7 +49,7 @@ Function attachSpecialMod(ObjectReference akInstance)
 	endif
 EndFunction
 
-Bool Function generate(ObjectReference akTarget = None, Bool bForceInContainer = false)
+Bool Function generate(ObjectReference akTarget = None)
 	if (!canLoad())
 		return false
 	endif
@@ -61,9 +60,7 @@ Bool Function generate(ObjectReference akTarget = None, Bool bForceInContainer =
 	
 	clean()
 	
-	if (bForceInContainer || bInContainer)
-		akTarget.addItem(akInstance)
-	endif
+	akTarget.addItem(akInstance)
 	
 	return true
 EndFunction

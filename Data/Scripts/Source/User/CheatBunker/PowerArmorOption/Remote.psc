@@ -9,7 +9,6 @@ CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
 Group FrameSettings
 	Int Property FrameID = 0 Auto Const
 	DigitSet Property FrameDigits Auto Const
-	Bool Property HasFrame = false Auto Const
 EndGroup
 
 Message Property CheatBunkerRemoteLoadingFailureMessage Auto Const Mandatory

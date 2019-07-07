@@ -1,7 +1,5 @@
 Scriptname CheatBunker:PowerArmorOption:Abstract extends Quest Hidden
 
-Bool Property HasMods = false Auto Const
-
 Group PartMods
 	DynamicTerminal:ListWrapper Property HeadlampMods Auto Const
 	DynamicTerminal:ListWrapper Property HelmetMods Auto Const
@@ -11,6 +9,10 @@ Group PartMods
 EndGroup
 
 DynamicTerminal:ListWrapper Property MaterialOptions Auto Const
+
+Bool Function hasMods()
+	return (HeadlampMods || HelmetMods || TorsoMods || ArmMods || LegMods)
+EndFunction
 
 Bool Function canLoad()
 {Override in child scripts as needed.}

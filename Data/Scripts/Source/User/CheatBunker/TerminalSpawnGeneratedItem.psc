@@ -4,7 +4,7 @@ Message Property mSpawned Auto Const
 CheatBunker:QuestScript Property CheatBunkerQuest Auto Const
 
 Function itemActivation(Int iItem, ObjectReference akTerminalRef)
-	if ( (getItem(iItem) as CheatBunker:ItemGenerator:Abstract).generate(CheatBunkerQuest.SpawnItemsContainer, true) )
+	if ( (getItem(iItem) as CheatBunker:ItemGenerator:Abstract).generate(CheatBunkerQuest.SpawnItemsContainer) )
 		mSpawned.Show()
 	endif
 EndFunction

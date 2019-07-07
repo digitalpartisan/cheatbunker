@@ -7,9 +7,7 @@ Group TargetQuestSettings
 	Quest Property MyQuest Auto Const
 	{The quest to watch.  Note that it is technically valid to have no quest if the purpose of the autocompleter}
 	InjectTec:Plugin Property QuestPlugin Auto Const
-	{The plugin containing the quest record with the form ID specific in the QuestID property.}
-	Int Property QuestID Auto Const
-	{The form ID of the quest record to load from QuestPlugin at runtime.}
+	{The plugin containing the quest record with the form ID specific in the QuestDigits property.}
 	DigitSet Property QuestDigits Auto Const
 	{The preferred method of identifying a quest record from a remote plugin.}
 EndGroup
@@ -62,11 +60,11 @@ EndFunction
 
 Bool Function isValid()
 {It is theoretically valid to have no quest object.  If a set quest is in another plugin, though, that plugin must be installed for the autocompletion option to display in the terminal.}
-	return (!MyQuest && (!QuestPlugin || getQuest()))
+	return MyQuest || (!QuestPlugin || getQuest())
 EndFunction
 
 Quest Function getQuest()
-	return InjectTec:Utility:Form.load(MyQuest, QuestPlugin, QuestID, QuestDigits) as Quest
+	return InjectTec:Utility:Form.load(MyQuest, QuestPlugin, 0, QuestDigits) as Quest
 EndFunction
 
 Bool Function playerLeftVault()
