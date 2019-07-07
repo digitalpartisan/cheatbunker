@@ -6,7 +6,7 @@ Int Function getValue()
 	Int iCounter = 0
 	
 	while (iCounter < myValues.Length)
-		iValue += (Math.pow(10, (myValues.Length - 1 - iCounter)) * InjectTec:HexidecimalLogic.getCharacterValue(myValues[iCounter].Character)) as Int
+		iValue += (Math.pow(10, (myValues.Length - 1 - iCounter)) * InjectTec:Utility:HexidecimalLogic.getCharacterValue(myValues[iCounter].Character)) as Int
 		iCounter += 1
 	endWhile
 	

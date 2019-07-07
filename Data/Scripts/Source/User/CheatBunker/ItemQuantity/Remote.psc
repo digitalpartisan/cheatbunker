@@ -1,7 +1,10 @@
 Scriptname CheatBunker:ItemQuantity:Remote extends CheatBunker:ItemQuantity:Abstract
 
+Import InjectTec:Utility:HexidecimalLogic
+
 InjectTec:Plugin Property PluginToReference Auto Const Mandatory
-Int Property FormID Auto Const Mandatory
+Int Property FormID Auto Const
+DigitSet Property FormDigits Auto Const
 
 CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
 
@@ -15,8 +18,8 @@ Function loadingFailure()
 EndFunction
 
 Bool Function canLoad()
-	fLoadedForm = PluginToReference.lookupForm(FormID)
-	if (None == fLoadedForm)
+	fLoadedForm = PluginToReference.lookupWithCoalescedID(FormID, FormDigits)
+	if !fLoadedForm
 		loadingFailure()
 		return false
 	endif

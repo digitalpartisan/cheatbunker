@@ -1,11 +1,14 @@
 Scriptname CheatBunker:PowerArmorOption:Remote extends CheatBunker:PowerArmorOption:Abstract Hidden
 {Scripts extending this one are intended to deal with loading power armor frames, pieces, and mods from third-party plugins.}
 
+Import InjectTec:Utility:HexidecimalLogic
+
 InjectTec:Plugin Property PluginToReference Auto Const Mandatory
 CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
 
 Group FrameSettings
 	Int Property FrameID = 0 Auto Const
+	DigitSet Property FrameDigits Auto Const
 	Bool Property HasFrame = false Auto Const
 EndGroup
 
@@ -47,9 +50,9 @@ Function loadingFailure()
 EndFunction
 
 Bool Function canLoadFrame()
-	if (HasFrame)
-		LoadedFrame = PluginToReference.lookupForm(FrameID) as Furniture
-		if (None == LoadedFrame)
+	if (FrameID || FrameDigits)
+		LoadedFrame = PluginToReference.lookupWithCoalescedID(FrameID, FrameDigits) as Furniture
+		if !LoadedFrame
 			loadingFailure()
 			return false
 		endif

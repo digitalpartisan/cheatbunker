@@ -1,8 +1,12 @@
 Scriptname CheatBunker:ItemGenerator:Remote extends CheatBunker:ItemGenerator:Abstract
 
+Import InjectTec:Utility:HexidecimalLogic
+
 InjectTec:Plugin Property PluginToReference Auto Const Mandatory
-Int Property FormID Auto Const Mandatory
-Int[] Property ModIDs = None Auto Const
+Int Property FormID Auto Const
+DigitSet Property FormDigits Auto Const
+Int[] Property ModIDs Auto Const
+DigitSet[] Property ModDigitSets Auto Const
 
 CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
 
@@ -17,18 +21,19 @@ Function loadingFailure()
 EndFunction
 
 Bool Function canLoad()
-	fLoadedForm = PluginToReference.lookupForm(FormID)
+	fLoadedForm = PluginToReference.lookupWithCoalescedID(FormID, FormDigits)
 	if (None == fLoadedForm)
 		loadingFailure()
 		return false
 	endif
 	
-	if (None == ModIDs)
+	if !(ModIDs || ModDigitSets)
 		return true
 	endif
 	
-	aLoadedMods = (PluginToReference.lookupForms(ModIDs) as ObjectMod[]) ; admittedly, this is a bit of a hack, but the game won't outright crash here, so it's the mod author's fault if something doesn't pan out.  Do good Q/A, etc.
-	if (None == aLoadedMods)
+	; admittedly, this is a bit of a hack, but the game won't outright crash here, so it's the mod author's fault if something doesn't pan out.  Do good Q/A, etc.
+	aLoadedMods = PluginToReference.lookupArrayWithCoalescedIDs(ModIDs, ModDigitSets) as ObjectMod[]
+	if !aLoadedMods
 		loadingFailure()
 		return false
 	endif

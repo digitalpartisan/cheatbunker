@@ -1,6 +1,6 @@
 Scriptname CheatBunker:QuestControl:DigitalInput:QuestID extends CheatBunker:QuestControl:DigitalInput
 
-Import InjectTec:HexidecimalLogic
+Import InjectTec:Utility:HexidecimalLogic
 
 Int Function getValue()
 	CheatBunker:QuestControl:InputValue[] myValues = getValues()

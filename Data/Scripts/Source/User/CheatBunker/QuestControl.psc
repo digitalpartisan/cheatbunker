@@ -240,7 +240,7 @@ State Quest
 	EndFunction
 	
 	Function loadQuest(ObjectReference akTerminalRef)
-		setQuest(getPlugin().lookupForm(QuestID.getValue()) as Quest)
+		setQuest(getPlugin().lookup(QuestID.getValue()) as Quest)
 		
 		if (getQuest())
 			bHasQuest = true

@@ -1,5 +1,7 @@
 v1.10.0
 Switched to Jiffy to simplify library dependencies
+Integrated Inject-Tec v1.7.0
+Integrated Dynamic Terminal v1.5.0
 Eliminated secret Workshop and directly linked Workbench contents to prevent possible bugs
 Re-implemented entrance to the Cheat Bunker to prevent breaking pre-combined meshes for performance reasons
 Generated interior pre-combined meshes to prevent possible performance issues
@@ -9,6 +11,7 @@ Added main story faction repeatable quest items to the appropriate faction equip
 Prevented NPCs from using the door in and out of the Bunker
 Implemented a Settings menu in the main terminal to handle global settings
 Fixed a bug where the Snapback teleportation timer was not stopped when the Snapback was manually cancelled
+Rewrote remote record scripts to use Inject-Tec's hexidecimal digit logic only for ease of third-party content imports
 
 v1.9.0
 Integrated Loggout v1.1.0

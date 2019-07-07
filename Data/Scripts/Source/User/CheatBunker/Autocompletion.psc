@@ -1,17 +1,17 @@
 Scriptname CheatBunker:Autocompletion extends Quest
 {Base Quest Autocompletion logic.  If you intend to allow a script to halt, do not check the "Run Once" box on the quest data tab.}
 
+Import InjectTec:Utility:HexidecimalLogic
+
 Group TargetQuestSettings
-	Bool Property LocalQuest = true Auto Const
-	{Leave true if the MyQuest property can be immediately set in the editor and set to false if it must be loaded at runtime from a third-party plugin.  See QuestPlugin and QuestID properties.
-	Setting this value to false without providing valid settings in the QuestPlugin and QuestID properties will cause the autocompletion option to be considered invalid.
-	An invalid setting is one where either the QuestPlugin isn't installed or the record with QuestID does not exist in QuestPlugin.}
 	Quest Property MyQuest Auto Const
 	{The quest to watch.  Note that it is technically valid to have no quest if the purpose of the autocompleter}
 	InjectTec:Plugin Property QuestPlugin Auto Const
 	{The plugin containing the quest record with the form ID specific in the QuestID property.}
 	Int Property QuestID Auto Const
 	{The form ID of the quest record to load from QuestPlugin at runtime.}
+	DigitSet Property QuestDigits Auto Const
+	{The preferred method of identifying a quest record from a remote plugin.}
 EndGroup
 
 Group AvailabilitySettings
@@ -61,26 +61,12 @@ Bool Function canUserHalt()
 EndFunction
 
 Bool Function isValid()
-{It is theoretically valid to have no quest object.  If a set quest is in another plugin, though, that plugin must be installed for the autocompletion option will display in the terminal.}
-	if (LocalQuest)
-		return true ; 
-	elseif (!QuestPlugin.isInstalled())
-		return false ; plugin is not installed
-	elseif ( !(QuestPlugin.lookupForm(QuestID) as Quest) )
-		return false
-	endif
-	
-	return true ; the third-party plugin is installed and the quest record specified can be loaded
+{It is theoretically valid to have no quest object.  If a set quest is in another plugin, though, that plugin must be installed for the autocompletion option to display in the terminal.}
+	return (!MyQuest && (!QuestPlugin || getQuest()))
 EndFunction
 
 Quest Function getQuest()
-	if (LocalQuest)
-		return MyQuest
-	elseif (QuestPlugin && QuestID)
-		return QuestPlugin.lookupForm(QuestID) as Quest
-	endif
-	
-	return None
+	return InjectTec:Utility:Form.load(MyQuest, QuestPlugin, QuestID, QuestDigits) as Quest
 EndFunction
 
 Bool Function playerLeftVault()
