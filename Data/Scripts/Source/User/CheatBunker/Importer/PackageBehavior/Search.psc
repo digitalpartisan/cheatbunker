@@ -1,7 +1,7 @@
 Scriptname CheatBunker:Importer:PackageBehavior:Search extends Chronicle:Package:CustomBehavior:BehaviorSearch
 
 Bool Function meetsCriteria(Chronicle:Package:CustomBehavior behavior)
-	return behavior is CheatBunker:Importer:PackageBehavior
+	return (behavior as CheatBunker:Importer:PackageBehavior)
 EndFunction
 
 CheatBunker:Importer:PackageBehavior[] Function searchImporters(Chronicle:Package targetPackage)

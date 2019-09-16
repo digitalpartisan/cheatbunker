@@ -30,6 +30,6 @@ EndFunction
 
 CheatBunker:PackageDiagnostics Property PackageDiagnostics Auto Const
 
-DynamicTerminal:Paginator Property ImporterPaginator Auto Const
+CheatBunker:ImportersPagination Property ImporterPaginator Auto Const
 
 DynamicTerminal:ListWrapper:FormList:Dynamic Property ImporterData Auto Const

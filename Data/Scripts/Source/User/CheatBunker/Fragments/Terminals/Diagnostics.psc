@@ -12,7 +12,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_02
 Function Fragment_Terminal_02(ObjectReference akTerminalRef)
 ;BEGIN CODE
-EngineHandler.setEngine(Engine)
+CheatBunkerEngineHandler.refreshStatus()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -23,6 +23,4 @@ Chronicle:Package:Paginator Property PackagesPaginator Auto Const
 
 Chronicle:Package:ListWrapper Property PackagesData Auto Const
 
-Chronicle:Engine:Handler Property EngineHandler Auto Const
-
-Chronicle:Engine Property Engine Auto Const
+Chronicle:Engine:Handler:Static Property CheatBunkerEngineHandler Auto Const

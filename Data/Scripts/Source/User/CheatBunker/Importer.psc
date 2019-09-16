@@ -8,7 +8,7 @@ InjectTec:Injector:Bulk Function getInjections()
 	return Injections
 EndFunction
 
-Message Function getDescription()
+Message Function getDescriptionMessage()
 	return Description
 EndFunction
 

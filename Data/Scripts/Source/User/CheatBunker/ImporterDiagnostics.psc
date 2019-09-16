@@ -20,7 +20,7 @@ Function setImporter(CheatBunker:Importer newImporter)
 	bIsValid = (None != getImporter())
 	
 	if (isValid())
-		bPluginsDetected = getImporter().getInjections().checkPlugins()
+		bPluginsDetected = getImporter().Injections.checkPlugins()
 	endif
 EndFunction
 
@@ -30,7 +30,7 @@ Function forceInjections()
 		return
 	endif
 
-	getImporter().getInjections().forceInject()
+	getImporter().Injections.forceInject()
 EndFunction
 
 Function backOut()
@@ -39,7 +39,7 @@ Function backOut()
 		return
 	endif
 
-	getImporter().getInjections().revert()
+	getImporter().Injections.revert()
 EndFunction
 
 Function tokenReplacementLogic()
@@ -57,5 +57,5 @@ Function tokenReplacementLogic()
 	
 	replace("ImporterObject", thisImporter)
 	replace("ProvidingPackage", thisImporter.getProvider())
-	replace("ImporterDescription", thisImporter.getDescription())
+	replace("ImporterDescription", thisImporter.getDescriptionMessage())
 EndFunction

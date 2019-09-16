@@ -68,9 +68,7 @@ Quest Function getQuest()
 EndFunction
 
 Bool Function playerLeftVault()
-	Bool bResult = CheatBunkerVault111ExitDetector.IsStopped()
-	
-	return bResult
+	return CheatBunkerVault111ExitDetector.IsStopped()
 EndFunction
 
 Bool Function detectTriggerStage(Int aiStageID)
