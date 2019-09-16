@@ -5,15 +5,15 @@ String Function getName() Global
 EndFunction
 
 Bool Function log(String sMessage) Global
-	return Loggout.log(getName(), sMessage)
+	return Jiffy:Loggout.log(getName(), sMessage)
 EndFunction
 
 Bool Function warn(String sMessage) Global
-	return Loggout.warn(getName(), sMessage)
+	return Jiffy:Loggout.warn(getName(), sMessage)
 EndFunction
 
 Bool Function error(String sMessage) Global
-	return Loggout.error(getName(), sMessage)
+	return Jiffy:Loggout.error(getName(), sMessage)
 EndFunction
 
 Bool Function containerReset(ObjectReference akContainer) Global

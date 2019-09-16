@@ -1,4 +1,4 @@
-Scriptname cheatbunker:autocompletion:StageResponder extends cheatbunker:autocompletion
+Scriptname CheatBunker:Autocompletion:StageResponder extends CheatBunker:Autocompletion
 
 Struct StageResponse
 	Int StageID

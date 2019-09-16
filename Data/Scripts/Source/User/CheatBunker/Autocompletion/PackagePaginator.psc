@@ -1,6 +1,14 @@
-Scriptname CheatBunker:Autocompletion:PackagePaginator extends DynamicTerminal:Paginator:Nested:DynamicList Conditional
+Scriptname CheatBunker:Autocompletion:PackagePaginator extends DynamicTerminal:Paginator:Nested:Dynamic:FormList Conditional
+
+CheatBunker:Autocompletion:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchAutocompletions Auto Const Mandatory
 
 DynamicTerminal:ListWrapper Function getListWrapper(Int iItemID)
-	DynamicListWrapper.setData( ((getItem(iItemID) as Chronicle:Package).getCustomData() as CheatBunker:PackageData).getAutocompletions() )
-	return DynamicListWrapper
+	CheatBunker:Autocompletion:PackageBehavior autocompletionBehavior = CheatBunkerPackageBehaviorSearchAutocompletions.searchOneAutocompletion(getItem(iItemID) as Chronicle:Package)
+	if (autocompletionBehavior)
+		DynamicFormListWrapper.setData(autocompletionBehavior.getAutocompletions())
+	else
+		DynamicFormListWrapper.setData(None)
+	endif
+	
+	return DynamicFormListWrapper
 EndFunction

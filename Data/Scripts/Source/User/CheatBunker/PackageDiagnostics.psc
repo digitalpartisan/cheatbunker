@@ -1,43 +1,20 @@
 Scriptname CheatBunker:PackageDiagnostics extends Chronicle:Package:Handler Conditional
 
-CheatBunker:PackageData Function getData()
-	if (isValid())
-		return (getPackage().getCustomData() as CheatBunker:PackageData)
-	else
-		return None
-	endif
-EndFunction
-
-Chronicle:Package:CustomBehavior:Injections Function getInjections()
-	CheatBunker:PackageData packageData = getData()
-	if (!packageData)
-		return None
-	endif
-	
-	return packageData.getInjections()
-EndFunction
+InjectTec:Injector:Bulk:ChronicleBehavior:Search Property CheatBunkerPackageBehaviorSearchInjections Auto Const Mandatory
+CheatBunker:Importer:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchImporters Auto Const Mandatory
 
 Function forceInjections()
-	Chronicle:Package:CustomBehavior:Injections injections = getInjections()
-	if (injections)
-		injections.forceInject()
+	InjectTec:Injector:Bulk:ChronicleBehavior InjectionBehavior = CheatBunkerPackageBehaviorSearchInjections.searchOneBulkInjector(getPackage())
+	if (injectionBehavior)
+		injectionBehavior.getInjections().forceInject()
 	endif
 EndFunction
 
 FormList Function getImporters()
-	CheatBunker:PackageData packageData = getData()
-	if (!packageData)
-		return None
+	CheatBunker:Importer:PackageBehavior importerBehavior = CheatBunkerPackageBehaviorSearchImporters.searchOneImporter(getPackage())
+	if (importerBehavior)
+		return importerBehavior.getImporters()
 	endif
-		
-	return packageData.getImporters()
-EndFunction
-
-Formlist Function getAutocompletions()
-	CheatBunker:PackageData packageData = getData()
-	if (!packageData)
-		return None
-	endif
-		
-	return packageData.getAutocompletions()
+	
+	return None
 EndFunction

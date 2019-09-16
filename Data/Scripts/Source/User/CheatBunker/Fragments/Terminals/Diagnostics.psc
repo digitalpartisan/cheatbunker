@@ -21,7 +21,7 @@ EndFunction
 
 Chronicle:Package:Paginator Property PackagesPaginator Auto Const
 
-Chronicle:Engine:PackageList Property PackagesData Auto Const
+Chronicle:Package:ListWrapper Property PackagesData Auto Const
 
 Chronicle:Engine:Handler Property EngineHandler Auto Const
 

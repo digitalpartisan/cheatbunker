@@ -1,18 +1,23 @@
 v1.10.0
-Switched to Jiffy to simplify library dependencies
-Integrated Inject-Tec v1.7.0
-Integrated Dynamic Terminal v1.5.0
-Eliminated secret Workshop and directly linked Workbench contents to prevent possible bugs
-Re-implemented entrance to the Cheat Bunker to prevent breaking pre-combined meshes for performance reasons
-Generated interior pre-combined meshes to prevent possible performance issues
-Added a button that allows the player to forcefully move phantom Power Armor Frames away from the Power Armor Workbench in the Bunker
-Implemented main story faction radiant quest autocompletion options
-Added main story faction repeatable quest items to the appropriate faction equipment lockers
-Prevented NPCs from using the door in and out of the Bunker
-Implemented a Settings menu in the main terminal to handle global settings
-Fixed a bug where the Snapback teleportation timer was not stopped when the Snapback was manually cancelled
-Rewrote remote record scripts to use Inject-Tec's hexidecimal digit logic only for ease of third-party content imports
-Removed item generator code artifacts and unmaintained code
+Library integrations:
+	Jiffy v1.0.0
+	Inject-Tec v1.7.0
+	Dynamic Terminal v1.5.0
+	Chronicle v1.2.0
+Bug fixes:
+	Added a button that allows the player to forcefully move phantom Power Armor Frames away from the Power Armor Workbench in the Bunker
+	Fixed a bug where the Snapback teleportation timer was not stopped when the Snapback was manually cancelled
+Bug prevention:
+	Eliminated secret Workshop and directly linked Workbench containers in the Bunker
+	Re-implemented entrances to the Cheat Bunker to prevent breaking pre-combined meshes
+	Generated interior pre-combined meshes to prevent possible performance issues
+	Prevented NPCs from using the door in and out of the Bunker
+	Rewrote remote record scripts to use Inject-Tec's hexidecimal digit logic only for ease of third-party content imports
+	Removed item generator code artifacts and unmaintained code
+New features:
+	Implemented main story faction radiant quest autocompletion options
+	Added main story faction repeatable quest items to the appropriate faction equipment lockers
+	Implemented a Settings menu in the antechamber terminal
 
 v1.9.0
 Integrated Loggout v1.1.0

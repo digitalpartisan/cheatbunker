@@ -5,32 +5,16 @@ Group UtilityQuestSettings
 EndGroup
 
 Bool Function installBehavior()
-	if (!parent.installBehavior())
-		return false
-	endif
-	
 	CheatBunkerTransitQuest.forcePreloadCell()
-	return true
-	
+	return parent.installBehavior()
 EndFunction
 
 Bool Function postloadBehavior()
-	if (!parent.postloadBehavior())
-		return false
-	endif
-	
 	CheatBunkerTransitQuest.forcePreloadCell()
-	
-	return true
+	return parent.postloadBehavior()
 EndFunction
 
 Bool Function uninstallBehavior()
 	CheatBunkerTransitQuest.forceLeaveBunker()
-	CheatBunkerTransitQuest.Stop()
-	
-	if (!parent.uninstallBehavior())
-		return false
-	endif
-	
-	return true
+	return parent.uninstallBehavior()
 EndFunction

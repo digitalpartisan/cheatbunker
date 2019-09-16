@@ -1,48 +1,61 @@
 Scriptname CheatBunker:ImporterDiagnostics extends DynamicTerminal:Basic Conditional
 
 CheatBunker:Importer myImporter = None
-Bool bPluginDetected = false Conditional
+Bool bIsValid = false Conditional
+Bool bPluginsDetected = false Conditional
+
+Bool Function isValid()
+	return bIsValid
+EndFunction
 
 CheatBunker:Importer Function getImporter()
 	return myImporter
 EndFunction
 
 Function setImporter(CheatBunker:Importer newImporter)
+	bIsValid = false
+	bPluginsDetected = false
+
 	myImporter = newImporter
-	bPluginDetected = (None != myImporter.Injections && myImporter.Injections.checkPlugin())
+	bIsValid = (None != getImporter())
+	
+	if (isValid())
+		bPluginsDetected = getImporter().getInjections().checkPlugins()
+	endif
 EndFunction
 
 Function forceInjections()
-	CheatBunker:Importer thisImporter = getImporter()
-	if (thisImporter == None)
+	if (!isValid())
 		CheatBunker:Logger:Importer.nothingToProxy()
 		return
 	endif
 
-	thisImporter.Injections.forceInject()
+	getImporter().getInjections().forceInject()
 EndFunction
 
 Function backOut()
-	CheatBunker:Importer thisImporter = getImporter()
-	if (thisImporter == None)
+	if (!isValid())
 		CheatBunker:Logger:Importer.nothingToProxy()
 		return
 	endif
 
-	thisImporter.Injections.revert()
+	getImporter().getInjections().revert()
 EndFunction
 
 Function tokenReplacementLogic()
-	CheatBunker:Importer thisImporter = getImporter()
-	if (thisImporter == None)
+	if (!isValid())
 		CheatBunker:Logger:Importer.nothingToProxy()
 		
 		replace("ImporterObject", None)
 		replace("ProvidingPackage", None)
 		replace("ImporterDescription", None)
-	else
-		replace("ImporterObject", thisImporter)
-		replace("ProvidingPackage", thisImporter.Provider)
-		replace("ImporterDescription", thisImporter.Description)
+		
+		return
 	endif
+	
+	CheatBunker:Importer thisImporter = getImporter()
+	
+	replace("ImporterObject", thisImporter)
+	replace("ProvidingPackage", thisImporter.getProvider())
+	replace("ImporterDescription", thisImporter.getDescription())
 EndFunction

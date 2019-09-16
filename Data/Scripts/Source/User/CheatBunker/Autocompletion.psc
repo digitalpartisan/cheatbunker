@@ -433,11 +433,11 @@ EndFunction
 Function retrofitPackage(Chronicle:Package packageRef) Global
 	CheatBunker:Logger:Autocompletion.retrofittingPackage(packageRef)
 	
-	CheatBunker:PackageData packageData = packageRef.getCustomData() as CheatBunker:PackageData
-	if (!packageData)
+	CheatBunker:Autocompletion:PackageBehavior autocompletionBehavior = CheatBunker:DependencyContainer.getInstance().getSearchAutocompletions().searchOneAutocompletion(packageRef)
+	if (!autocompletionBehavior)
 		return
 	endif
-	FormList packageAutocompletions = packageData.getAutocompletions()
+	FormList packageAutocompletions = autocompletionBehavior.getAutocompletions()
 	if (!packageAutocompletions)
 		return
 	endif
@@ -446,6 +446,44 @@ Function retrofitPackage(Chronicle:Package packageRef) Global
 	Int iSize = packageAutocompletions.GetSize()
 	while (iCounter < iSize)
 		(packageAutocompletions.GetAt(iCounter) as CheatBunker:Autocompletion).retrofitState()
+		iCounter += 1
+	endWhile
+EndFunction
+
+Function initializeList(FormList autocompletions) Global
+	if (!autocompletions || !autocompletions.GetSize())
+		return
+	endif
+	
+	Int iCounter = 0
+	Int iSize = autocompletions.GetSize()
+	CheatBunker:Autocompletion target = None
+	
+	while (iCounter < iSize)
+		target = autocompletions.GetAt(iCounter) as CheatBunker:Autocompletion
+		if (target)
+			target.initialize()
+		endif
+		
+		iCounter += 1
+	endWhile
+EndFunction
+
+Function terminateList(FormList autocompletions) Global
+	if (!autocompletions || !autocompletions.GetSize())
+		return
+	endif
+	
+	Int iCounter = 0
+	Int iSize = autocompletions.GetSize()
+	CheatBunker:Autocompletion target = None
+	
+	while (iCounter < iSize)
+		target = autocompletions.GetAt(iCounter) as CheatBunker:Autocompletion
+		if (target)
+			target.terminate()
+		endif
+		
 		iCounter += 1
 	endWhile
 EndFunction
