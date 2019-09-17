@@ -79,4 +79,4 @@ CheatBunker:QuestControl Property QuestControl Auto Const Mandatory
 
 CheatBunker:QuestControl:PluginPaginator Property PluginPaginator Auto Const Mandatory
 
-CheatBunker:QuestControl:PluginList Property PluginData Auto Const Mandatory
+InjectTec:Plugin:ListWrapper Property PluginData Auto Const Mandatory
