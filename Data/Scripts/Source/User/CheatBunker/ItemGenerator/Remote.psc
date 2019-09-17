@@ -6,16 +6,12 @@ InjectTec:Plugin Property PluginToReference Auto Const Mandatory
 DigitSet Property FormDigits Auto Const Mandatory
 DigitSet[] Property ModDigitSets Auto Const
 
-CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
-
-Message Property CheatBunkerRemoteLoadingFailureMessage Auto Const Mandatory
-
 Form fLoadedForm = None
 ObjectMod[] aLoadedMods = None
 
 Function loadingFailure()
 	clean()
-	CheatBunkerRemoteLoadingFailureMessage.Show()
+	CheatBunker:Dependencies:Spawning.getInstance().showRemoteLoadingFailureMessage()
 EndFunction
 
 Bool Function canLoad()

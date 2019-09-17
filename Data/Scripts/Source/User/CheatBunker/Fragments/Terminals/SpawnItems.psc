@@ -11,14 +11,8 @@ EndFunction
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:QuestScript Property CheatBunkerQuest Auto Const
-
 CheatBunker:TerminalSpawnFormList Property CollectiblePaginator Auto Const
 
 DynamicTerminal:ListWrapper:FormList Property CollectibleData Auto Const
 
 DynamicTerminal:PaginationProxy Property Proxy Auto Const
-
-CheatBunker:TerminalSpawnSmallItem Property MiscPaginator Auto Const
-
-DynamicTerminal:ListWrapper:Formlist Property MiscData Auto Const

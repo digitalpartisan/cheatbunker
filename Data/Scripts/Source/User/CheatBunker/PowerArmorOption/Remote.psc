@@ -4,14 +4,7 @@ Scriptname CheatBunker:PowerArmorOption:Remote extends CheatBunker:PowerArmorOpt
 Import InjectTec:Utility:HexidecimalLogic
 
 InjectTec:Plugin Property PluginToReference Auto Const Mandatory
-CheatBunker:QuestScript Property CheatBunkerQuest Auto Const Mandatory
-
-Group FrameSettings
-	Int Property FrameID = 0 Auto Const
-	DigitSet Property FrameDigits Auto Const
-EndGroup
-
-Message Property CheatBunkerRemoteLoadingFailureMessage Auto Const Mandatory
+DigitSet Property FrameDigits Auto Const
 
 Furniture LoadedFrame = None
 
@@ -45,16 +38,14 @@ EndFunction
 
 Function loadingFailure()
 	clean()
-	CheatBunkerRemoteLoadingFailureMessage.Show()
+	CheatBunker:Dependencies:Spawning.getInstance().showRemoteLoadingFailureMessage()
 EndFunction
 
 Bool Function canLoadFrame()
-	if (FrameID || FrameDigits)
-		LoadedFrame = PluginToReference.lookupWithCoalescedID(FrameID, FrameDigits) as Furniture
-		if !LoadedFrame
-			loadingFailure()
-			return false
-		endif
+	LoadedFrame = PluginToReference.lookupWithDigits(FrameDigits) as Furniture
+	if !LoadedFrame
+		loadingFailure()
+		return false
 	endif
 	
 	return true

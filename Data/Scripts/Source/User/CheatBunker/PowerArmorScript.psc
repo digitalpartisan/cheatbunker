@@ -1,6 +1,5 @@
 Scriptname CheatBunker:PowerArmorScript extends DynamicTerminal:Builder:Menu Conditional
 
-ObjectReference Property Workbench Auto Const Mandatory
 ObjectReference Property MoveTarget Auto Const Mandatory
 Furniture Property PowerArmorFrame Auto Const Mandatory
 Ammo Property FusionCore Auto Const Mandatory
@@ -39,8 +38,12 @@ CheatBunker:PowerArmorOption:Abstract Function getArmor()
 	return getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption:Abstract
 EndFunction
 
+ObjectReference Function getWorkbenchReference()
+	return CheatBunker:Dependencies:Workbenches.getInstance().getPowerArmorWorkbenchReference()
+EndFunction	
+
 ObjectReference[] Function searchNearbyFrames()
-	ObjectReference[] nearbyPowerArmors = Workbench.FindAllReferencesWithKeyword(FurnitureTypePowerArmor, iPowerArmorSearchRadius)
+	ObjectReference[] nearbyPowerArmors = getWorkbenchReference().FindAllReferencesWithKeyword(FurnitureTypePowerArmor, iPowerArmorSearchRadius)
 	CheatBunker:Logger:PowerArmor.logPreSpawnSearchResults(nearbyPowerArmors)
 	return nearbyPowerArmors
 EndFunction
@@ -64,7 +67,7 @@ ObjectReference Function spawnFrame(Furniture FrameToSpawn)
 		return None
 	endif
 	
-	ObjectReference frame = Workbench.PlaceAtMe(FrameToSpawn)
+	ObjectReference frame = getWorkbenchReference().PlaceAtMe(FrameToSpawn)
 	frame.AddItem(FusionCore)
 	return frame
 EndFunction

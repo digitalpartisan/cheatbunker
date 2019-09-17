@@ -1,8 +1,5 @@
 Scriptname CheatBunker:PowerArmorModQuest extends DynamicTerminal:Builder:Menu Conditional
 
-CheatBunker:QuestScript Property CheatBunkerQuest Auto Const
-Message Property CheatBunkerGenericItemSpawnMessage Auto Const
-
 Int Property iArmorID = 0 Auto Const
 Int Property iHelmetID = 1 Auto Const
 Int Property iHeadlampID = 2 Auto Const
@@ -51,7 +48,7 @@ Function calculateCanBuild()
 EndFunction
 
 Function spawnComponent(Int iComponentID, Int iAmount = 1)
-	CheatBunkerQuest.SpawnItemsContainer.AddItem(getComponent(iComponentID).getValue(), iAmount)
+	CheatBunker:Dependencies:Spawning.getInstance().getContainerReference().AddItem(getComponent(iComponentID).getValue(), iAmount)
 EndFunction
 
 Function buildLogic()
@@ -61,5 +58,5 @@ Function buildLogic()
 	spawnComponent(iArmsID, 2)
 	spawnComponent(iLegsID, 2)
 
-	CheatBunkerGenericItemSpawnMessage.Show()
+	CheatBunker:Dependencies:Spawning.getInstance().showGenericSuccessMessage()
 EndFunction

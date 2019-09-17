@@ -36,8 +36,6 @@ Int[] Property StagesToComplete Auto Const
 These stages are checked and, if necessary, set after the setstage() event listener is deactivated prior to the autocompletion option finishing its work.
 Any work to do on a specific stage or other event should be taken care of elsewhere because this is a fallback mechanism to tie up loose ends that only require a call to setStage() and no other work.}
 
-Vault111ExitDetector Property CheatBunkerVault111ExitDetector Auto Const Mandatory
-
 String sStateEmpty = "" Const
 String sStatePreinitialized = "Preinitialized" Const
 String sStateInitialized = "Initialized" Const
@@ -67,8 +65,12 @@ Quest Function getQuest()
 	return InjectTec:Utility:Form.load(MyQuest, QuestPlugin, 0, QuestDigits) as Quest
 EndFunction
 
+Jiffy:Vault111ExitDetector Function getVault111ExitDetector()
+	return CheatBunker:Dependencies:General.getInstance().getVault111ExitDetector()
+EndFunction
+
 Bool Function playerLeftVault()
-	return CheatBunkerVault111ExitDetector.IsStopped()
+	return getVault111ExitDetector().IsStopped()
 EndFunction
 
 Bool Function detectTriggerStage(Int aiStageID)
@@ -138,12 +140,12 @@ EndFunction
 
 Function listenForVaultExit()
 	CheatBunker:Logger:Autocompletion.logListeningForVaultExit(self)
-	RegisterForRemoteEvent(CheatBunkerVault111ExitDetector, "OnQuestShutdown")
+	RegisterForRemoteEvent(getVault111ExitDetector(), "OnQuestShutdown")
 EndFunction
 
 Function stopListeningForVaultExit()
 	CheatBunker:Logger:Autocompletion.logStopListeningForVaultExit(self)
-	UnregisterForRemoteEvent(CheatBunkerVault111ExitDetector, "OnQuestShutdown")
+	UnregisterForRemoteEvent(getVault111ExitDetector(), "OnQuestShutdown")
 EndFunction
 
 Function handleStageEvent(Int aiStageID)
@@ -158,7 +160,7 @@ Event Quest.OnStageSet(Quest akSender, int auiStageID, int auiItemID)
 EndEvent
 
 Event Quest.OnQuestShutdown(Quest akSender)
-	if (CheatBunkerVault111ExitDetector == akSender)
+	if (getVault111ExitDetector() == akSender)
 		stopListeningForVaultExit()
 		availabilityCheck()
 	endif
@@ -431,7 +433,7 @@ EndFunction
 Function retrofitPackage(Chronicle:Package packageRef) Global
 	CheatBunker:Logger:Autocompletion.retrofittingPackage(packageRef)
 	
-	CheatBunker:Autocompletion:PackageBehavior autocompletionBehavior = CheatBunker:DependencyContainer.getInstance().getSearchAutocompletions().searchOneAutocompletion(packageRef)
+	CheatBunker:Autocompletion:PackageBehavior autocompletionBehavior = CheatBunker:Dependencies:General.getInstance().getAutocompletionSearcher().searchOneAutocompletion(packageRef)
 	if (!autocompletionBehavior)
 		return
 	endif

@@ -1,8 +1,6 @@
 Scriptname CheatBunker:ArmorScript extends DynamicTerminal:Builder:Menu Conditional
 
 ObjectMod Property CheaterMod Auto Const
-CheatBunker:QuestScript Property CheatBunkerQuest Auto Const
-Message Property CheatBunkerGenericItemSpawnMessage Auto Const
 
 Int Property iArmorID = 0 Auto Const
 Int Property iSizeID = 1 Auto Const
@@ -61,7 +59,8 @@ Function spawnItem(Armor aItem = None, ObjectMod size = None, ObjectMod material
 		return
 	endif
 
-	ObjectReference akInstance = CheatBunkerQuest.SpawnItemsContainer.PlaceAtMe(aItem)
+	ObjectReference spawnItemsContainer = CheatBunker:Dependencies:Spawning.getInstance().getContainerReference()
+	ObjectReference akInstance = spawnItemsContainer.PlaceAtMe(aItem)
 	if (size != None)
 		akInstance.AttachMod(size)
 	endif
@@ -69,7 +68,7 @@ Function spawnItem(Armor aItem = None, ObjectMod size = None, ObjectMod material
 		akInstance.AttachMod(material)
 	endif
 	akInstance.AttachMod(CheaterMod)
-	CheatBunkerQuest.SpawnItemsContainer.AddItem(akInstance)
+	spawnItemsContainer.AddItem(akInstance)
 EndFunction
 
 Function spawnHelmet(CheatBunker:ArmorSize size = None, CheatBunker:ArmorMaterial material = None)
@@ -150,5 +149,5 @@ Function buildLogic()
 	spawnArms(size, material)
 	spawnLegs(size, material)
 
-	CheatBunkerGenericItemSpawnMessage.Show()
+	CheatBunker:Dependencies:Spawning.getInstance().showGenericSuccessMessage()
 EndFunction
