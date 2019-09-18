@@ -22,27 +22,12 @@ ObjectReference Function getPowerArmorWorkbenchReference()
 	return PAWorkbench
 EndFunction
 
-ObjectReference[] Function getWorkbenchReferences()
-	ObjectReference[] workbenches = new ObjectReference[0]
-	workbenches.Add(CookingWorkbench)
-	workbenches.Add(ChemistryWorkbench)
-	workbenches.Add(WeaponsmithWorkbench)
-	workbenches.Add(WeaponsWorkbench)
-	workbenches.Add(AmmunitionWorkbench)
-	workbenches.Add(ArmorsmithWorkbench)
-	workbenches.Add(ArmorWorkbench)
-	workbenches.Add(PAWorkbench)
-	return workbenches
-EndFunction
-
 Event Actor.OnGetUp(Actor sender, ObjectReference akFurnitureRef)
 	if (Game.GetPlayer() != sender)
 		return
 	endif
 	
-	if (getWorkbenchReferences().Find(akFurnitureRef) >= 0)
-		WorkshopContainer.Reset()
-	endif
+	WorkshopContainer.Reset()
 EndEvent
 
 Event OnQuestInit()

@@ -22,7 +22,9 @@ EndFunction
 Function updateLogic()
 	if (!bHasArmor && getComponent(iArmorID).isComplete())
 		bHasArmor = true
-		getComponent(iMaterialID).setOptions( (getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption:Abstract).MaterialOptions )
+		DynamicTerminal:Builder:Component materials = getComponent(iMaterialID)
+		(materials.getOptions() as DynamicTerminal:ListWrapper:FormList:Dynamic).setData( (getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption:Abstract).MaterialOptions )
+		materials.examineOptions()
 	endif
 
 	bHasMaterial = bHasMaterial || getComponent(iMaterialID).isComplete()

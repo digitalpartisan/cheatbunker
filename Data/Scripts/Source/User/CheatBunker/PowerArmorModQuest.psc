@@ -25,17 +25,23 @@ Function clearState()
 	bHasLegs = false
 EndFunction
 
+Function setComponentOptions(Int iComponentID, FormList options)
+	DynamicTerminal:Builder:Component target = getComponent(iComponentID)
+	(target.getOptions() as DynamicTerminal:ListWrapper:FormList:Dynamic).setData(options)
+	target.examineOptions()
+EndFunction
+
 Function updateLogic()
 	if (!bHasArmor && getComponent(iArmorID).isComplete())
 		bHasArmor = true
 		CheatBunker:PowerArmorOption:Abstract armorOption = getComponent(iArmorID).getValue() as CheatBunker:PowerArmorOption:Abstract
-		getComponent(iHelmetID).setOptions(armorOption.HelmetMods)
-		getComponent(iHeadlampID).setOptions(armorOption.HeadlampMods)
-		getComponent(iTorsoID).setOptions(armorOption.TorsoMods)
-		getComponent(iArmsID).setOptions(armorOption.ArmMods)
-		getComponent(iLegsID).setOptions(armorOption.LegMods)
+		setComponentOptions(iHelmetID, armorOption.HelmetMods)
+		setComponentOptions(iHeadlampID, armorOption.HeadlampMods)
+		setComponentOptions(iTorsoID, armorOption.TorsoMods)
+		setComponentOptions(iArmsID, armorOption.ArmMods)
+		setComponentOptions(iLegsID, armorOption.LegMods)
 	endif
-
+	
 	bHasHelmet = bHasHelmet || getComponent(iHelmetID).isComplete()
 	bHasHeadlamp = bHasHeadlamp || getComponent(iHeadlampID).isComplete()
 	bHasTorso = bHasTorso || getComponent(iTorsoID).isComplete()

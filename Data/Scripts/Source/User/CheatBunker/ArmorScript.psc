@@ -30,16 +30,22 @@ Function clearState()
 	bHasLegs = false
 EndFunction
 
+Function setComponentOptions(Int iComponentID, FormList options)
+	DynamicTerminal:Builder:Component target = getComponent(iComponentID)
+	(target.getOptions() as DynamicTerminal:ListWrapper:FormList:Dynamic).setData(options)
+	target.examineOptions()
+EndFunction
+
 Function updateLogic()
 	if (!bHasArmor && getComponent(iArmorID).isComplete())
 		bHasArmor = true
 		CheatBunker:ArmorSet armorSet = getComponent(iArmorID).getValue() as CheatBunker:ArmorSet
-		getComponent(iSizeID).setOptions(armorSet.Sizes)
-		getComponent(iMaterialID).setOptions(armorSet.Materials)
-		getComponent(iHelmetID).setOptions(armorSet.Helmets)
-		getComponent(iTorsoID).setOptions(armorSet.Torsos)
-		getComponent(iArmsID).setOptions(armorSet.Arms)
-		getComponent(iLegsID).setOptions(armorSet.Legs)
+		setComponentOptions(iSizeID, armorSet.Sizes)
+		setComponentOptions(iMaterialID, armorSet.Materials)
+		setComponentOptions(iHelmetID, armorSet.Helmets)
+		setComponentOptions(iTorsoID, armorSet.Torsos)
+		setComponentOptions(iArmsID, armorSet.Arms)
+		setComponentOptions(iLegsID, armorSet.Legs)
 	endif
 
 	bHasSize = bHasSize || getComponent(iSizeID).isComplete()

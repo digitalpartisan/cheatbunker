@@ -1,14 +1,14 @@
 Scriptname CheatBunker:PowerArmorOption:Abstract extends Quest Hidden
 
 Group PartMods
-	DynamicTerminal:ListWrapper Property HeadlampMods Auto Const
-	DynamicTerminal:ListWrapper Property HelmetMods Auto Const
-	DynamicTerminal:ListWrapper Property TorsoMods Auto Const
-	DynamicTerminal:ListWrapper Property ArmMods Auto Const
-	DynamicTerminal:ListWrapper Property LegMods Auto Const
+	FormList Property HeadlampMods Auto Const
+	FormList Property HelmetMods Auto Const
+	FormList Property TorsoMods Auto Const
+	FormList Property ArmMods Auto Const
+	FormList Property LegMods Auto Const
 EndGroup
 
-DynamicTerminal:ListWrapper Property MaterialOptions Auto Const
+FormList Property MaterialOptions Auto Const
 
 Bool Function hasMods()
 	return (HeadlampMods || HelmetMods || TorsoMods || ArmMods || LegMods)
