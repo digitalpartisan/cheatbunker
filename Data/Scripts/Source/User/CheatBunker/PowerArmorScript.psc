@@ -1,8 +1,6 @@
 Scriptname CheatBunker:PowerArmorScript extends DynamicTerminal:Builder:Menu Conditional
 
 ObjectReference Property MoveTarget Auto Const Mandatory
-Furniture Property PowerArmorFrame Auto Const Mandatory
-Ammo Property FusionCore Auto Const Mandatory
 Message Property mSpawned Auto Const Mandatory
 Message Property mCannotSpawn Auto Const Mandatory
 Keyword Property FurnitureTypePowerArmor Auto Const Mandatory
@@ -68,7 +66,7 @@ ObjectReference Function spawnFrame(Furniture FrameToSpawn)
 	endif
 	
 	ObjectReference frame = getWorkbenchReference().PlaceAtMe(FrameToSpawn)
-	frame.AddItem(FusionCore)
+	frame.AddItem(CheatBunker:Dependencies:Spawning.getInstance().getFusionCore())
 	return frame
 EndFunction
 
@@ -141,7 +139,7 @@ Function buildLogic()
 	if (selectedArmor.canLoad())
 		Furniture frameToSpawn = selectedArmor.getCustomFrame()
 		if (None == frameToSpawn)
-			frameToSpawn = PowerArmorFrame
+			frameToSpawn = CheatBunker:Dependencies:Spawning.getInstance().getPowerArmorFrame()
 		endif
 		
 		ObjectReference frame = spawnFrame(frameToSpawn)

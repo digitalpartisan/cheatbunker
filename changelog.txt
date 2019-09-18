@@ -18,7 +18,8 @@ New features:
 	Implemented main story faction radiant quest autocompletion options
 	Added main story faction repeatable quest items to the appropriate faction equipment lockers
 	Implemented a Settings menu in the antechamber terminal
-
+	Added the manual to the Holotape
+	
 v1.9.0
 Integrated Loggout v1.1.0
 Integrated Inject-Tec v1.6.0

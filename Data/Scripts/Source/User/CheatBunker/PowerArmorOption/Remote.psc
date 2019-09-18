@@ -42,12 +42,17 @@ Function loadingFailure()
 EndFunction
 
 Bool Function canLoadFrame()
-	LoadedFrame = PluginToReference.lookupWithDigits(FrameDigits) as Furniture
-	if !LoadedFrame
-		loadingFailure()
-		return false
+	if (FrameDigits)
+		LoadedFrame = PluginToReference.lookupWithDigits(FrameDigits) as Furniture
+		if !LoadedFrame
+			loadingFailure()
+			return false
+		endif
+		
+		return true
 	endif
 	
+	LoadedFrame = CheatBunker:Dependencies:Spawning.getInstance().getPowerArmorFrame()
 	return true
 EndFunction
 

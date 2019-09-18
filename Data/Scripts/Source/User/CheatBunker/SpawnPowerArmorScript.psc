@@ -1,6 +1,5 @@
 Scriptname CheatBunker:SpawnPowerArmorScript extends Quest Conditional
 
-CheatBunker:PowerArmorScript Property CheatBunkerPowerArmorBuilder Auto Const Mandatory
 GlobalVariable Property CheatBunkerRemoveSpawnedFrameTimeLimit Auto Const Mandatory
 Int Property TimerID = 1 Auto Const
 
@@ -54,8 +53,9 @@ Function spawnFrame()
 		return
 	endif
 
-	spawnedFrame = Game.GetPlayer().PlaceAtMe(CheatBunkerPowerArmorBuilder.PowerArmorFrame)
-	spawnedFrame.AddItem(CheatBunkerPowerArmorBuilder.FusionCore)
+	CheatBunker:Dependencies:Spawning spawningDependencies = CheatBunker:Dependencies:Spawning.getInstance()
+	spawnedFrame = Game.GetPlayer().PlaceAtMe(spawningDependencies.getPowerArmorFrame())
+	spawnedFrame.AddItem(spawningDependencies.getFusionCore())
 	spawnedFrame.SetAngle(0, 0, spawnedFrame.GetAngleZ()) ; make sure the new frame isn't tilted so that it is usable
 	
 	startCountdown()
