@@ -79,39 +79,41 @@ EndFunction
 
 Function spawnHelmet(CheatBunker:ArmorSize size = None, CheatBunker:ArmorMaterial material = None)
 	ObjectMod omMaterial = None
-	if (material != None)
-		if (material.Helmet != None)
-			omMaterial = material.Helmet
-		endif
+	if (material && material.Helmet)
+		omMaterial = material.Helmet
 	endif
 	
 	spawnItem(getComponent(iHelmetID).getValue() as Armor, None, omMaterial)
 EndFunction
 
 Function spawnTorso(CheatBunker:ArmorSize size = None, CheatBunker:ArmorMaterial material = None)
-	ObjectMod omMaterial = None
-	if (material != None)
-		if (material.Torso != None)
-			omMaterial = material.Torso
-		endif
+	ObjectMod omSize = None
+	if (size && size.Arm)
+		omSize = size.Arm
 	endif
 	
-	spawnItem(getComponent(iTorsoID).getValue() as Armor, size.Torso, omMaterial)
+	ObjectMod omMaterial = None
+	if (material && material.Torso)
+		omMaterial = material.Torso
+	endif
+	
+	spawnItem(getComponent(iTorsoID).getValue() as Armor, omSize, omMaterial)
 EndFunction
 
 Function spawnArms(CheatBunker:ArmorSize size = None, CheatBunker:ArmorMaterial material = None)
 	CheatBunker:ArmorLimbs arms = getComponent(iArmsID).getValue() as CheatBunker:ArmorLimbs
-	ObjectMod omSize = None
-	if (size != None)
-		if (size.Arm != None)
-			omSize = size.Arm
-		endif
+	if (!arms)
+		return
 	endif
+	
+	ObjectMod omSize = None
+	if (size && size.Arm)
+		omSize = size.Arm
+	endif
+	
 	ObjectMod omMaterial = None
-	if (material != None)
-		if (material.Arm != None)
-			omMaterial = material.Arm
-		endif
+	if (material && material.Arm)
+		omMaterial = material.Arm
 	endif
 	
 	spawnItem(arms.Left, omSize, omMaterial)
@@ -120,17 +122,18 @@ EndFunction
 
 Function spawnLegs(CheatBunker:ArmorSize size = None, CheatBunker:ArmorMaterial material = None)
 	CheatBunker:ArmorLimbs legs = getComponent(iLegsID).getValue() as CheatBunker:ArmorLimbs
-	ObjectMod omSize = None
-	if (size != None)
-		if (size.Leg != None)
-			omSize = size.Leg
-		endif
+	if (!legs)
+		return
 	endif
+	
+	ObjectMod omSize = None
+	if (size && size.Leg)
+		omSize = size.Leg
+	endif
+	
 	ObjectMod omMaterial = None
-	if (material != None)
-		if (material.Leg != None)
-			omMaterial = material.Leg
-		endif
+	if (material && material.Leg)
+		omMaterial = material.Leg
 	endif
 	
 	spawnItem(legs.Left, omSize, omMaterial)
@@ -138,17 +141,8 @@ Function spawnLegs(CheatBunker:ArmorSize size = None, CheatBunker:ArmorMaterial 
 EndFunction
 
 Function buildLogic()
-	DynamicTerminal:Builder:Component sizeComponent = getComponent(iSizeID)
-	CheatBunker:ArmorSize size = None
-	if (sizeComponent.isAvailable())
-		size = sizeComponent.getValue() as CheatBunker:ArmorSize
-	endif
-
-	DynamicTerminal:Builder:Component materialComponent = getComponent(iMaterialID)
-	CheatBunker:ArmorMaterial material = None
-	if (materialComponent.isAvailable())
-		material = materialComponent.getValue() as CheatBunker:ArmorMaterial
-	endif
+	CheatBunker:ArmorSize size = getComponent(iSizeID).getValue() as CheatBunker:ArmorSize
+	CheatBunker:ArmorMaterial material = getComponent(iMaterialID).getValue() as CheatBunker:ArmorMaterial
 
 	spawnHelmet(size, material)
 	spawnTorso(size, material)
