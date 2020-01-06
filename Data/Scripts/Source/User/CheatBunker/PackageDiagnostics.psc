@@ -12,6 +12,15 @@ FormList Function getImporters()
 	if (importerBehavior)
 		return importerBehavior.getImporters()
 	endif
-	
+
 	return None
+EndFunction
+
+FormList Function getSettings()
+    CheatBunker:Setting:PackageBehavior settingBehavior = CheatBunker:Dependencies:General.getInstance().getSettingSearcher().searchOneSetting(getPackage())
+    if (settingBehavior)
+        return settingBehavior.getSettings()
+    endif
+
+    return None
 EndFunction

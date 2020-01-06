@@ -7,7 +7,7 @@ String[] Function getTags() Global
 EndFunction
 
 Bool Function log(String sMessage) Global
-	return Jiffy:Loggout.log(CheatBunker:Logger.getName(), sMessage, getTags())
+    return Jiffy:Loggout.log(CheatBunker:Logger.getName(), sMessage, getTags())
 EndFunction
 
 Bool Function warn(String sMessage) Global

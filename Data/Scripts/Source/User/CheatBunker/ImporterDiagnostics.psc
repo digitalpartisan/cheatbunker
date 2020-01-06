@@ -3,6 +3,8 @@ Scriptname CheatBunker:ImporterDiagnostics extends DynamicTerminal:Basic Conditi
 CheatBunker:Importer myImporter = None
 Bool bIsValid = false Conditional
 Bool bPluginsDetected = false Conditional
+Bool bHasRun = false Conditional
+Bool bCanRun = false Conditional
 
 Bool Function isValid()
 	return bIsValid
@@ -15,47 +17,62 @@ EndFunction
 Function setImporter(CheatBunker:Importer newImporter)
 	bIsValid = false
 	bPluginsDetected = false
+	bHasRun = false
+	bCanRun = false
 
 	myImporter = newImporter
-	bIsValid = (None != getImporter())
-	
+	bIsValid = (None != myImporter)
+EndFunction
+
+Function stateCheck()
+    if (!isValid())
+        return
+    endif
+
+    CheatBunker:Importer importer = getImporter()
+
+    bPluginsDetected = myImporter.isPluginInstalled()
+    bHasRun = myImporter.hasRun()
+    bCanRun = MyImporter.canRun()
+EndFunction
+
+Function run(ObjectReference akTerminalRef)
+    if (isValid())
+        getImporter().run()
+        draw(akTerminalRef)
+        return
+    endif
+
+    CheatBunker:Logger:Importer.nothingToProxy()
+EndFunction
+
+Function backOut(ObjectReference akTerminalRef)
 	if (isValid())
-		bPluginsDetected = getImporter().Injections.checkPlugins()
-	endif
-EndFunction
-
-Function forceInjections()
-	if (!isValid())
-		CheatBunker:Logger:Importer.nothingToProxy()
+		getImporter().backOut()
+		draw(akTerminalRef)
 		return
 	endif
 
-	getImporter().Injections.forceInject()
+    CheatBunker:Logger:Importer.nothingToProxy()
 EndFunction
 
-Function backOut()
-	if (!isValid())
-		CheatBunker:Logger:Importer.nothingToProxy()
-		return
-	endif
-
-	getImporter().Injections.revert()
+Function rerun(ObjectReference akTerminalRef)
+    if (isValid())
+        getImporter().rerun()
+        draw(akTerminalRef)
+    endif
 EndFunction
 
 Function tokenReplacementLogic()
-	if (!isValid())
-		CheatBunker:Logger:Importer.nothingToProxy()
-		
+    stateCheck()
+
+	if (isValid())
+        CheatBunker:Importer thisImporter = getImporter()
+        replace("ImporterObject", thisImporter)
+        replace("ImporterDescription", thisImporter.getDescription())
+	else
+        CheatBunker:Logger:Importer.nothingToProxy()
 		replace("ImporterObject", None)
-		replace("ProvidingPackage", None)
 		replace("ImporterDescription", None)
-		
-		return
 	endif
-	
-	CheatBunker:Importer thisImporter = getImporter()
-	
-	replace("ImporterObject", thisImporter)
-	replace("ProvidingPackage", thisImporter.getProvider())
-	replace("ImporterDescription", thisImporter.getDescriptionMessage())
 EndFunction

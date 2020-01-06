@@ -11,45 +11,29 @@ Group Snapback
 	Message Property CheatBunkerSnapbackFailMessage Auto Const Mandatory
 	Message Property CheatBunkerSnapbackCompleteMessage Auto Const Mandatory
 	Message Property CheatBunkerSnapbackCancelledMessage Auto Const Mandatory
-	
-	ObjectReference Property SnapbackMarker = None Auto
+
 	Static Property XMarkerHeading Auto Const Mandatory
 EndGroup
 
 Group Transit
-	Int Property LoadCellTimerID = 2 Auto Const
-	GlobalVariable Property CheatBunkerLoadCellTimerDuration Auto Const Mandatory
-
 	Location Property CheatBunkerLocation Auto Const Mandatory
 	Location Property CheatBunkerFastTravelLocation Auto Const Mandatory
 	
 	Spell Property TeleportPlayerInSpell Auto Const Mandatory
 	Spell Property TeleportInSpell Auto Const Mandatory
 	
-	Cell Property CheatBunkerInterior Auto Const Mandatory
-	Cell Property CheatBunkerFastTravel Auto Const Mandatory
-	
 	ObjectReference Property InteriorMarker Auto Const Mandatory
 	ObjectReference Property FastTravelMarker Auto Const Mandatory
 EndGroup
 
-CheatBunker:Settings Property CheatBunkerSettings Auto Const Mandatory
-
-ObjectReference Property BunkerEntranceDoor Auto Const Mandatory
-{Used to preload the interior of the bunker}
 ObjectReference Property ForceExitMarker Auto Const Mandatory
 {Used to relocate the player outside the bunker when uninstalling}
 
 Bool bSnapbackPrimed = false Conditional
-Bool bPreloadCell = false Conditional; legacy, required for 1.10.0 update to process correctly
-
-Bool Function preloadingCell() ; also a legacy item, used to handle 1.10.0 update script and is vestigial after that
-	return bPreloadCell
-EndFunction
+ObjectReference snapbackMarker = None;
 
 Event OnQuestShutdown()
 	CancelTimer(iSnapbackTimerID)
-	CancelTimer(LoadCellTimerID)
 	destroySnapbackMarker()
 EndEvent
 
@@ -130,8 +114,8 @@ Function forceLeaveBunker()
 EndFunction
 
 Bool Function placeSnapbackMarker()
-	SnapbackMarker = Game.GetPlayer().PlaceAtMe(XMarkerHeading)
-	if (SnapbackMarker == None)
+	snapbackMarker = Game.GetPlayer().PlaceAtMe(XMarkerHeading)
+	if (snapbackMarker == None)
 		CheatBunkerSnapbackFailMessage.Show()
 		return false
 	endif
@@ -140,11 +124,12 @@ Bool Function placeSnapbackMarker()
 EndFunction
 
 Function destroySnapbackMarker()
-	if (SnapbackMarker == None)
+	if (snapbackMarker == None)
 		return
 	endif
-	ObjectReference akMarker = SnapbackMarker ; make sure the script property is clear before deleting just to be totally sure
-	SnapbackMarker = None
+
+	ObjectReference akMarker = snapbackMarker ; make sure the script property is clear before deleting just to be totally sure
+	snapbackMarker = None
 	akMarker.Delete()
 EndFunction
 
@@ -169,13 +154,13 @@ Function cancelSnapback()
 EndFunction
 
 Function completeSnapback()
-	if (SnapbackMarker == None)
+	if (snapbackMarker == None)
 		CheatBunkerSnapbackFailMessage.Show()
 		return
 	endif
 	
-	transitToMarker(SnapbackMarker)
-	destroySnapbackMarker()
+	transitToMarker(snapbackMarker)
+	destroysnapbackMarker()
 	CheatBunkerSnapbackCompleteMessage.Show()
 	bSnapbackPrimed = false
 	CancelTimer(iSnapbackTimerID)
@@ -187,30 +172,8 @@ Function locationChangeHandler(Location akFrom, Location akTo)
 	endif
 EndFunction
 
-Function forcePreloadCell()
-	CheatBunker:Logger.preloadingCell()
-	
-	if (CheatBunkerInterior.IsAttached()) ; player is in the bunker, cell is loaded, do nothing
-		return
-	endif
-	
-	if (CheatBunkerInterior.IsLoaded()) ; once again, do nothing since it's needless work
-		return
-	endif
-	
-	BunkerEntranceDoor.PreloadTargetArea()
-	
-	if (CheatBunkerSettings.getPreloadInterior())
-		StartTimer(CheatBunkerLoadCellTimerDuration.GetValue(), LoadCellTimerID)
-	endif
-EndFunction
-
 Event OnTimer(int iTimerID)
 	if (iTimerID == iSnapbackTimerID)
 		cancelSnapback()
-	endif
-
-	if (iTimerID == LoadCellTimerID)
-		forcePreloadCell()
 	endif
 EndEvent

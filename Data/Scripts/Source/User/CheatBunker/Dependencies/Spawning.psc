@@ -7,7 +7,7 @@ Furniture Property PowerArmorFrameFurnitureNoCore Auto Const Mandatory
 Ammo Property AmmoFusionCore Auto Const Mandatory
 
 CheatBunker:Dependencies:Spawning Function getInstance() Global
-	return Game.GetFormFromFile(0x000029A7, CheatBunker:Dependencies:General.getPluginFilename()) as CheatBunker:Dependencies:Spawning
+	return Game.GetFormFromFile(0x000029A7, CheatBunker:Dependencies.getPluginFilename()) as CheatBunker:Dependencies:Spawning
 EndFunction
 
 ObjectReference Function getContainerReference()

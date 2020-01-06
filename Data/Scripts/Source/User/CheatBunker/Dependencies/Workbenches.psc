@@ -15,7 +15,7 @@ ObjectReference Property PAWorkbench Auto Const Mandatory
 ObjectReference Property WorkshopContainer Auto Const Mandatory
 
 CheatBunker:Dependencies:Workbenches Function getInstance() Global
-	return Game.GetFormFromFile(0x000029A6, CheatBunker:Dependencies:General.getPluginFilename()) as CheatBunker:Dependencies:Workbenches
+	return Game.GetFormFromFile(0x000029A6, CheatBunker:Dependencies.getPluginFilename()) as CheatBunker:Dependencies:Workbenches
 EndFunction
 
 ObjectReference Function getPowerArmorWorkbenchReference()

@@ -1,14 +1,41 @@
 Scriptname CheatBunker:Importer extends Quest
 
-InjectTec:Injector:Bulk Property Injections Auto Const Mandatory
+InjectTec:Plugin Property MyPlugin Auto Const Mandatory
 Message Property Description Auto Const Mandatory
 Chronicle:Package Property Provider Auto Const Mandatory
 
-InjectTec:Injector:Bulk Function getInjections()
-	return Injections
+String sStateUnrun = "Unrun" Const
+String sStateRun = "Run" Const
+
+Function goToUnrun()
+	
 EndFunction
 
-Message Function getDescriptionMessage()
+Function goToRun()
+
+EndFunction
+
+InjectTec:Plugin Function getPlugin()
+	return MyPlugin
+EndFunction
+
+Bool Function isPluginInstalled()
+	if (getPlugin())
+		return getPlugin().isInstalled()
+	else
+		return false
+	endif
+EndFunction
+
+Bool Function canRun()
+	return false
+EndFunction
+
+Bool Function shouldBackOut()
+	return false
+EndFunction
+
+Message Function getDescription()
 	return Description
 EndFunction
 
@@ -16,48 +43,91 @@ Chronicle:Package Function getProvider()
 	return Provider
 EndFunction
 
-Function injectList(FormList importers, Bool bForce = false) Global
-	if (!importers || !importers.GetSize())
+Bool Function hasRun()
+	return false
+EndFunction
+
+Function run()
+	
+EndFunction
+
+Function backOut(Bool bRequired = true)
+
+EndFunction
+
+Bool Function rerun()
+	goToUnrun()
+	goToRun()
+EndFunction
+
+Function backOutBulk(CheatBunker:Importer[] importers, Bool bRequired = true) Global
+	if (!importers || !importers.Length)
 		return
 	endif
 	
 	Int iCounter = 0
-	Int iSize = importers.GetSize()
-	CheatBunker:Importer target = None
-	
-	while (iCounter < iSize)
-		target = importers.GetAt(iCounter) as CheatBunker:Importer
-		if (target)
-			target.Injections.inject(bForce)
+	while (iCounter < importers.Length)
+		if (importers[iCounter])
+			importers[iCounter].backOut(bRequired)
 		endif
 		
 		iCounter += 1
 	endWhile
 EndFunction
 
-Function forceInjectList(FormList importers) Global
-	injectList(importers, true)
+Function backOutList(FormList importerList) Global
+    backOutBulk(Jiffy:Utility:FormList.toArray(importerList) as CheatBunker:Importer[])
 EndFunction
 
-Function revertList(FormList importers, Bool bForce = false) Global
-	if (!importers || !importers.GetSize())
-		return
-	endif
-	
-	Int iCounter = 0
-	Int iSize = importers.GetSize()
-	CheatBunker:Importer target = None
-	
-	while (iCounter < iSize)
-		target = importers.GetAt(iCounter) as CheatBunker:Importer
-		if (target)
-			target.Injections.revert(bForce)
-		endif
+Auto State Unrun
+	Event OnBeginState(String asOldState)
 		
-		iCounter += 1
-	endWhile
-EndFunction
+	EndEvent
+	
+	Event OnQuestInit()
+		goToRun()
+	EndEvent
+	
+	Function goToRun()
+		GoToState(sStateRun)
+	EndFunction
+	
+	Bool Function canRun()
+		return isPluginInstalled()
+	EndFunction
+	
+	Function run()
+		Start()
+	EndFunction
+EndState
 
-Function forceRevertList(FormList importers) Global
-	revertList(importers, true)
-EndFunction
+State Run
+	Event OnBeginState(String asOldState)
+		if (shouldBackOut())
+			Stop()
+			return
+		endif
+	EndEvent
+	
+	Event OnQuestShutdown()
+		goToUnrun()
+	EndEvent
+	
+	Function goToUnrun()
+		GoToState(sStateUnrun)
+	EndFunction
+	
+	Bool Function hasRun()
+		return true
+	EndFunction
+	
+	Bool Function shouldBackOut()
+		return !isPluginInstalled()
+	EndFunction
+	
+	Function backOut(Bool bRequired = true)
+		if (bRequired || shouldBackOut())
+			Stop()
+		endif
+	EndFunction
+EndState
