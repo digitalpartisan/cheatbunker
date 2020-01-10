@@ -41,6 +41,10 @@ ObjectReference Function getButton()
     return None
 EndFunction
 
+ObjectReference Function getMarker()
+    return None
+EndFunction
+
 Function startBulk(CheatBunker:WorldSpace[] worldSpaces) Global
     if (!worldSpaces || !worldSpaces.Length)
         return
