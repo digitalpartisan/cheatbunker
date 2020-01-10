@@ -4,15 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:TeleporterRoom Extends Terminal Hidde
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerTransitQuest.transitToFastTravel()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_Terminal_02
-Function Fragment_Terminal_02(ObjectReference akTerminalRef)
-;BEGIN CODE
-CheatBunkerTransitQuest.transitToInterior()
+WorldSpacePaginator.init(akTerminalRef, WorldSpaceData)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -36,3 +28,7 @@ EndFunction
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const
+
+CheatBunker:WorldSpace:Paginator Property WorldSpacePaginator Auto Const
+
+CheatBunker:WorldSpace:List Property WorldSpaceData Auto Const

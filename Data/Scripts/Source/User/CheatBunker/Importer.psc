@@ -1,7 +1,7 @@
 Scriptname CheatBunker:Importer extends Quest
 
 InjectTec:Plugin Property MyPlugin Auto Const Mandatory
-Message Property Description Auto Const Mandatory
+Message Property Details Auto Const Mandatory
 Chronicle:Package Property Provider Auto Const Mandatory
 
 String sStateUnrun = "Unrun" Const
@@ -35,8 +35,8 @@ Bool Function shouldBackOut()
 	return false
 EndFunction
 
-Message Function getDescription()
-	return Description
+Message Function getDetails()
+	return Details
 EndFunction
 
 Chronicle:Package Function getProvider()

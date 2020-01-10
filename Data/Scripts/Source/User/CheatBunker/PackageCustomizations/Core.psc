@@ -1,10 +1,6 @@
-Scriptname CheatBunker:PackageCustomizations:Core extends CheatBunker:PackageCustomizations
-
-Group UtilityQuestSettings
-	CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const Mandatory
-EndGroup
+Scriptname CheatBunker:PackageCustomizations:Core extends Chronicle:Package:CustomBehavior
 
 Bool Function uninstallBehavior()
-	CheatBunkerTransitQuest.forceLeaveBunker()
-	return parent.uninstallBehavior()
+	CheatBunker:Dependencies:General.getInstance().getTransitQuest().forceLeaveBunker()
+	return true
 EndFunction

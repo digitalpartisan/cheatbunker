@@ -4,6 +4,7 @@ InjectTec:Injector:Bulk:ChronicleBehavior:Search Property CheatBunkerPackageBeha
 CheatBunker:Importer:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchImporters Auto Const Mandatory
 CheatBunker:Setting:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchSettings Auto Const Mandatory
 CheatBunker:Autocompletion:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchAutocompletions Auto Const Mandatory
+CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const Mandatory
 Jiffy:Vault111ExitDetector Property CheatBunkerVault111ExitDetector Auto Const Mandatory
 
 CheatBunker:Dependencies:General Function getInstance() Global
@@ -28,4 +29,8 @@ EndFunction
 
 Jiffy:Vault111ExitDetector Function getVault111ExitDetector()
 	return CheatBunkerVault111ExitDetector
+EndFunction
+
+CheatBunker:TransitScript Function getTransitQuest()
+    return CheatBunkerTransitQuest
 EndFunction

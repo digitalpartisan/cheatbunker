@@ -2,8 +2,6 @@ Scriptname CheatBunker:Setting:PreloadInteriors extends CheatBunker:Setting Cond
 
 Cell Property CheatBunkerInterior Auto Const Mandatory
 {Autofill.}
-Cell Property CheatBunkerFastTravel Auto Const Mandatory
-{Autofill.}
 ObjectReference Property BunkerEntranceDoor Auto Const Mandatory
 {Trapdoor outside Vault 111 to Cheat Bunker interior.}
 
@@ -28,6 +26,7 @@ EndFunction
 
 Function startupLogic()
     forcePreloadCell()
+	RegisterForRemoteEvent(Game.GetPlayer(), "OnLocationChange")
 EndFunction
 
 Function shutdownLogic()

@@ -16,21 +16,17 @@ Group Snapback
 EndGroup
 
 Group Transit
-	Location Property CheatBunkerLocation Auto Const Mandatory
-	Location Property CheatBunkerFastTravelLocation Auto Const Mandatory
-	
 	Spell Property TeleportPlayerInSpell Auto Const Mandatory
 	Spell Property TeleportInSpell Auto Const Mandatory
-	
+
 	ObjectReference Property InteriorMarker Auto Const Mandatory
-	ObjectReference Property FastTravelMarker Auto Const Mandatory
 EndGroup
 
-ObjectReference Property ForceExitMarker Auto Const Mandatory
+CheatBunker:WorldSpace:Local Property CheatBunkerPackageBaseWorldSpaceCommonwealth Auto Const Mandatory
 {Used to relocate the player outside the bunker when uninstalling}
 
 Bool bSnapbackPrimed = false Conditional
-ObjectReference snapbackMarker = None;
+ObjectReference snapbackMarker = None
 
 Event OnQuestShutdown()
 	CancelTimer(iSnapbackTimerID)
@@ -50,19 +46,18 @@ Function applyEffectsToActor(Actor aTarget)
 	aTarget.AddSpell(sTeleport, false)
 EndFunction
 
-Function applyEffects()
-	applyEffectsToActor(Game.GetPlayer())
-	applyEffectsToActor(CheatBunkerCompanionQuest.getCompanionActor())
-	applyEffectsToActor(CheatBunkerCompanionQuest.getDogmeatActor())
-EndFunction
-
 Bool Function moveActor(Actor aTarget, ObjectReference akLocation)
 	if (!aTarget)
 		return false
 	endif
 	
 	if ( (aTarget as ObjectReference) != akLocation)
-		aTarget.MoveTo(akLocation)
+	    if (Game.GetPlayer() == aTarget)
+            Game.FastTravel(akLocation)
+	    else
+            aTarget.MoveTo(akLocation)
+	    endif
+
 		return true
 	endif
 	
@@ -98,11 +93,7 @@ Function transitToPlayer()
 EndFunction
 
 Function transitToInterior()
-	transitToMarker(InteriorMarker)
-EndFunction
-
-Function transitToFastTravel()
-	transitToMarker(FastTravelMarker)
+    transitToMarker(InteriorMarker)
 EndFunction
 
 Function recoverCompanions()
@@ -110,7 +101,7 @@ Function recoverCompanions()
 EndFunction
 
 Function forceLeaveBunker()
-	transitToMarker(ForceExitMarker)
+	CheatBunkerPackageBaseWorldSpaceCommonwealth.transitTo()
 EndFunction
 
 Bool Function placeSnapbackMarker()
@@ -164,12 +155,6 @@ Function completeSnapback()
 	CheatBunkerSnapbackCompleteMessage.Show()
 	bSnapbackPrimed = false
 	CancelTimer(iSnapbackTimerID)
-EndFunction
-
-Function locationChangeHandler(Location akFrom, Location akTo)
-	if (akFrom == CheatBunkerFastTravelLocation && akTo != CheatBunkerLocation) ; leaving the fast travel room to somewhere other than the bunker interior, so fast travel via map
-		applyEffects()
-	endif
 EndFunction
 
 Event OnTimer(int iTimerID)

@@ -27,4 +27,4 @@ EndFunction
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:ImporterDiagnostics Property ImporterDiagnostics Auto Const
+CheatBunker:Importer:Diagnostics Property ImporterDiagnostics Auto Const
