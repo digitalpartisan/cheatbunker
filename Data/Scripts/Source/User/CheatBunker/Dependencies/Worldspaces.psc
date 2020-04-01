@@ -12,12 +12,28 @@ EndFunction
 
 Function registerWorldSpace(CheatBunker:WorldSpace targetWorldSpace)
     if (targetWorldSpace && targetWorldSpace.isReadyForTransit())
-        getWorldSpaces().AddForm(targetWorldSpace)
+        InjectTec:Utility:FormList.addForm(getWorldSpaces(), targetWorldSpace)
+    endif
+EndFunction
+
+Function registerWorldSpaceList(FormList worldSpaces)
+    if (worldSpaces && worldSpaces.GetSize())
+        InjectTec:Utility:FormList.addFormList(getWorldSpaces(), worldSpaces)
     endif
 EndFunction
 
 Function unregisterWorldSpace(CheatBunker:WorldSpace targetWorldSpace)
     if (targetWorldSpace)
-        getWorldSpaces().RemoveAddedForm(targetWorldSpace)
+        InjectTec:Utility:FormList.removeForm(getWorldSpaces(), targetWorldSpace)
     endif
+EndFunction
+
+Function unregisterWorldSpaceList(FormList worldSpaces)
+    if (worldSpaces && worldSpaces.GetSize())
+        InjectTec:Utility:FormList.removeFormList(getWorldSpaces(), worldSpaces)
+    endif
+EndFunction
+
+Function cleanWorldspaces()
+    Jiffy:Utility:FormList.clean(getWorldSpaces())
 EndFunction

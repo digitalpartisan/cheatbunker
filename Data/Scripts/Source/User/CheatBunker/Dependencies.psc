@@ -1,12 +1,9 @@
 Scriptname CheatBunker:Dependencies Hidden Const
 
 String Function getPluginFilename() Global
-	String sMasterFile = "CheatBunker.esm"
-	String sDevFile = "CheatBunker.esp"
-	
-	if (!Game.IsPluginInstalled(sMasterFile))
-		return sDevFile
-	endif
-	
-	return sMasterFile
+	String[] plugins = new String[2]
+	plugins[0] = "CheatBunker.esm"
+	plugins[1] = "CheatBunker.esp"
+
+	return Jiffy:Utility:Plugin.getFirstInstalledPlugin(plugins)
 EndFunction
