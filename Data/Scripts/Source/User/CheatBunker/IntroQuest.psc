@@ -4,10 +4,13 @@ Int Property EnterObjectiveID = 10 Auto Const
 Int Property ReadObjectiveID = 15 Auto Const
 
 Location Property CheatBunkerLocation Auto Const Mandatory
+ReferenceAlias Property EntranceButton Auto Const Mandatory
+CheatBunker:Worldspace Property CheatBunkerPackageBaseWorldspaceCommonwealth Auto Const Mandatory
 
 Quest Property CheatBunkerHolotapeQuest Auto Const Mandatory
 
 Event OnQuestInit()
+	EntranceButton.ForceRefTo(CheatBunkerPackageBaseWorldspaceCommonwealth.getButtonSpawner().getSpawnedReference())
 	SetObjectiveDisplayed(EnterObjectiveID)
 	SetActive()
 EndEvent

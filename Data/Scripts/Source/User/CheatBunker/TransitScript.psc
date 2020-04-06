@@ -22,7 +22,7 @@ Group Transit
 	ObjectReference Property InteriorMarker Auto Const Mandatory
 EndGroup
 
-CheatBunker:WorldSpace:Local Property CheatBunkerPackageBaseWorldSpaceCommonwealth Auto Const Mandatory
+CheatBunker:WorldSpace Property CheatBunkerPackageBaseWorldSpaceCommonwealth Auto Const Mandatory
 {Used to relocate the player outside the bunker when uninstalling}
 
 Bool bSnapbackPrimed = false Conditional
@@ -31,6 +31,7 @@ ObjectReference snapbackMarker = None
 Event OnQuestShutdown()
 	CancelTimer(iSnapbackTimerID)
 	destroySnapbackMarker()
+	CheatBunkerPackageBaseWorldSpaceCommonwealth.transitTo()
 EndEvent
 
 Function applyEffectsToActor(Actor aTarget)
@@ -98,10 +99,6 @@ EndFunction
 
 Function recoverCompanions()
 	transitToPlayer()
-EndFunction
-
-Function forceLeaveBunker()
-	CheatBunkerPackageBaseWorldSpaceCommonwealth.transitTo()
 EndFunction
 
 Bool Function placeSnapbackMarker()
