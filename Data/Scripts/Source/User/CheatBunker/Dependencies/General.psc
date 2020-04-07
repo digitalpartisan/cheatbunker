@@ -1,7 +1,7 @@
 Scriptname CheatBunker:Dependencies:General extends Quest Const
 
 InjectTec:Injector:Bulk:ChronicleBehavior:Search Property CheatBunkerPackageBehaviorSearchInjections Auto Const Mandatory
-CheatBunker:Importer:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchImporters Auto Const Mandatory
+InjectTec:Integrator:ChronicleBehavior:Search Property CheatBunkerPackageBehaviorSearchImporters Auto Const Mandatory
 CheatBunker:Setting:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchSettings Auto Const Mandatory
 CheatBunker:Autocompletion:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchAutocompletions Auto Const Mandatory
 CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const Mandatory
@@ -15,7 +15,7 @@ InjectTec:Injector:Bulk:ChronicleBehavior:Search Function getInjectionSearcher()
 	return CheatBunkerPackageBehaviorSearchInjections
 EndFunction
 
-CheatBunker:Importer:PackageBehavior:Search Function getImporterSearcher()
+InjectTec:Integrator:ChronicleBehavior:Search Function getImporterSearcher()
 	return CheatBunkerPackageBehaviorSearchImporters
 EndFunction
 

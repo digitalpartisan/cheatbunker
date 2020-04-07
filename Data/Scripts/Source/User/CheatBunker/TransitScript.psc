@@ -1,7 +1,5 @@
 Scriptname CheatBunker:TransitScript Extends Quest Conditional
 
-CheatBunker:CompanionScript Property CheatBunkerCompanionQuest Auto Const
-
 Group Snapback
 	Int Property iSnapbackTimerID = 1 Auto Const
 
@@ -48,7 +46,7 @@ Function applyEffectsToActor(Actor aTarget)
 EndFunction
 
 Bool Function moveActor(Actor aTarget, ObjectReference akLocation)
-	if (!aTarget)
+	if (!aTarget || !akLocation)
 		return false
 	endif
 	
@@ -65,28 +63,24 @@ Bool Function moveActor(Actor aTarget, ObjectReference akLocation)
 	return false
 EndFunction
 
-Function moveToMarker(ObjectReference akMarker)
-	Actor aPlayer = Game.GetPlayer()
-	moveActor(aPlayer, akMarker)
-	moveActor(CheatBunkerCompanionQuest.getDogmeatActor(), aPlayer)
-	moveActor(CheatBunkerCompanionQuest.getCompanionActor(), aPlayer)
-EndFunction
-
-Function moveToPlayer()
-	moveToMarker(Game.GetPlayer())
-EndFunction
-
 Function transitActor(Actor aTarget, ObjectReference akLocation)
-	if (moveActor(aTarget, akLocation))
-		applyEffectsToActor(aTarget)
-	endif
+	moveActor(aTarget, akLocation) && applyEffectsToActor(aTarget)
 EndFunction
 
 Function transitToMarker(ObjectReference akMarker)
 	Actor aPlayer = Game.GetPlayer()
 	transitActor(aPlayer, akMarker)
-	transitActor(CheatBunkerCompanionQuest.getDogmeatActor(), aPlayer)
-	transitActor(CheatBunkerCompanionQuest.getCompanionActor(), aPlayer)
+	
+	Actor[] followers = Game.GetPlayerFollowers()
+	if (!followers || !followers.Length)
+		return
+	endif
+	
+	Int iCounter = 0
+	while (iCounter < followers.Length)
+		transitActor(followers[iCounter], aPlayer)
+		iCounter += 1
+	endWhile
 EndFunction
 
 Function transitToPlayer()

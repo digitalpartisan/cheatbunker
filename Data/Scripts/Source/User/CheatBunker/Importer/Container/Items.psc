@@ -2,7 +2,7 @@ Scriptname CheatBunker:Importer:Container:Items extends CheatBunker:Importer:Con
 
 Int Property AmountToAdd = 10 Auto Const Mandatory
 
-Function addItem(Form itemToAdd)
+Function importItem(Form itemToAdd)
     CheatBunker:Importer:Items items = itemToAdd as CheatBunker:Importer:Items
     if (items)
         ; TODO: figure this out in the items script

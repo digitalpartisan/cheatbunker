@@ -1,6 +1,9 @@
 Scriptname CheatBunker:WorldSpace extends Quest Conditional
 
+CustomEvent Ready
+
 Spawny:Spawner Property ButtonSpawner Auto Const Mandatory
+Message Property ReadyMessage Auto Const
 
 Bool bIsReadyForTransit = false Conditional
 String sStateInactive = "Inactive" Const
@@ -104,6 +107,8 @@ State Activated
     Event OnBeginState(String asOldState)
         CheatBunker:Dependencies:WorldSpaces.getInstance().registerWorldSpace(self)
         bIsReadyForTransit = true
+		SendCustomEvent("Ready")
+		ReadyMessage && ReadyMessage.Show()
     EndEvent
 
     Event OnQuestShutdown()

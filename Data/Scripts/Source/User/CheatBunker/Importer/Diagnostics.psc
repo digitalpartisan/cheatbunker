@@ -31,14 +31,14 @@ Function stateCheck()
 
     CheatBunker:Importer importer = getImporter()
 
-    bPluginsDetected = myImporter.isPluginInstalled()
+    bPluginsDetected = myImporter.isPluginRequirementMet()
     bHasRun = myImporter.hasRun()
     bCanRun = MyImporter.canRun()
 EndFunction
 
 Function run(ObjectReference akTerminalRef)
     if (isValid())
-        getImporter().run()
+        getImporter().Start()
         draw(akTerminalRef)
         return
     endif
@@ -48,7 +48,7 @@ EndFunction
 
 Function backOut(ObjectReference akTerminalRef)
 	if (isValid())
-		getImporter().backOut()
+		getImporter().Stop()
 		draw(akTerminalRef)
 		return
 	endif
@@ -69,7 +69,7 @@ Function tokenReplacementLogic()
 	if (isValid())
         CheatBunker:Importer thisImporter = getImporter()
         replace("ImporterObject", thisImporter)
-        replace("ImporterDetails", thisImporter.getDetails())
+        replace("ImporterDetails", thisImporter.getAbout())
 	else
         CheatBunker:Logger:Importer.nothingToProxy()
 		replace("ImporterObject", None)

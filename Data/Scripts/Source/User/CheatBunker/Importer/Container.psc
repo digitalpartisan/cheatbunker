@@ -6,7 +6,7 @@ FormList Function getContents()
     return MyContents
 EndFunction
 
-Function addItem(Form itemToAdd)
+Function importItem(Form itemToAdd)
     {Override this to implement a particular type of importer container.}
 EndFunction
 
@@ -19,7 +19,7 @@ Function addContents()
     Int iCounter = 0
     Int iSize = contents.GetSize()
     while (iCounter < iSize)
-        addItem(contents.GetAt(iCounter))
+        importItem(contents.GetAt(iCounter))
         iCounter += 1
     endWhile
 EndFunction

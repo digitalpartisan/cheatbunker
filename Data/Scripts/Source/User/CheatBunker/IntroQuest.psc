@@ -9,10 +9,18 @@ CheatBunker:Worldspace Property CheatBunkerPackageBaseWorldspaceCommonwealth Aut
 
 Quest Property CheatBunkerHolotapeQuest Auto Const Mandatory
 
-Event OnQuestInit()
+Function setEntranceAlias()
 	EntranceButton.ForceRefTo(CheatBunkerPackageBaseWorldspaceCommonwealth.getButtonSpawner().getSpawnedReference())
+EndFunction
+
+Event OnQuestInit()
+	setEntranceAlias()
 	SetObjectiveDisplayed(EnterObjectiveID)
 	SetActive()
+EndEvent
+
+Event OnQuestShutdown()
+	UnregisterForCustomEvent(CheatBunkerPackageBaseWorldspaceCommonwealth, "Ready") ; what should happen if an uninstall takes place at just the wrong time
 EndEvent
 
 Function manualWasOpened()
@@ -40,3 +48,22 @@ Function locationChangeHandler(Location akOldLoc, Location akNewLoc)
         SetObjectiveDisplayed(EnterObjectiveID)
     endif
 EndFunction
+
+Function retrofitEntranceObjective()
+{What should happen if the v1.10.0 update runs and this quest is not yet complete.}
+	if (!IsRunning())
+		return
+	endif
+	
+	RegisterForCustomEvent(CheatBunkerPackageBaseWorldspaceCommonwealth, "Ready")
+	CheatBunkerPackageBaseWorldspaceCommonwealth.Start()
+EndFunction
+
+Event CheatBunker:Worldspace.Ready(CheatBunker:Worldspace sender, Var[] args)
+	if (CheatBunkerPackageBaseWorldspaceCommonwealth != sender) ; paranoia never hurt anyone, right?
+		return
+	endif
+	
+	UnregisterForCustomEvent(CheatBunkerPackageBaseWorldspaceCommonwealth, "Ready")
+	setEntranceAlias()
+EndEvent

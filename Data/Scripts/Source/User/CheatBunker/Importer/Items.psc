@@ -3,6 +3,7 @@ Scriptname CheatBunker:Importer:Items extends Quest
 Import InjectTec:Utility:HexidecimalLogic
 
 CheatBunker:Importer Property MyImporter Auto Const Mandatory
+InjectTec:Plugin Property MyPlugin Auto Const Mandatory
 DigitSet[] Property MyDigitSets Auto Const Mandatory
 Int Property Amount = 1 Auto Const
 GlobalVariable Property AmountVariable Auto Const
@@ -36,6 +37,10 @@ CheatBunker:Importer Function getImporter()
 	return MyImporter
 EndFunction
 
+InjectTec:Plugin Function getPlugin()
+	return MyPlugin
+EndFunction
+
 DigitSet[] Function getDigitSets()
 	return None
 EndFunction
@@ -61,9 +66,8 @@ EndState
 
 State Loaded
 	Event OnBeginState(String asOldState)
-		InjectTec:Plugin myPlugin = getImporter().getPlugin()
-		if (myPlugin.isInstalled())
-			afTargets = getImporter().getPlugin().lookupArrayWithDigitSets(getDigitSets())
+		if (MyPlugin && MyPlugin.isInstalled())
+			afTargets = MyPlugin.lookupArrayWithDigitSets(getDigitSets())
 			if (!afTargets)
 				Stop()
 			endif

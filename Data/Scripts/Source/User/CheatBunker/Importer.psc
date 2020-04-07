@@ -10,10 +10,6 @@ Group Containers
     FormList Property WeaponsAmmo Auto Const
 EndGroup
 
-Group TerminalOptions
-
-EndGroup
-
 Chronicle:Package Property Provider Auto Const Mandatory
 
 Chronicle:Package Function getProvider()

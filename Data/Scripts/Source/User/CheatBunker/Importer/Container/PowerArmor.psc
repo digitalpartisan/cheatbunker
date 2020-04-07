@@ -1,6 +1,6 @@
 Scriptname CheatBunker:Importer:Container:PowerArmor extends CheatBunker:Importer:Container
 
-Function addItem(Form itemToAdd)
+Function importItem(Form itemToAdd)
     CheatBunker:PowerArmorOption:Abstract powerArmorOption = itemToAdd as CheatBunker:PowerArmorOption:Abstract
     if (!powerArmorOption)
         return

@@ -4,6 +4,7 @@ Library integrations:
 	Inject-Tec v1.7.0
 	Dynamic Terminal v1.5.0
 	Chronicle v1.2.0
+	Spawny v1.0.0
 Bug fixes:
 	Added a button that allows the player to forcefully move phantom Power Armor Frames away from the Power Armor Workbench in the Bunker
 	Fixed a bug where the Snapback teleportation timer was not stopped when the Snapback was manually cancelled
@@ -13,10 +14,13 @@ Bug prevention:
 	Generated interior pre-combined meshes to prevent possible performance issues
 	Rewrote remote record scripts to use Inject-Tec's hexidecimal digit logic only for ease of third-party content imports
 	Removed item generator code artifacts and unmaintained code
+	Ensured the shutdown of several background and utlity quests upon uninstallation
 New features:
 	Implemented main story faction radiant quest autocompletion options
+	Added a "Show All Map Markers" option to the Character Development terminal
 	Added main story faction repeatable quest items to the appropriate faction equipment lockers
-	Implemented a Settings menu in the antechamber terminal
+	Implemented a Settings menu in the Manual & Diagnostics terminal (accessed on a per-package basis)
+	Made the transit behavior compatible with multiple follower mods
 	Added the manual to the Holotape
 
 v1.9.0

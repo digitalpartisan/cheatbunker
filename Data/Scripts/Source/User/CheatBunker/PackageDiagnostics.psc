@@ -7,10 +7,10 @@ Function forceInjections()
 	endif
 EndFunction
 
-FormList Function getImporters()
-	CheatBunker:Importer:PackageBehavior importerBehavior = CheatBunker:Dependencies:General.getInstance().getImporterSearcher().searchOneImporter(getPackage())
-	if (importerBehavior)
-		return importerBehavior.getImporters()
+InjectTec:Integrator[] Function getImporters()
+	InjectTec:Integrator:ChronicleBehavior integratorBehavior = CheatBunker:Dependencies:General.getInstance().getImporterSearcher().searchOneIntegrator(getPackage())
+	if (integratorBehavior)
+		return integratorBehavior.getIntegrators()
 	endif
 
 	return None
