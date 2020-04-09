@@ -19,7 +19,7 @@ Bool Function canLoad()
 	return true
 EndFunction
 
-Function clean()
+Function refresh()
 {Override in child scripts as needed.}
 EndFunction
 
@@ -86,4 +86,13 @@ ObjectMod Function getLegLining()
 {Implement in child scripts.}
 	CheatBunker:Logger:RemoteLoading.logFunctionalityNotImplemented(self, "getArmLining()")
 	return None
+EndFunction
+
+Function clean()
+	Jiffy:Utility:FormList.clean(MaterialOptions)
+	Jiffy:Utility:FormList.clean(HeadlampMods)
+	Jiffy:Utility:FormList.clean(HelmetMods)
+	Jiffy:Utility:FormList.clean(TorsoMods)
+	Jiffy:Utility:FormList.clean(ArmMods)
+	Jiffy:Utility:FormList.clean(LegMods)
 EndFunction

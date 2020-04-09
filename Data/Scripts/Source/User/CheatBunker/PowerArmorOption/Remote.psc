@@ -20,7 +20,7 @@ ObjectMod LoadedTorsoLining = None
 ObjectMod LoadedArmLining = None
 ObjectMod LoadedLegLining = None
 
-Function clean()
+Function refresh()
 	LoadedFrame = None
 
 	LoadedHelmet = None
@@ -37,7 +37,7 @@ Function clean()
 EndFunction
 
 Function loadingFailure()
-	clean()
+	refresh()
 	CheatBunker:Dependencies:Spawning.getInstance().showRemoteLoadingFailureMessage()
 EndFunction
 

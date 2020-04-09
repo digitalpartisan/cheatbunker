@@ -27,12 +27,6 @@ Function reversion(FormList target, FormList source)
     endif
 EndFunction
 
-Function cleaning(FormList target, FormList source)
-    if (target && source)
-        Jiffy:Utility:FormList.clean(target)
-    endif
-EndFunction
-
 FormList Function getArmorClothingList()
     return CheatBunkerImporterContainerArmorClothingContents
 EndFunction
@@ -91,24 +85,4 @@ EndFunction
 
 Function revertWeaponsAmmo(FormList source)
     reversion(getWeaponsAmmoList(), source)
-EndFunction
-
-Function cleanArmorClothing(FormList source)
-    cleaning(getArmorClothingList(), source)
-EndFunction
-
-Function cleanConsumables(FormList source)
-    cleaning(getConsumablesList(), source)
-EndFunction
-
-Function cleanHolotapes(FormList source)
-    cleaning(getHolotapesList(), source)
-EndFunction
-
-Function cleanMisc(FormList source)
-    cleaning(getMiscList(), source)
-EndFunction
-
-Function cleanWeaponsAmmo(FormList source)
-    cleaning(getWeaponsAmmoList(), source)
 EndFunction

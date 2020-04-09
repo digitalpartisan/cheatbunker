@@ -153,3 +153,7 @@ Function buildLogic()
 	
 	selectedArmor.clean()
 EndFunction
+
+Function clean()
+	
+EndFunction
