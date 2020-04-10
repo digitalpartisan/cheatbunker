@@ -122,19 +122,16 @@ State Activated
 	Function transitTo()
 		Spawny:Spawner mySpawner = getButtonSpawner()
 		if (!mySpawner)
-			Debug.MessageBox("no spawner")
 			return
 		endif
 		
 		CheatBunker:WorldSpace:EntranceButton button = mySpawner.getSpawnedReference() as CheatBunker:WorldSpace:EntranceButton
 		if (!button)
-			Debug.MessageBox("no button")
 			return
 		endif
 		
 		ObjectReference transitMarker = button.getMarker()
 		if (!transitMarker)
-			Debug.MessageBox("no marker")
 			return
 		endif
 		
