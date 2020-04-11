@@ -11,7 +11,7 @@ EndGroup
 FormList Property MaterialOptions Auto Const
 
 Bool Function hasMods()
-	return (HeadlampMods || HelmetMods || TorsoMods || ArmMods || LegMods)
+	return ( (HeadlampMods && HeadlampMods.GetSize()) || (HelmetMods && HelmetMods.GetSize()) || (TorsoMods && TorsoMods.GetSize()) || (ArmMods && ArmMods.GetSize()) || (LegMods && LegMods.GetSize()) )
 EndFunction
 
 Bool Function canLoad()

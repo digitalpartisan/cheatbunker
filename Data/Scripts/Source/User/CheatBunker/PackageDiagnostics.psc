@@ -7,7 +7,7 @@ Function forceInjections()
 	endif
 EndFunction
 
-InjectTec:Integrator[] Function getImporters()
+FormList Function getImporters()
 	InjectTec:Integrator:ChronicleBehavior integratorBehavior = CheatBunker:Dependencies:General.getInstance().getImporterSearcher().searchOneIntegrator(getPackage())
 	if (integratorBehavior)
 		return integratorBehavior.getIntegrators()

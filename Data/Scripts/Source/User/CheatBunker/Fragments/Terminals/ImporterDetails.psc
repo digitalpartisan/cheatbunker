@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:ImporterDetails Extends Terminal Hidd
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
 ;BEGIN CODE
-ImporterDiagnostics.run(akTerminalRef)
+CheatBunkerImporterDiagnostics.startup(akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -12,7 +12,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_02
 Function Fragment_Terminal_02(ObjectReference akTerminalRef)
 ;BEGIN CODE
-ImporterDiagnostics.backOut(akTerminalRef)
+CheatBunkerImporterDiagnostics.shutdown(akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -20,11 +20,11 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_04
 Function Fragment_Terminal_04(ObjectReference akTerminalRef)
 ;BEGIN CODE
-ImporterDiagnostics.rerun(akTerminalRef)
+CheatBunkerImporterDiagnostics.rerun(akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:Importer:Diagnostics Property ImporterDiagnostics Auto Const
+InjectTec:Integrator:Handler Property CheatBunkerImporterDiagnostics Auto Const

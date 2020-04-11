@@ -18,6 +18,15 @@ PackageDiagnostics.draw(akTerminalRef)
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_Terminal_03
+Function Fragment_Terminal_03(ObjectReference akTerminalRef)
+;BEGIN CODE
+ImporterData.setData(PackageDiagnostics.getImporters())
+ImporterPaginator.init(akTerminalRef, ImporterData)
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;BEGIN FRAGMENT Fragment_Terminal_04
 Function Fragment_Terminal_04(ObjectReference akTerminalRef)
 ;BEGIN CODE
@@ -33,3 +42,7 @@ CheatBunker:PackageDiagnostics Property PackageDiagnostics Auto Const
 CheatBunker:Setting:Paginator Property SettingPaginator Auto Const
 
 DynamicTerminal:ListWrapper:FormList:Dynamic Property SettingData Auto Const
+
+InjectTec:Integrator:Paginator Property ImporterPaginator Auto Const
+
+DynamicTerminal:ListWrapper:FormList:Dynamic Property ImporterData Auto Const

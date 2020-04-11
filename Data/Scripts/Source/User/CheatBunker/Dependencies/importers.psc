@@ -1,14 +1,20 @@
 Scriptname CheatBunker:Dependencies:Importers extends Quest
 
-FormList Property CheatBunkerImporterContainerArmorClothingContents Auto Const Mandatory
+FormList Property CheatBunkerImporterContainerMiscContents Auto Const Mandatory
 {Autofill}
-FormList Property CheatBunkerImporterContainerConsumablesContents Auto Const Mandatory
+FormList Property CheatBunkerImporterContainerArmorAndClothingContents Auto Const Mandatory
+{Autofill}
+FormList Property CheatBunkerImporterContainerFoodAndDrinkContents Auto Const Mandatory
+{Autofill}
+FormList Property CheatBunkerImporterContainerMedicalAndChemsContents Auto Const Mandatory
 {Autofill}
 FormList Property CheatBunkerImporterContainerHolotapesContents Auto Const Mandatory
 {Autofill}
-FormList Property CheatBunkerImporterContainerMiscContents Auto Const Mandatory
+FormList Property CheatBunkerImporterContainerPowerArmorContents Auto Const Mandatory
 {Autofill}
-FormList Property CheatBunkerImporterContainerWeaponsAmmoContents Auto Const Mandatory
+FormList Property CheatBunkerImporterContainerWeaponsAndAmmoContents Auto Const Mandatory
+{Autofill}
+FormList Property CheatBunkerKnownPluginsList Auto Const Mandatory
 {Autofill}
 
 CheatBunker:Dependencies:Importers Function getInstance() Global
@@ -16,73 +22,131 @@ CheatBunker:Dependencies:Importers Function getInstance() Global
 EndFunction
 
 Function injection(FormList target, FormList source)
-    if (target && source && source.GetSize())
-        InjectTec:Utility:FormList.addFormList(target, source)
+    if (!target || !source || !source.GetSize())
+        return
     endif
+	
+	InjectTec:Utility:FormList.addFormList(target, source)
+	
+	Int iCounter = 0
+	Int iSize = source.GetSize()
+	CheatBunker:Importer:Item item = None
+	while (iCounter < iSize)
+		item = source.GetAt(iCounter) as CheatBunker:Importer:Item
+		item && item.Start()
+		iCounter += 1
+	endWhile
 EndFunction
 
 Function reversion(FormList target, FormList source)
-    if (target && source && source.GetSize())
-        InjectTec:Utility:FormList.removeFormList(target, source)
+    if (!target || !source || !source.GetSize())
+		return
     endif
-EndFunction
-
-FormList Function getArmorClothingList()
-    return CheatBunkerImporterContainerArmorClothingContents
-EndFunction
-
-FormList Function getConsumablesList()
-    return CheatBunkerImporterContainerConsumablesContents
-EndFunction
-
-FormList Function getHolotapesList()
-    return CheatBunkerImporterContainerHolotapesContents
+	
+	InjectTec:Utility:FormList.removeFormList(target, source)
+	
+	Int iCounter = 0
+	Int iSize = source.GetSize()
+	CheatBunker:Importer:Item item = None
+	while (iCounter < iSize)
+		item = source.GetAt(iCounter) as CheatBunker:Importer:Item
+		item && item.Stop()
+		iCounter += 1
+	endWhile
 EndFunction
 
 FormList Function getMiscList()
     return CheatBunkerImporterContainerMiscContents
 EndFunction
 
-FormList Function getWeaponsAmmoList()
-    return CheatBunkerImporterContainerWeaponsAmmoContents
+FormList Function getArmorAndClothingList()
+    return CheatBunkerImporterContainerArmorAndClothingContents
 EndFunction
 
-Function injectArmorClothing(FormList source)
-    injection(getArmorClothingList(), source)
+FormList Function getFoodAndDrinkList()
+    return CheatBunkerImporterContainerFoodAndDrinkContents
 EndFunction
 
-Function injectConsumables(FormList source)
-    injection(getConsumablesList(), source)
+FormList Function getMedicalAndChemsList()
+	return CheatBunkerImporterContainerMedicalAndChemsContents
 EndFunction
 
-Function injectHolotapes(FormList source)
-    injection(getHolotapesList(), source)
+FormList Function getHolotapesList()
+    return CheatBunkerImporterContainerHolotapesContents
 EndFunction
 
-Function injectMisc(FormList source)
-    injection(getMiscList(), source)
+FormList Function getPowerArmorList()
+	return CheatBunkerImporterContainerPowerArmorContents
 EndFunction
 
-Function injectWeaponsAmmo(FormList source)
-    injection(getWeaponsAmmoList(), source)
+FormList Function getWeaponsAndAmmoList()
+    return CheatBunkerImporterContainerWeaponsAndAmmoContents
 EndFunction
 
-Function revertArmorClothing(FormList source)
-    reversion(getArmorClothingList(), source)
+FormList Function getKnownPluginsList()
+	return CheatBunkerKnownPluginsList
 EndFunction
 
-Function revertConsumables(FormList source)
-    reversion(getConsumablesList(), source)
+Function injectMisc(FormList miscList)
+	injection(getMiscList(), miscList)
 EndFunction
 
-Function revertHolotapes(FormList source)
-    reversion(getHolotapesList(), source)
+Function injectArmorAndClothing(FormList armorClothingList)
+	injection(getArmorAndClothingList(), armorClothingList)
 EndFunction
 
-Function revertMiscList(FormList source)
-    reversion(getMiscList(), source)
+Function injectFoodAndDrink(FormList foodAndDrinkList)
+	injection(getFoodAndDrinkList(), foodAndDrinkList)
 EndFunction
 
-Function revertWeaponsAmmo(FormList source)
-    reversion(getWeaponsAmmoList(), source)
+Function injectMedicalAndChems(FormList medicalAndChemsList)
+	injection(getMedicalAndChemsList(), medicalAndChemsList)
+EndFunction
+
+Function injectHolotapes(FormList holotapesList)
+	injection(getHolotapesList(), holotapesList)
+EndFunction
+
+Function injectPowerArmor(FormList powerArmorList)
+	injection(getPowerArmorList(), powerArmorList)
+EndFunction
+
+Function injectWeaponsAndAmmo(FormList weaponsAndAmmoList)
+	injection(getWeaponsAndAmmoList(), weaponsAndAmmoList)
+EndFunction
+
+Function injectPlugins(InjectTec:Plugin[] plugins)
+	InjectTec:Utility:FormList.addForms(getKnownPluginsList(), plugins as Form[])
+EndFunction
+
+Function revertMisc(FormList miscList)
+	reversion(getMiscList(), miscList)
+EndFunction
+
+Function revertArmorAndClothing(FormList armorAndClothingList)
+	reversion(getArmorAndClothingList(), armorAndClothingList)
+EndFunction
+
+Function revertFoodAndDrink(FormList foodAndDrinkList)
+	reversion(getFoodAndDrinkList(), foodAndDrinkList)
+EndFunction
+
+Function revertMedicalAndChems(FormList medicalAndChemsList)
+	reversion(getMedicalAndChemsList(), medicalAndChemsList)
+EndFunction
+
+Function revertHolotapes(FormList holotapesList)
+	reversion(getHolotapesList(), holotapesList)
+EndFunction
+
+Function revertPowerArmor(FormList powerArmorList)
+	reversion(getPowerArmorList(), powerArmorList)
+EndFunction
+
+Function revertWeaponsAndAmmo(FormList weaponsAndAmmoList)
+	reversion(getWeaponsAndAmmoList(), weaponsAndAmmoList)
+EndFunction
+
+Function revertPlugins(InjectTec:Plugin[] plugins)
+	InjectTec:Utility:FormList.removeForms(getKnownPluginsList(), plugins as Form[])
 EndFunction

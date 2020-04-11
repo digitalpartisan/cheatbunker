@@ -115,4 +115,4 @@ EndFunction
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:Importer:Paginator Property Paginator Auto Const
+InjectTec:Integrator:Paginator Property Paginator Auto Const

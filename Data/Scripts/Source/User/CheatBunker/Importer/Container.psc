@@ -1,13 +1,9 @@
-Scriptname CheatBunker:Importer:Container extends ObjectReference Hidden
+Scriptname CheatBunker:Importer:Container extends ObjectReference
 
 FormList Property MyContents Auto Const Mandatory
 
 FormList Function getContents()
     return MyContents
-EndFunction
-
-Function importItem(Form itemToAdd)
-    {Override this to implement a particular type of importer container.}
 EndFunction
 
 Function addContents()
@@ -18,14 +14,16 @@ Function addContents()
 
     Int iCounter = 0
     Int iSize = contents.GetSize()
+	CheatBunker:Importer:Item item = None
     while (iCounter < iSize)
-        importItem(contents.GetAt(iCounter))
+		item = contents.GetAt(iCounter) as CheatBunker:Importer:Item
+		item && item.addToContainer(self)
         iCounter += 1
     endWhile
 EndFunction
 
 Event OnClose(ObjectReference akActionRef)
-    RemoveAllItems()
+	CheatBunker:Logger.containerReset(self)
 	Reset()
 	addContents()
 EndEvent
