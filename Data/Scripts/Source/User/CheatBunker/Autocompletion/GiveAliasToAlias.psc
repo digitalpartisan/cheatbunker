@@ -1,9 +1,30 @@
 Scriptname CheatBunker:Autocompletion:GiveAliasToAlias extends CheatBunker:Autocompletion:StageResponder:CustomResponse
 
-ReferenceAlias Property GiveMe Auto Const Mandatory
-ReferenceAlias Property ToMe Auto Const Mandatory
+Struct GiveTo
+	Int giveID = 0
+	Int toID = 0
+EndStruct
 
-Function respond()
-	CheatBunker:Logger:Autocompletion.logGivingAliasToAlias(self, GiveMe, ToMe)
-	ToMe.GetReference().AddItem(GiveMe.GetReference())
+ReferenceAlias Property GiveMe Auto Const
+ReferenceAlias Property ToMe Auto Const
+GiveTo[] Property GiveRelations Auto Const Mandatory
+
+Function respond(Quest targetQuest)
+	if (!GiveRelations || !GiveRelations.Length)
+		return
+	endIf
+	
+	Int iCounter = 0
+	GiveTo targetSet = None
+	while (iCounter < GiveRelations.Length)
+		targetSet = GiveRelations[iCounter]
+		if (targetSet)
+			ReferenceAlias giveAlias = resolveReferenceAlias(targetQuest, targetSet.giveID)
+			ReferenceAlias toAlias = resolveReferenceAlias(targetQuest, targetSet.toID)
+			CheatBunker:Logger:Autocompletion.logGivingAliasToAlias(self, giveAlias, toAlias)
+			toAlias.GetReference().AddItem(giveAlias.GetReference())
+		endif
+		
+		iCounter += 1
+	endWhile
 EndFunction

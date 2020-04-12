@@ -79,11 +79,7 @@ EndFunction
 
 Bool Function isStageReady()
 	Quest targetQuest = getQuest()
-	if (!targetQuest || 0 == TriggerStages.Length)
-		return false ; this method will only allow the autocompletion to run if a quest is specified and 
-	endif
-	
-	return detectTriggerStage(targetQuest.GetStage())
+	return (targetQuest && TriggerStages && TriggerStages.Length && detectTriggerStage(targetQuest.GetStage())) ; this method will only allow the autocompletion to run if a quest is specified and its current stage is in the allowed Trigger Stages
 EndFunction
 
 Bool Function detectAccessibleObjective()

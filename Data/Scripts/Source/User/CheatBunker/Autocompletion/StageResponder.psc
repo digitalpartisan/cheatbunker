@@ -51,7 +51,7 @@ Function processStageResponse(StageResponse myResponse)
 
 	if (myResponse.CustomResponseBehavior)
 		CheatBunker:Logger:Autocompletion.responseCustomBehavior(self, myResponse.StageID, myResponse.CustomResponseBehavior)
-		myResponse.CustomResponseBehavior.respond()
+		myResponse.CustomResponseBehavior.respond(targetQuest)
 	endif
 	
 	if (0 != myResponse.CompleteObjectiveID)

@@ -115,22 +115,18 @@ Bool Function logStopListeningForVaultExit(CheatBunker:Autocompletion myAutocomp
 	return log(myAutocompleter + " is no longer listening for Vault 111 exit")
 EndFunction
 
-Bool Function logKillingAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias target) Global
-	return log(response + " is killing the alias " + target)
-EndFunction
-
 Bool Function logKillingAliases(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias[] targets) Global
 	return log(response + " is killing these aliases " + targets)
 EndFunction
 
-Bool Function logGivingAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias target) Global
-	return log(response + " is giving the player " + target)
+Bool Function logGivingAliases(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias[] targets) Global
+	return log(response + " is giving the player " + targets)
 EndFunction
 
 Bool Function logGivingAliasToAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias given, Alias givenTo) Global
 	return log(response + " is giving " + given + " to " + givenTo)
 EndFunction
 
-Bool Function logActivatingAlias(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias target) Global
-	return log(response + " is activating " + target)
+Bool Function logActivatingAliases(CheatBunker:Autocompletion:StageResponder:CustomResponse response, Alias[] targets) Global
+	return log(response + " is activating " + targets)
 EndFunction
