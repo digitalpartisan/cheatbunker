@@ -35,6 +35,8 @@ Int[] Property StagesToComplete Auto Const
 {All stage IDs that must be "done" to avoid side effects from the target quest being "not quite" done such as dialogue from the target quest still running because its conditions say it should.
 These stages are checked and, if necessary, set after the setstage() event listener is deactivated prior to the autocompletion option finishing its work.
 Any work to do on a specific stage or other event should be taken care of elsewhere because this is a fallback mechanism to tie up loose ends that only require a call to setStage() and no other work.}
+Chronicle:Package Property MyPackage Auto Const Mandatory
+Bool Property NeverAutofire = false Auto Const
 
 String sStateEmpty = "" Const
 String sStatePreinitialized = "Preinitialized" Const
@@ -51,6 +53,14 @@ EndGroup
 Bool bRunning = false ; artifact from prior version of the autocompletion logic.  Retained to track state of existing autocompletion instances.
 Bool bFinished = false  ; artifact from prior version of the autocompletion logic.  Retained to track state of existing autocompletion instances.
 Bool bAnnounced = false
+
+Chronicle:Package Function getPackage()
+	return MyPackage
+EndFunction
+
+Bool Function mayAutofire()
+	return !NeverAutofire && CheatBunker:Autocompletion:AutofireSetting.isSetForPackage(getPackage())
+EndFunction
 
 Bool Function canUserHalt()
 	return UserCanHalt
@@ -204,10 +214,18 @@ Function executionStageHandler(Int aiStageID)
 EndFunction
 
 Function availabilityCheck()
-	if (canExecute() && !bAnnounced)
-		bAnnounced = true
-		CheatBunker:Logger:Autocompletion.available(self)
-		AvailabilityMessage.Show()
+	if (!canExecute())
+		return
+	endif
+
+	if (mayAutofire())
+		execute()
+	else
+		if (!bAnnounced)
+			bAnnounced = true
+			CheatBunker:Logger:Autocompletion.available(self)
+			AvailabilityMessage.Show()
+		endif
 	endif
 EndFunction
 

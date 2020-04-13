@@ -34,3 +34,11 @@ EndFunction
 CheatBunker:TransitScript Function getTransitQuest()
     return CheatBunkerTransitQuest
 EndFunction
+
+CheatBunker:CustomPackageData Function getPackageData(Chronicle:Package targetPackage) Global
+	if (!targetPackage)
+		return None
+	endif
+	
+	return targetPackage.getCustomData() as CheatBunker:CustomPackageData
+EndFunction

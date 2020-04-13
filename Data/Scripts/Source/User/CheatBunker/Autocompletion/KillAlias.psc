@@ -1,6 +1,5 @@
 Scriptname CheatBunker:Autocompletion:KillAlias extends CheatBunker:Autocompletion:StageResponder:CustomResponse
 
-ReferenceAlias Property KillMe Auto Const
 Int[] Property KillIDs Auto Const Mandatory
 
 Function respond(Quest targetQuest)

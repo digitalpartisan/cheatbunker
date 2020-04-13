@@ -1,6 +1,5 @@
 Scriptname CheatBunker:Autocompletion:ActivateAlias extends CheatBunker:Autocompletion:StageResponder:CustomResponse
 
-ReferenceAlias Property ActivateMe Auto Const
 Int[] Property AliasIDs Auto Const Mandatory
 
 Function respond(Quest targetQuest)

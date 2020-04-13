@@ -5,8 +5,6 @@ Struct GiveTo
 	Int toID = 0
 EndStruct
 
-ReferenceAlias Property GiveMe Auto Const
-ReferenceAlias Property ToMe Auto Const
 GiveTo[] Property GiveRelations Auto Const Mandatory
 
 Function respond(Quest targetQuest)

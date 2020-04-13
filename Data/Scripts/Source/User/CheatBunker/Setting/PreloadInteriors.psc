@@ -3,7 +3,6 @@ Scriptname CheatBunker:Setting:PreloadInteriors extends CheatBunker:Setting Cond
 Cell Property CheatBunkerInterior Auto Const Mandatory
 {Autofill.}
 ObjectReference Property BunkerEntranceDoor Auto Const Mandatory
-{Trapdoor outside Vault 111 to Cheat Bunker interior.}
 
 Function logPreloading(String asDetails) DebugOnly
     CheatBunker:Logger:Settings.log(self + " is preloading, " + asDetails)

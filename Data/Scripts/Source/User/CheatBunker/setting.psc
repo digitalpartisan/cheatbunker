@@ -1,11 +1,16 @@
 Scriptname CheatBunker:Setting extends Quest Hidden Conditional
 
+Chronicle:Package Property MyPackage Auto Const Mandatory
 Message Property Explanation Auto Const Mandatory
 
 Bool bIsActivated = false Conditional
 
 String sStateDeactivated = "Deactivated" Const
 String sStateActivated = "Activated" Const
+
+Chronicle:Package Function getPackage()
+	return MyPackage
+EndFunction
 
 Function goToDeactivated()
 	GoToState(sStateDeactivated)
