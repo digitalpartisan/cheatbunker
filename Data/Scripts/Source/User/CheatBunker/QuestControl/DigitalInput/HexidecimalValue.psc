@@ -1,4 +1,4 @@
-Scriptname CheatBunker:QuestControl:DigitalInput:QuestID extends CheatBunker:QuestControl:DigitalInput
+Scriptname CheatBunker:QuestControl:DigitalInput:HexidecimalValue extends CheatBunker:QuestControl:DigitalInput
 
 Import InjectTec:Utility:HexidecimalLogic
 

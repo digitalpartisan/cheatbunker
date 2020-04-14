@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:QuestControlInput Extends Terminal Hi
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue0, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue0, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -12,7 +12,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_02
 Function Fragment_Terminal_02(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue1, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue1, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -20,7 +20,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_03
 Function Fragment_Terminal_03(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue2, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue2, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -28,7 +28,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_04
 Function Fragment_Terminal_04(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue3, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue3, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -36,7 +36,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_05
 Function Fragment_Terminal_05(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue4, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue4, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -44,7 +44,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_06
 Function Fragment_Terminal_06(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue5, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue5, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -52,7 +52,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_07
 Function Fragment_Terminal_07(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue6, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue6, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -60,7 +60,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_08
 Function Fragment_Terminal_08(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue7, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue7, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -68,7 +68,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_09
 Function Fragment_Terminal_09(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue8, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue8, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -76,7 +76,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_10
 Function Fragment_Terminal_10(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValue9, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValue9, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -84,7 +84,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_11
 Function Fragment_Terminal_11(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValueA, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValueA, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -92,7 +92,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_12
 Function Fragment_Terminal_12(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValueB, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValueB, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -100,7 +100,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_13
 Function Fragment_Terminal_13(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValueC, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValueC, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -108,7 +108,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_14
 Function Fragment_Terminal_14(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValueD, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValueD, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -116,7 +116,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_15
 Function Fragment_Terminal_15(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValueE, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValueE, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -124,14 +124,14 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_16
 Function Fragment_Terminal_16(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerQuestControl.newInput(CheatBunkerQuestControlInputValueF, akTerminalRef)
+CheatBunkerQuestControlTerminalLogicProxy.newInput(CheatBunkerQuestControlInputValueF, akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:QuestControl Property CheatBunkerQuestControl Auto Const Mandatory
+CheatBunker:QuestControl:DigitalInput:Terminal:Proxy Property CheatBunkerQuestControlTerminalLogicProxy Auto Const Mandatory
 
 CheatBunker:QuestControl:InputValue Property CheatBunkerQuestControlInputValue0 Auto Const Mandatory
 CheatBunker:QuestControl:InputValue Property CheatBunkerQuestControlInputValue1 Auto Const Mandatory

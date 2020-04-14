@@ -1,7 +1,11 @@
 Scriptname CheatBunker:QuestControl:PluginPaginator extends dynamicterminal:paginator Conditional
 
-CheatBunker:QuestControl Property CheatBunkerQuestControl Auto Const Mandatory
+CheatBunker:QuestControl:DigitalInput:Terminal terminalLogic = None
+
+Function setTerminalLogic(CheatBunker:QuestControl:DigitalInput:Terminal newValue)
+	terminalLogic = newValue
+EndFunction
 
 Function itemActivation(Int iItem, ObjectReference akTerminalRef)
-	CheatbunkerQuestControl.setPlugin( getItem(iItem) as InjectTec:Plugin , akTerminalRef)
+	terminalLogic && terminalLogic.setPlugin( getItem(iItem) as InjectTec:Plugin , akTerminalRef )
 EndFunction

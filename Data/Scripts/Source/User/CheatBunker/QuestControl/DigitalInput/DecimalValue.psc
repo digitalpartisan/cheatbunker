@@ -1,4 +1,4 @@
-Scriptname CheatBunker:QuestControl:DigitalInput:StageID extends CheatBunker:QuestControl:DigitalInput
+Scriptname CheatBunker:QuestControl:DigitalInput:DecimalValue extends CheatBunker:QuestControl:DigitalInput
 
 Int Function getValue()
 	CheatBunker:QuestControl:InputValue[] myValues = getValues()

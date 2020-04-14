@@ -8,6 +8,7 @@ Library integrations:
 Bug fixes:
 	Added a button that allows the player to forcefully move phantom Power Armor Frames away from the Power Armor Workbench in the Bunker
 	Fixed a bug where the Snapback teleportation timer was not stopped when the Snapback was manually cancelled
+	Many terminals had their response text set or refined to make behavior more clear to the user
 Bug prevention:
 	Redsigned Bunker / World Space transition mechanisms to allow for access to third-party World Spaces and the removal of the Fast Travel room
 	Eliminated secret Workshop and directly linked Workbench containers in the Bunker

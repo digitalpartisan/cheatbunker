@@ -1,13 +1,11 @@
-Scriptname CheatBunker:QuestControl extends DynamicTerminal:Basic Conditional
+Scriptname CheatBunker:QuestControl extends CheatBunker:QuestControl:DigitalInput:Terminal Conditional
 
 Message Property CheatBunkerQuestControlInvalidQuestIDMessage Auto Const Mandatory
 Message Property CheatBunkerQuestControlInvalidStageIDMessage Auto Const Mandatory
 Message Property CheatBunkerQuestControlStageSetMessage Auto Const Mandatory
 
-Message Property CheatBunkerQuestControlDefaultDigit Auto Const Mandatory
-
-CheatBunker:QuestControl:DigitalInput:QuestID Property QuestID Auto Const Mandatory
-CheatBunker:QuestControl:DigitalInput:StageID Property StageID Auto Const Mandatory
+CheatBunker:QuestControl:DigitalInput:HexidecimalValue Property QuestID Auto Const Mandatory
+CheatBunker:QuestControl:DigitalInput:DecimalValue Property StageID Auto Const Mandatory
 
 Message Property CheatBunkerQuestControlStateCompletedMessage Auto Const Mandatory
 Message Property CheatBunkerQuestControlStateNotRunningMessage Auto Const Mandatory
@@ -16,57 +14,41 @@ Message Property CheatBunkerQuestControlStateStartingMessage Auto Const Mandator
 Message Property CheatBunkerQuestControlStateStoppedMessage Auto Const Mandatory
 Message Property CheatBunkerQuestControlStateStoppingMessage Auto Const Mandatory
 
-String sStatePlugin = "Plugin" Const
 String sStateQuest = "Quest" Const
 String sStateStage = "Stage" Const
 
-String sTokenSelectedPlugin = "SelectedPlugin" Const
 String sTokenSelectedQuest = "SelectedQuest" Const
 String sTokenQuestStatus = "QuestStatus" Const
 String sTokenQuestStage = "QuestStage" Const
 String sTokenQuestIDPrefix = "QuestID" Const
 String sTokenStageIDPrefix = "StageID" Const
 
-Bool bHasPlugin = false Conditional
 Bool bHasQuestID = false Conditional
 Bool bHasQuest = false Conditional
 Bool bCanStart = false Conditional
 Bool bCanStop = false Conditional
 Bool bCanComplete = false Conditional
 Bool bHasStageID = false Conditional
-Bool bAcceptingHexidecimalInput = false Conditional
 
-InjectTec:Plugin myPlugin = None
 Quest myQuest = None
 
-Function initializeState(ObjectReference akTerminalRef)
-	GoToState(sStatePlugin)
+String Function getStateAfterPlugin()
+	return sStateQuest
+EndFunction
 
-	bHasPlugin = false
+Function initializeBehavior()
 	bHasQuestID = false
 	bHasQuest = false
 	bHasStageID = false
-	bAcceptingHexidecimalInput = false
 
-	myPlugin = None
 	myQuest = None
 	
 	QuestID.initialize()
 	StageID.initialize()
-	
-	draw(akTerminalRef)
 EndFunction
 
 Function loadQuest(ObjectReference akTerminalRef)
 	CheatBunker:Logger.logBehaviorUndefined(self, "loadQuest()")
-EndFunction
-
-InjectTec:Plugin Function getPlugin()
-	return myPlugin
-EndFunction
-
-Function setPlugin(InjectTec:Plugin pluginRef, ObjectReference akTerminalRef)
-	CheatBunker:Logger.logBehaviorUndefined(self, "setPlugin()")
 EndFunction
 
 Quest Function getQuest()
@@ -110,12 +92,9 @@ Function resetQuestStateLogic()
 EndFunction
 
 Function resetQuestIDLogic()
-	bAcceptingHexidecimalInput = true
 	bHasQuestID = false
 	bHasQuest = false
-	
 	resetQuestStateLogic()
-	
 	QuestID.initialize()
 EndFunction
 
@@ -123,10 +102,6 @@ Function resetStageIDLogic()
 	bHasStageID = false
 	resetQuestStateLogic()
 	StageID.initialize()
-EndFunction
-
-Function newInput(CheatBunker:QuestControl:InputValue newValue, ObjectReference akTerminalRef)
-	CheatBunker:Logger.logBehaviorUndefined(self, "newInput()")
 EndFunction
 
 Function resetQuestID(ObjectReference akTerminalRef)
@@ -163,23 +138,6 @@ Function replaceQuestData()
 	replace(sTokenQuestStatus, statusMessage)
 EndFunction
 
-Function replaceDigitalInputTokens(CheatBunker:QuestControl:DigitalInput inputSet, String sPrefix)
-	Int iCounter = 0
-	String sTokenName = ""
-	CheatBunker:QuestControl:InputValue[] values = inputSet.getValues()
-	
-	while (iCounter < inputSet.NumberOfDigits)
-		sTokenName = sPrefix + iCounter
-		if (iCounter < values.Length)
-			replace(sTokenName, values[iCounter])
-		else
-			replace(sTokenName, CheatBunkerQuestControlDefaultDigit)
-		endif
-		
-		iCounter += 1
-	endWhile
-EndFunction
-
 Function replaceQuestIDTokens()
 	replaceDigitalInputTokens(QuestID, sTokenQuestIDPrefix)
 EndFunction
@@ -189,9 +147,7 @@ Function replaceStageIDTokens()
 EndFunction
 
 Function tokenReplacementLogic()
-	if (bHasPlugin)
-		replace(sTokenSelectedPlugin, getPlugin())
-	endif
+	replacePlugin()
 	
 	if (bHasQuest)
 		replaceQuestData()
@@ -201,32 +157,19 @@ Function tokenReplacementLogic()
 	replaceStageIDTokens()
 EndFunction
 
-Auto State Plugin
-	Function setPlugin(InjectTec:Plugin pluginRef, ObjectReference akTerminalRef)
-		myPlugin = pluginRef
-		bHasPlugin = true
-		GoToState(sStateQuest)
-		draw(akTerminalRef)
-	EndFunction
-EndState
-
 State Quest
 	Event OnBeginState(String asOldState)
 		resetQuestIDLogic()
+		acceptHexidecimalInput()
 	EndEvent
 	
 	Event OnEndState(String asNewState)
-		bAcceptingHexidecimalInput = false
+		stopAcceptingHexidecimalInput()
 	EndEvent
 	
 	Function newInput(CheatBunker:QuestControl:InputValue newValue, ObjectReference akTerminalRef)
 		QuestID.setNextField(newValue)
-		
-		if (QuestID.isFull())
-			bHasQuestID = true
-			bAcceptingHexidecimalInput = false
-		endif
-		
+		bHasQuestID = QuestID.isFull()
 		draw(akTerminalRef)
 	EndFunction
 	
@@ -244,13 +187,17 @@ State Quest
 		
 		if (getQuest())
 			bHasQuest = true
-			GoToState(sStateStage)
+			progressState()
 		else
 			CheatBunkerQuestControlInvalidQuestIDMessage.Show()
 			resetQuestIDLogic()
 		endif
 		
 		draw(akTerminalRef)
+	EndFunction
+	
+	Function progressState()
+		GoToState(sStateStage)
 	EndFunction
 EndState
 
@@ -261,11 +208,7 @@ State Stage
 	
 	Function newInput(CheatBunker:QuestControl:InputValue newValue, ObjectReference akTerminalRef)
 		StageID.setNextField(newValue)
-		
-		if (StageID.isFull())
-			bHasStageID = true
-		endif
-		
+		bHasStageID = StageID.isFull()
 		draw(akTerminalRef)
 	EndFunction
 	
