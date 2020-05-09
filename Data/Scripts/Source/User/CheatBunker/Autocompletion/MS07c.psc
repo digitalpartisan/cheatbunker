@@ -11,6 +11,7 @@ Function completeTapeStage(StageTapeAssociation tapeStageData)
 	Quest targetQuest = getQuest()
 	if (!targetQuest.IsStageDone(tapeStageData.StageID))
 		Game.GetPlayer().AddItem(tapeStageData.TapeRef.GetReference())
+		Utility.Wait(0.25)
 	endif
 EndFunction
 
