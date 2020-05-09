@@ -78,6 +78,11 @@ Function applyMod(ObjectReference piece, ObjectMod mod)
 	endif
 EndFunction
 
+Function applyLining(ObjectReference piece, ObjectMod lining)
+	CheatBunker:Logger:PowerArmor.logLiningResult(getArmor(), piece, lining)
+	applyMod(piece, lining)
+EndFunction
+
 Function applyMaterial(ObjectReference piece)
 	if (bHasMaterial)
 		applyMod(piece, getComponent(iMaterialID).getValue() as ObjectMod)
@@ -87,7 +92,7 @@ EndFunction
 Function spawnHelmet(ObjectReference frame)
 	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
 	ObjectReference helmet = frame.PlaceAtMe(selectedArmor.getHelmet())
-	applyMod(helmet, selectedArmor.getHelmetLining())
+	applyLining(helmet, selectedArmor.getHelmetLining())
 	applyMaterial(helmet)
 	frame.AddItem(helmet)
 EndFunction
@@ -95,7 +100,7 @@ EndFunction
 Function spawnTorso(ObjectReference frame)
 	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
 	ObjectReference torso = frame.PlaceAtMe(selectedArmor.getTorso())
-	applyMod(torso, selectedArmor.getTorsoLining())
+	applyLining(torso, selectedArmor.getTorsoLining())
 	applyMaterial(torso)
 	frame.addItem(torso)
 EndFunction
@@ -103,7 +108,7 @@ EndFunction
 Function spawnArm(ObjectReference frame, Armor piece)
 	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor() 
 	ObjectReference arm = frame.PlaceAtMe(piece)
-	applyMod(arm, selectedArmor.getArmLining())
+	applyLining(arm, selectedArmor.getArmLining())
 	applyMaterial(arm)
 	frame.AddItem(arm)
 EndFunction
@@ -117,7 +122,7 @@ EndFunction
 Function spawnLeg(ObjectReference frame, Armor piece)
 	CheatBunker:PowerArmorOption:Abstract selectedArmor = getArmor()
 	ObjectReference leg = frame.PlaceAtMe(piece)
-	applyMod(leg, selectedArmor.getLegLining())
+	applyLining(leg, selectedArmor.getLegLining())
 	applyMaterial(leg)
 	frame.AddItem(leg)
 EndFunction

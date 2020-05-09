@@ -219,6 +219,7 @@ Function availabilityCheck()
 	endif
 
 	if (mayAutofire())
+		Utility.Wait(10)
 		execute()
 	else
 		if (!bAnnounced)

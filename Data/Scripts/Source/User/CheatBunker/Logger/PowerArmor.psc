@@ -18,6 +18,12 @@ Bool Function error(String sMessage) Global
 	return Jiffy:Loggout.error(CheatBunker:Logger.getName(), sMessage, getTags())
 EndFunction
 
+Bool Function logLiningResult(CheatBunker:PowerArmorOption:Abstract armorSet, ObjectReference piece, ObjectMod lining) Global
+	if (!lining)
+		return error(armorSet + " does not have a lining for " + piece)
+	endif
+EndFunction
+
 Bool Function logPreSpawnSearchResults(ObjectReference[] akResults) Global
 	String sMessage = "Found " + akResults.Length + " power armor frames: "
 	

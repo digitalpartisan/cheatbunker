@@ -14,9 +14,13 @@ Group Parts
 EndGroup
 
 Group PartLevels
+	ObjectMod Property HelmetLining Auto Const
 	DigitSet Property HelmetLiningDigits Auto Const
+	ObjectMod Property TorsoLining Auto Const
 	DigitSet Property TorsoLiningDigits Auto Const
+	ObjectMod Property ArmLining Auto Const
 	DigitSet Property ArmLiningDigits Auto Const
+	ObjectMod Property LegLining Auto Const
 	DigitSet Property LegLiningDigits Auto Const
 EndGroup
 
@@ -120,6 +124,14 @@ Bool Function populateModList(DigitSet[] digits, FormList targetList)
 	return (digits.Length == targetList.GetSize())
 EndFunction
 
+ObjectMod Function resolveMod(ObjectMod localForm, DigitSet digits)
+	if (localForm)
+		return localForm
+	endif
+	
+	return getPlugin().lookupWithDigits(digits) as ObjectMod
+EndFunction
+
 Bool Function loadBehavior()
 	if (!meetsPluginRequirements())
 		return false
@@ -165,26 +177,26 @@ Bool Function loadBehavior()
 		endif
 	endif
 	
-	if (HelmetLiningDigits)
-		helmetLiningForm = targetPlugin.lookupWithDigits(HelmetLiningDigits) as ObjectMod
+	if (HelmetLining || HelmetLiningDigits)
+		helmetLiningForm = resolveMod(HelmetLining, HelmetLiningDigits)
 		if (!helmetLiningForm)
 			return false
 		endif
 	endif
-	if (TorsoLiningDigits)
-		torsoLiningForm = targetPlugin.lookupWithDigits(TorsoLiningDigits) as ObjectMod
+	if (TorsoLining || TorsoLiningDigits)
+		torsoLiningForm = resolveMod(TorsoLining, TorsoLiningDigits)
 		if (!torsoLiningForm)
 			return false
 		endif
 	endif
-	if (ArmLiningDigits)
-		armLiningForm = targetPlugin.lookupWithDigits(ArmLiningDigits) as ObjectMod
+	if (ArmLining || ArmLiningDigits)
+		armLiningForm = resolveMod(ArmLining, ArmLiningDigits)
 		if (!armLiningForm)
 			return false
 		endif
 	endif
-	if (LegLiningDigits)
-		legLiningForm = targetPlugin.lookupWithDigits(legLiningDigits) as ObjectMod
+	if (LegLining || LegLiningDigits)
+		legLiningForm = resolveMod(LegLining, LegLiningDigits)
 		if (!legLiningForm)
 			return false
 		endif
