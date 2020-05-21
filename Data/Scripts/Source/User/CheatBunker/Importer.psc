@@ -1,4 +1,4 @@
-Scriptname CheatBunker:Importer extends InjectTec:Integrator
+Scriptname CheatBunker:Importer extends InjectTec:Integrator:BehaviorOmnibus
 
 Group Contents
 	FormList Property Misc Auto Const
