@@ -72,7 +72,7 @@ Bool Function isValid()
 EndFunction
 
 Quest Function getQuest()
-	return InjectTec:Utility:Form.load(MyQuest, QuestPlugin, 0, QuestDigits) as Quest
+	return InjectTec:Utility:Form.load(MyQuest, QuestPlugin, QuestDigits) as Quest
 EndFunction
 
 Jiffy:Vault111ExitDetector Function getVault111ExitDetector()

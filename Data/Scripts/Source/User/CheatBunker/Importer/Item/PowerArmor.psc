@@ -119,7 +119,7 @@ Bool Function populateModList(DigitSet[] digits, FormList targetList)
 	
 	InjectTec:Plugin targetPlugin = getPlugin()
 	targetList.Revert()
-	InjectTec:Utility:FormList.addForms(targetList, targetPlugin.lookupArrayWithDigitSets(digits))
+	InjectTec:Utility:FormList.addForms(targetList, targetPlugin.lookupArray(digits))
 	
 	return (digits.Length == targetList.GetSize())
 EndFunction
@@ -129,7 +129,7 @@ ObjectMod Function resolveMod(ObjectMod localForm, DigitSet digits)
 		return localForm
 	endif
 	
-	return getPlugin().lookupWithDigits(digits) as ObjectMod
+	return getPlugin().lookup(digits) as ObjectMod
 EndFunction
 
 Bool Function loadBehavior()
@@ -141,37 +141,37 @@ Bool Function loadBehavior()
 	CheatBunker:PowerArmorOption:Imported armorSet = getTargetArmorSet()
 	
 	if (HelmetDigits)
-		helmetForm = targetPlugin.lookupWithDigits(HelmetDigits) as Armor
+		helmetForm = targetPlugin.lookup(HelmetDigits) as Armor
 		if (!helmetForm)
 			return false
 		endif
 	endif
 	if (TorsoDigits)
-		torsoForm = targetPlugin.lookupWithDigits(TorsoDigits) as Armor
+		torsoForm = targetPlugin.lookup(TorsoDigits) as Armor
 		if (!torsoForm)
 			return false
 		endif
 	endif
 	if (ArmLeftDigits)
-		armLeftForm = targetPlugin.lookupWithDigits(ArmLeftDigits) as Armor
+		armLeftForm = targetPlugin.lookup(ArmLeftDigits) as Armor
 		if (!armLeftForm)
 			return false
 		endif
 	endif
 	if (ArmRightDigits)
-		armRightForm = targetPlugin.lookupWithDigits(ArmRightDigits) as Armor
+		armRightForm = targetPlugin.lookup(ArmRightDigits) as Armor
 		if (!armRightForm)
 			return false
 		endif
 	endif
 	if (LegLeftDigits)
-		legLeftForm = targetPlugin.lookupWithDigits(LegLeftDigits) as Armor
+		legLeftForm = targetPlugin.lookup(LegLeftDigits) as Armor
 		if (!legLeftForm)
 			return false
 		endif
 	endif
 	if (LegRightDigits)
-		legRightForm = targetPlugin.lookupWithDigits(LegRightDigits) as Armor
+		legRightForm = targetPlugin.lookup(LegRightDigits) as Armor
 		if (!legRightForm)
 			return false
 		endif

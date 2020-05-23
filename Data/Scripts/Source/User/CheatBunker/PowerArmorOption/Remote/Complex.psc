@@ -54,11 +54,11 @@ Group LegLiningSettings
 EndGroup
 
 Armor Function loadArmor(Armor LocalArmor, DigitSet RemoteDigits)
-	return InjectTec:Utility:Form.load(LocalArmor, PluginToReference, 0, RemoteDigits) as Armor
+	return InjectTec:Utility:Form.load(LocalArmor, PluginToReference, RemoteDigits) as Armor
 EndFunction
 
 ObjectMod Function loadLining(ObjectMod LocalLining, DigitSet RemoteDigits)
-	return InjectTec:Utility:Form.load(LocalLining, PluginToReference, 0, RemoteDigits) as ObjectMod
+	return InjectTec:Utility:Form.load(LocalLining, PluginToReference, RemoteDigits) as ObjectMod
 EndFunction
 
 Function loadHelmet()

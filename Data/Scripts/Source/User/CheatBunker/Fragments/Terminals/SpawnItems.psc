@@ -15,4 +15,4 @@ CheatBunker:TerminalSpawnFormList Property CollectiblePaginator Auto Const
 
 DynamicTerminal:ListWrapper:FormList Property CollectibleData Auto Const
 
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
+DynamicTerminal:Paginator:Proxy Property Proxy Auto Const

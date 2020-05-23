@@ -61,7 +61,7 @@ EndFunction
 
 CheatBunker:CompanionScript Property CheatBunkerCompanionQuest Auto Const
 
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
+DynamicTerminal:Paginator:Proxy Property Proxy Auto Const
 
 CheatBunker:CompanionPaginator Property CompanionPaginator Auto Const
 

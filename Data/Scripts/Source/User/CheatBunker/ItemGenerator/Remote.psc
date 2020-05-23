@@ -15,7 +15,7 @@ Function loadingFailure()
 EndFunction
 
 Bool Function canLoad()
-	fLoadedForm = PluginToReference.lookupWithDigits(FormDigits)
+	fLoadedForm = PluginToReference.lookup(FormDigits)
 	if (None == fLoadedForm)
 		loadingFailure()
 		return false
@@ -26,7 +26,7 @@ Bool Function canLoad()
 	endif
 	
 	; admittedly, this is a bit of a hack, but the game won't outright crash here, so it's the mod author's fault if something doesn't pan out.  Do good Q/A, etc.
-	aLoadedMods = PluginToReference.lookupArrayWithDigitSets(ModDigitSets) as ObjectMod[]
+	aLoadedMods = PluginToReference.lookupArray(ModDigitSets) as ObjectMod[]
 	if !aLoadedMods
 		loadingFailure()
 		return false

@@ -6,6 +6,7 @@ CustomEvent Removed
 CustomEvent RemovedList
 
 FormList Property CheatBunkerDependenciesWorldSpacesList Auto Const Mandatory
+Spawny:Spawner:AdjustmentHandler Property CheatBunkerSpawnAdjuster Auto Const Mandatory
 
 CheatBunker:Dependencies:WorldSpaces Function getInstance() Global
 	return Game.GetFormFromFile(0x000050F3, CheatBunker:Dependencies.getPluginFilename()) as CheatBunker:Dependencies:WorldSpaces
@@ -62,4 +63,8 @@ Function unregisterWorldSpaceList(FormList worldSpaces)
 	Var[] args = new Var[1]
 	args[0] = worldSpaces
 	SendCustomEvent("RemovedList", args)
+EndFunction
+
+Spawny:Spawner:AdjustmentHandler Function getAdjuster()
+	return CheatBunkerSpawnAdjuster
 EndFunction

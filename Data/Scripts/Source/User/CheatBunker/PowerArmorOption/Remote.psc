@@ -43,7 +43,7 @@ EndFunction
 
 Bool Function canLoadFrame()
 	if (FrameDigits)
-		LoadedFrame = PluginToReference.lookupWithDigits(FrameDigits) as Furniture
+		LoadedFrame = PluginToReference.lookup(FrameDigits) as Furniture
 		if !LoadedFrame
 			loadingFailure()
 			return false

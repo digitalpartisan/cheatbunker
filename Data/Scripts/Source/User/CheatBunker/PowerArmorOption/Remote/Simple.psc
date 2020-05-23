@@ -19,11 +19,11 @@ Group LiningIDs
 EndGroup
 
 Armor Function loadArmor(DigitSet RemoteDigits)
-	return PluginToReference.lookupWithDigits(RemoteDigits) as Armor
+	return PluginToReference.lookup(RemoteDigits) as Armor
 EndFunction
 
 ObjectMod Function loadLining(DigitSet RemoteDigits)
-	return PluginToReference.lookupWithDigits(RemoteDigits) as ObjectMod
+	return PluginToReference.lookup(RemoteDigits) as ObjectMod
 EndFunction
 
 Function loadHelmet()

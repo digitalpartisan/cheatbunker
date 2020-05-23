@@ -33,7 +33,7 @@ Bool Function loadBehavior()
 		return false
 	endif
 	
-	myForms = getPlugin().lookupArrayWithDigitSets(getDigits())
+	myForms = getPlugin().lookupArray(getDigits())
 	return myForms && myForms.Length == getDigits().Length
 EndFunction
 

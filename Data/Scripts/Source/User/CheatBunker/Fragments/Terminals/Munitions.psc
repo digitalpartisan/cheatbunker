@@ -63,4 +63,4 @@ CheatBunker:TerminalGiveItem Property SyringerPaginator Auto Const
 
 DynamicTerminal:ListWrapper:FormList Property SyringerData Auto Const
 
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
+DynamicTerminal:Paginator:Proxy Property Proxy Auto Const

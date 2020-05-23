@@ -63,7 +63,7 @@ CheatBunker:TerminalGiveItem Property ChemsPaginator Auto Const
 
 DynamicTerminal:ListWrapper:FormList Property ChemsData Auto Const
 
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
+DynamicTerminal:Paginator:Proxy Property Proxy Auto Const
 
 CheatBunker:TerminalGiveItemAmount Property CurrencyPaginator Auto Const
 

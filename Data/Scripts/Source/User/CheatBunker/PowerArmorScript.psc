@@ -155,10 +155,4 @@ Function buildLogic()
 			mSpawned.Show()
 		endif
 	endif
-	
-	selectedArmor.clean()
-EndFunction
-
-Function clean()
-	
 EndFunction

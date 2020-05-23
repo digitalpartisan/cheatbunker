@@ -52,7 +52,7 @@ CheatBunker:SpawnWorkshopNPCPaginator Property NPCPaginator Auto Const
 
 DynamicTerminal:ListWrapper Property NPCData Auto Const
 
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
+DynamicTerminal:Paginator:Proxy Property Proxy Auto Const
 
 CheatBunker:PaginationProxyGiveAll Property GiveAllProxy Auto Const
 

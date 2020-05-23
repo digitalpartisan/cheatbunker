@@ -150,3 +150,15 @@ EndFunction
 Function revertPlugins(InjectTec:Plugin[] plugins)
 	InjectTec:Utility:FormList.removeForms(getKnownPluginsList(), plugins as Form[])
 EndFunction
+
+Function clean()
+	Jiffy:BackgroundProcessor:FormListCleaner cleaner = CheatBunker:Dependencies:General.getInstance().getFormListCleaner()
+	cleaner.clean(getMiscList())
+	cleaner.clean(getArmorAndClothingList())
+	cleaner.clean(getFoodAndDrinkList())
+	cleaner.clean(getMedicalAndChemsList())
+	cleaner.clean(getHolotapesList())
+	cleaner.clean(getPowerArmorList())
+	cleaner.clean(getWeaponsAndAmmoList())
+	cleaner.clean(getKnownPluginsList())
+EndFunction

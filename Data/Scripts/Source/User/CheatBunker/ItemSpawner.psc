@@ -127,7 +127,7 @@ State Form
 	EndFunction
 	
 	Function loadForm(ObjectReference akTerminalRef)
-		setForm(getPlugin().lookup(FormID.getValue()))
+		setForm(getPlugin().lookupInt(FormID.getValue()))
 		
 		if (getForm())
 			bHasForm = true

@@ -91,4 +91,5 @@ EndFunction
 Function unrunBehavior()
     parent.unrunBehavior()
 	deportBehavior()
+	CheatBunker:Dependencies:Importers.getInstance().clean()
 EndFunction

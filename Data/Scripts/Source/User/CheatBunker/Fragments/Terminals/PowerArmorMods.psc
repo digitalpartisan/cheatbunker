@@ -69,4 +69,4 @@ EndFunction
 
 CheatBunker:PowerArmorModQuest Property Builder Auto Const
 
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
+DynamicTerminal:Paginator:Proxy Property Proxy Auto Const

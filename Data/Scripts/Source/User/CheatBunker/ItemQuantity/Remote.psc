@@ -13,7 +13,7 @@ Function loadingFailure()
 EndFunction
 
 Bool Function canLoad()
-	fLoadedForm = PluginToReference.lookupWithDigits(FormDigits)
+	fLoadedForm = PluginToReference.lookup(FormDigits)
 	if !fLoadedForm
 		loadingFailure()
 		return false

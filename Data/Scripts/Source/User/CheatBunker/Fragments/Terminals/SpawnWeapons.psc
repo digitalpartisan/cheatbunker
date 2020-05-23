@@ -63,4 +63,4 @@ CheatBunker:TerminalSpawnGeneratedItem Property FistPaginator Auto Const
 
 DynamicTerminal:ListWrapper:FormList Property FistData Auto Const
 
-DynamicTerminal:PaginationProxy Property Proxy Auto Const
+DynamicTerminal:Paginator:Proxy Property Proxy Auto Const

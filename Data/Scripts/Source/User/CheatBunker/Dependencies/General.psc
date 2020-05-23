@@ -6,6 +6,7 @@ CheatBunker:Setting:PackageBehavior:Search Property CheatBunkerPackageBehaviorSe
 CheatBunker:Autocompletion:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchAutocompletions Auto Const Mandatory
 CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const Mandatory
 Jiffy:Vault111ExitDetector Property CheatBunkerVault111ExitDetector Auto Const Mandatory
+Jiffy:BackgroundProcessor:FormListCleaner Property CheatBunkerFormListCleaner Auto Const Mandatory
 
 CheatBunker:Dependencies:General Function getInstance() Global
 	return Game.GetFormFromFile(0x000029A8, CheatBunker:Dependencies.getPluginFilename()) as CheatBunker:Dependencies:General
@@ -41,4 +42,8 @@ CheatBunker:CustomPackageData Function getPackageData(Chronicle:Package targetPa
 	endif
 	
 	return targetPackage.getCustomData() as CheatBunker:CustomPackageData
+EndFunction
+
+Jiffy:BackgroundProcessor:FormListCleaner Function getFormListCleaner()
+	return CheatBunkerFormListCleaner
 EndFunction
