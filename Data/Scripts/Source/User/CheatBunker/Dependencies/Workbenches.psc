@@ -2,16 +2,9 @@ Scriptname CheatBunker:Dependencies:Workbenches extends Quest Const
 
 ObjectReference Property CookingWorkbench Auto Const Mandatory
 ObjectReference Property ChemistryWorkbench Auto Const Mandatory
-
-ObjectReference Property WeaponsmithWorkbench Auto Const Mandatory
 ObjectReference Property WeaponsWorkbench Auto Const Mandatory
-ObjectReference Property AmmunitionWorkbench Auto Const Mandatory
-
-ObjectReference Property ArmorsmithWorkbench Auto Const Mandatory
 ObjectReference Property ArmorWorkbench Auto Const Mandatory
-
 ObjectReference Property PAWorkbench Auto Const Mandatory
-
 ObjectReference Property WorkshopContainer Auto Const Mandatory
 
 CheatBunker:Dependencies:Workbenches Function getInstance() Global

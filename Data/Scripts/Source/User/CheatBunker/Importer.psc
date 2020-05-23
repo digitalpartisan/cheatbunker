@@ -12,7 +12,6 @@ Group Contents
 EndGroup
 
 Chronicle:Package Property Provider Auto Const Mandatory
-Spawny:ReferenceHandler:Listener[] Property ReferenceHandlerListeners Auto Const
 
 Chronicle:Package Function getProvider()
     return Provider
@@ -58,7 +57,6 @@ Function importBehavior()
 	importerLogic.injectWeaponsAndAmmo(getWeaponsAndAmmo())
 	importerLogic.injectPlugins(getPlugins())
 	
-	Spawny:ReferenceHandler:Listener.startBulk(ReferenceHandlerListeners)
 	CheatBunker:Worldspace.startBulk(Worldspaces)
 EndFunction
 
@@ -74,7 +72,6 @@ Function deportBehavior()
 	importerLogic.revertWeaponsAndAmmo(getWeaponsAndAmmo())
 	importerLogic.revertPlugins(getPlugins())
 	
-	Spawny:ReferenceHandler:Listener.stopBulk(ReferenceHandlerListeners)
 	CheatBunker:Worldspace.stopBulk(Worldspaces)
 EndFunction
 
