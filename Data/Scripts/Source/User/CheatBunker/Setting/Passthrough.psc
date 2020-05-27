@@ -1,0 +1,1 @@
+Scriptname CheatBunker:Setting:Passthrough extends CheatBunker:Setting
