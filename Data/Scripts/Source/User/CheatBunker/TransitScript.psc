@@ -21,7 +21,9 @@ Group Transit
 EndGroup
 
 CheatBunker:WorldSpace Property CheatBunkerPackageBaseWorldSpaceCommonwealth Auto Const Mandatory
-{Used to relocate the player outside the bunker when uninstalling}
+{Autofill, Used to relocate the player outside the bunker when uninstalling}
+Jiffy:Teleporter Property CheatBunkerTeleporter Auto Const Mandatory
+{Autofill}
 
 Bool bSnapbackPrimed = false Conditional
 ObjectReference snapbackMarker = None
@@ -32,6 +34,14 @@ Event OnQuestShutdown()
 	CheatBunkerPackageBaseWorldSpaceCommonwealth.transitTo()
 EndEvent
 
+Function teleport(ObjectReference akDestinationRef)
+	CheatBunkerTeleporter.act(akDestinationRef)
+EndFunction
+
+Function teleportFromTerminal(ObjectReference akDestinationRef)
+	CheatBunkerTeleporter.actFromTerminal(akDestinationRef)
+EndFunction
+
 Function applyEffectsToActor(Actor aTarget)
 	if (!aTarget)
 		return
@@ -41,58 +51,38 @@ Function applyEffectsToActor(Actor aTarget)
 	if (aTarget == Game.GetPlayer())
 		sTeleport = TeleportPlayerInSpell
 	endif
-	
+
 	aTarget.AddSpell(sTeleport, false)
 EndFunction
 
-Bool Function moveActor(Actor aTarget, ObjectReference akLocation)
-	if (!aTarget || !akLocation)
+Bool Function moveActor(Actor aTarget, ObjectReference akDestination)
+	if (!aTarget || !akDestination || (aTarget as ObjectReference) == akDestination )
 		return false
 	endif
-	
-	if ( (aTarget as ObjectReference) != akLocation)
-	    if (Game.GetPlayer() == aTarget)
-            Game.FastTravel(akLocation)
-	    else
-            aTarget.MoveTo(akLocation)
-	    endif
 
-		return true
-	endif
-	
-	return false
+	aTarget.MoveTo(akDestination)
+    return true
 EndFunction
 
 Function transitActor(Actor aTarget, ObjectReference akLocation)
 	moveActor(aTarget, akLocation) && applyEffectsToActor(aTarget)
 EndFunction
 
-Function transitToMarker(ObjectReference akMarker)
-	Actor aPlayer = Game.GetPlayer()
-	transitActor(aPlayer, akMarker)
-	
-	Actor[] followers = Game.GetPlayerFollowers()
-	if (!followers || !followers.Length)
-		return
-	endif
-	
-	Int iCounter = 0
-	while (iCounter < followers.Length)
-		transitActor(followers[iCounter], aPlayer)
-		iCounter += 1
-	endWhile
-EndFunction
-
-Function transitToPlayer()
-	transitToMarker(Game.GetPlayer())
+Function transitToPlayer(Actor aTarget)
+	transitActor(aTarget, Game.GetPlayer())
 EndFunction
 
 Function transitToInterior()
-    transitToMarker(InteriorMarker)
+    teleport(InteriorMarker)
+EndFunction
+
+Function transitToInteriorFromTerminal()
+	teleportFromTerminal(InteriorMarker)
 EndFunction
 
 Function recoverCompanions()
-	transitToPlayer()
+	CheatBunkerTeleporter.moveFollowers()
+	CheatBunkerTeleporter.addSpellToFollowers()
 EndFunction
 
 Bool Function placeSnapbackMarker()
@@ -122,7 +112,7 @@ Function initiateSnapback()
 		return
 	endif
 	
-	transitToInterior()
+	transitToInteriorFromTerminal()
 	CheatBunkerSnapbackInitMessage.Show()
 	bSnapbackPrimed = true
 	StartTimer(SnapbackTimeLimit.GetValue(), iSnapbackTimerID)
@@ -141,7 +131,7 @@ Function completeSnapback()
 		return
 	endif
 	
-	transitToMarker(snapbackMarker)
+	teleportFromTerminal(snapbackMarker)
 	destroysnapbackMarker()
 	CheatBunkerSnapbackCompleteMessage.Show()
 	bSnapbackPrimed = false

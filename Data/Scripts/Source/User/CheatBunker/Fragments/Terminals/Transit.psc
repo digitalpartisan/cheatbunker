@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:Transit Extends Terminal Hidden Const
 ;BEGIN FRAGMENT Fragment_Terminal_02
 Function Fragment_Terminal_02(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerTransitQuest.transitToInterior()
+CheatBunkerTransitQuest.transitToInteriorFromTerminal()
 ;END CODE
 EndFunction
 ;END FRAGMENT

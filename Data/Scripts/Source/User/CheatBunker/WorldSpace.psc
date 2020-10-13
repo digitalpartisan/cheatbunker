@@ -132,9 +132,9 @@ State Activated
 		
 		ObjectReference transitMarker = button.getMarker()
 		if (!transitMarker)
-			CheatBunker:Dependencies:General.getInstance().getTransitQuest().transitToMarker(button)
-		endif
-		
-		CheatBunker:Dependencies:General.getInstance().getTransitQuest().transitToMarker(transitMarker)
+            transitMarker = button
+        endif
+        
+		CheatBunker:Dependencies:General.getInstance().getTransitQuest().teleportFromTerminal(transitMarker)
 	EndFunction
 EndState

@@ -79,11 +79,7 @@ Function track()
 EndFunction
 
 Function moveToPlayer()
-	if (!setCheck())
-		return
-	endif
-	
-	CheatBunkerCompanionQuest.moveToPlayer(getCompanion().getUnderlyingActor())
+	setCheck() && CheatBunkerCompanionQuest.moveToPlayer(getCompanion().getUnderlyingActor())
 EndFunction
 
 Function tokenReplacementLogic()
@@ -96,11 +92,13 @@ Function tokenReplacementLogic()
 	CheatBunker:Companion thisCompanion = getCompanion()	
 	replace("CompanionActor", thisCompanion.abCompanion)
 	replace("CompanionPerk", thisCompanion.getPerk())
+	
 	if (bHasPerk)
 		replace("HavePerk", YesMessage)
 	else
 		replace("HavePerk", NoMessage)
 	endif
+
 	if (bRelationshipDamaged)
 		replace("DamagedRelationship", YesMessage)
 	else

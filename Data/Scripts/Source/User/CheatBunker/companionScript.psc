@@ -41,7 +41,7 @@ EndFunction
 
 Bool Function isRelationshipDamaged(CheatBunker:Companion companion)
 	CompanionActorScript companionActor = companion.getCompanionActor()
-	if (None == companionActor)
+	if (!companionActor)
 		return false
 	else
 		Float fAffinity = companionActor.GetValue(Game.GetCommonProperties().CA_Affinity)
@@ -65,13 +65,13 @@ EndFunction
 
 Function progressRelationship(Actor aTarget)
 	CompanionActorScript aCompanion = aTarget as CompanionActorScript
-	if (aCompanion == None)
+	if (!aCompanion)
 		AffinityNoCompanion.Show()
 		return
 	endif
 
 	CompanionActorScript:ThresholdData nextThreshold = aCompanion.GetNextThreshold(true)
-	if (nextThreshold == None)
+	if (!nextThreshold)
 		AffinityNoProgressPossible.Show()
 		return
 	endif
@@ -92,8 +92,8 @@ Function stopTracking()
 EndFunction
 
 Function setTrackingTarget(Actor aTarget, Message NotAvailableMessage = None)
-	if (aTarget == None)
-		if (NotAvailableMessage == None)
+	if (!aTarget)
+		if (!NotAvailableMessage)
 			TrackingNotAvailableMessage.Show()
 		else
 			NotAvailableMessage.Show()
@@ -111,15 +111,13 @@ Function setTrackingTarget(Actor aTarget, Message NotAvailableMessage = None)
 EndFunction
 
 Function moveToPlayer(Actor aTarget, Message mFailure = None)
-	if (aTarget == None)
-		if (mFailure != None)
-			mFailure.Show()
-		endif
+	if (!aTarget)
+		mFailure && mFailure.Show()
 		return
 	endif
 	
 	CheatBunker:Logger:Companion.movingToPlayer(aTarget)
-	CheatBunkerTransitQuest.moveActor(aTarget, Game.GetPlayer())
+	CheatBunkerTransitQuest.transitToPlayer(aTarget)
 	CheatBunkerTransitQuest.applyEffectsToActor(aTarget)
 EndFunction
 
