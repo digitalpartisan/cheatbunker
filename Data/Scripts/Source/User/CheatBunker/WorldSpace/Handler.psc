@@ -16,10 +16,12 @@ Function setWorldSpace(CheatBunker:WorldSpace targetWorldSpace)
 	bIsValid = myWorldSpace && myWorldSpace.isReadyForTransit()
 EndFunction
 
-Function transitTo()
-    if (isValid())
-        getWorldSpace().transitTo()
-    endif
+Function transitTo(ObjectReference akTerminalRef)
+    isValid() && getWorldSpace().transitTo()
+EndFunction
+
+Function transitToFromTerminal(ObjectReference akTerminalRef)
+    isValid() && getWorldSpace().transitToFromTerminal(akTerminalRef)
 EndFunction
 
 Function tokenReplacementLogic()

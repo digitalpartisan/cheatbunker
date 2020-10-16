@@ -31,6 +31,7 @@ ObjectReference snapbackMarker = None
 Event OnQuestShutdown()
 	CancelTimer(iSnapbackTimerID)
 	destroySnapbackMarker()
+	Game.GetPlayer().MoveTo(Game.GetPlayer()) ; make sure the player is out of the terminal
 	CheatBunkerPackageBaseWorldSpaceCommonwealth.transitTo()
 EndEvent
 
@@ -38,8 +39,8 @@ Function teleport(ObjectReference akDestinationRef)
 	CheatBunkerTeleporter.act(akDestinationRef)
 EndFunction
 
-Function teleportFromTerminal(ObjectReference akDestinationRef)
-	CheatBunkerTeleporter.actFromTerminal(akDestinationRef)
+Function teleportFromTerminal(ObjectReference akTerminalRef, ObjectReference akDestinationRef)
+	CheatBunkerTeleporter.actFromTerminal(akTerminalRef, akDestinationRef)
 EndFunction
 
 Function applyEffectsToActor(Actor aTarget)
@@ -76,8 +77,8 @@ Function transitToInterior()
     teleport(InteriorMarker)
 EndFunction
 
-Function transitToInteriorFromTerminal()
-	teleportFromTerminal(InteriorMarker)
+Function transitToInteriorFromTerminal(ObjectReference akTerminalRef)
+	teleportFromTerminal(akTerminalRef, InteriorMarker)
 EndFunction
 
 Function recoverCompanions()
@@ -100,19 +101,19 @@ Function destroySnapbackMarker()
 		return
 	endif
 
-	ObjectReference akMarker = snapbackMarker ; make sure the script property is clear before deleting just to be totally sure
+	ObjectReference akMarker = snapbackMarker ; make sure the script variable is clear before deleting just to be totally sure
 	snapbackMarker = None
 	akMarker.Delete()
 EndFunction
 
-Function initiateSnapback()
+Function initiateSnapback(ObjectReference akTerminalRef)
 	destroySnapbackMarker()
 	if (!placeSnapbackMarker())
 		CheatBunkerSnapbackFailMessage.Show()
 		return
 	endif
 	
-	transitToInteriorFromTerminal()
+	transitToInteriorFromTerminal(akTerminalRef)
 	CheatBunkerSnapbackInitMessage.Show()
 	bSnapbackPrimed = true
 	StartTimer(SnapbackTimeLimit.GetValue(), iSnapbackTimerID)
@@ -125,13 +126,13 @@ Function cancelSnapback()
 	CheatBunkerSnapbackCancelledMessage.Show()
 EndFunction
 
-Function completeSnapback()
+Function completeSnapback(ObjectReference akTerminalRef)
 	if (snapbackMarker == None)
 		CheatBunkerSnapbackFailMessage.Show()
 		return
 	endif
 	
-	teleportFromTerminal(snapbackMarker)
+	teleportFromTerminal(akTerminalRef, snapbackMarker)
 	destroysnapbackMarker()
 	CheatBunkerSnapbackCompleteMessage.Show()
 	bSnapbackPrimed = false

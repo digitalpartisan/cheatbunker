@@ -22,8 +22,31 @@ Function goToActivated()
     GoToState(sStateActivated)
 EndFunction
 
+ObjectReference Function getTransitMarker()
+    Spawny:Spawner mySpawner = getButtonSpawner()
+    if (!mySpawner)
+        return None
+    endif
+
+    CheatBunker:WorldSpace:EntranceButton button = mySpawner.getSpawnedReference() as CheatBunker:WorldSpace:EntranceButton
+    if (!button)
+        return None
+    endif
+
+    ObjectReference transitMarker = button.getMarker()
+    if (!transitMarker)
+        transitMarker = button
+    endif
+
+    return transitMarker
+EndFunction
+
 Function transitTo()
 	
+EndFunction
+
+Function transitToFromTerminal(ObjectReference akTerminalRef)
+
 EndFunction
 
 Bool Function isReadyForTransit()
@@ -120,21 +143,20 @@ State Activated
     EndFunction
 	
 	Function transitTo()
-		Spawny:Spawner mySpawner = getButtonSpawner()
-		if (!mySpawner)
-			return
-		endif
-		
-		CheatBunker:WorldSpace:EntranceButton button = mySpawner.getSpawnedReference() as CheatBunker:WorldSpace:EntranceButton
-		if (!button)
-			return
-		endif
-		
-		ObjectReference transitMarker = button.getMarker()
-		if (!transitMarker)
-            transitMarker = button
+        ObjectReference transitMarker = getTransitMarker()
+        if (!transitMarker)
+            return
         endif
-        
-		CheatBunker:Dependencies:General.getInstance().getTransitQuest().teleportFromTerminal(transitMarker)
+
+		CheatBunker:Dependencies:General.getInstance().getTransitQuest().teleport(transitMarker)
 	EndFunction
+
+    Function transitToFromTerminal(ObjectReference akTerminalRef)
+        ObjectReference transitMarker = getTransitMarker()
+        if (!transitMarker)
+            return
+        endif
+
+        CheatBunker:Dependencies:General.getInstance().getTransitQuest().teleportFromTerminal(akTerminalRef, transitMarker)
+    EndFunction
 EndState

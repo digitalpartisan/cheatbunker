@@ -12,7 +12,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_Terminal_03
 Function Fragment_Terminal_03(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerTransitQuest.completeSnapback()
+CheatBunkerTransitQuest.completeSnapback(akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT

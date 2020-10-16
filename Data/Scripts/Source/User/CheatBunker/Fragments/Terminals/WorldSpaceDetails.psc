@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:WorldSpaceDetails Extends Terminal Hi
 ;BEGIN FRAGMENT Fragment_Terminal_01
 Function Fragment_Terminal_01(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerWorldSpaceHandler.transitTo()
+CheatBunkerWorldSpaceHandler.transitToFromTerminal(akTerminalRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
