@@ -2,5 +2,5 @@
 *sublime*
 *.ppj
 *.pex
-Data/Meshes/PreCombined/CheatBunker.esp/
-Data/Vis/CheatBunker.esp/
+Data/Meshes/PreCombined/CheatBunker.esp
+Data/Vis/CheatBunker.esp
