@@ -51,7 +51,12 @@ Function calculateCanBuild()
 EndFunction
 
 Function spawnComponent(Int iComponentID, Int iAmount = 1)
-	CheatBunker:Dependencies:Spawning.getInstance().getContainerReference().AddItem(getComponent(iComponentID).getValue(), iAmount)
+	Form fItem = getComponent(iComponentID).getValue()
+	if (!fItem)
+		return
+	endif
+
+	CheatBunker:Dependencies:Spawning.getInstance().spawn(fItem, iAmount)
 EndFunction
 
 Function buildLogic()

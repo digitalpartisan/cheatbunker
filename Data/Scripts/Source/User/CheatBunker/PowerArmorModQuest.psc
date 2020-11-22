@@ -54,7 +54,7 @@ Function calculateCanBuild()
 EndFunction
 
 Function spawnComponent(Int iComponentID, Int iAmount = 1)
-	CheatBunker:Dependencies:Spawning.getInstance().getContainerReference().AddItem(getComponent(iComponentID).getValue(), iAmount)
+	CheatBunker:Dependencies:Spawning.getInstance().spawn(getComponent(iComponentID).getValue(), iAmount)
 EndFunction
 
 Function buildLogic()

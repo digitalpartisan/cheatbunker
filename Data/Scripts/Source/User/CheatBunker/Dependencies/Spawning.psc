@@ -29,3 +29,20 @@ EndFunction
 Ammo Function getFusionCore()
 	return AmmoFusionCore
 EndFunction
+
+Function spawn(Form fItem, Int iAmount = 1)
+	fItem && getContainerReference().AddItem(fItem, iAmount)
+EndFunction
+
+Function spawnList(FormList flItems)
+	if (!flItems || !flItems.GetSize())
+		return
+	endif
+
+	Int iCounter = 0
+	Int iSize = flItems.GetSize()
+	while (iCounter < iSize)
+		spawn(flItems.GetAt(iCounter))
+		iCounter += 1
+	endWhile
+EndFunction
