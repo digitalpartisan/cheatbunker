@@ -4,7 +4,7 @@ Scriptname CheatBunker:Fragments:Terminals:Holotape Extends Terminal Hidden Cons
 ;BEGIN FRAGMENT Fragment_Terminal_09
 Function Fragment_Terminal_09(ObjectReference akTerminalRef)
 ;BEGIN CODE
-CheatBunkerTerminalWorkshopHandler.refreshStatus()
+CheatBunkerTerminalWorkshopHandler.refreshWorkshop()
 ;END CODE
 EndFunction
 ;END FRAGMENT
