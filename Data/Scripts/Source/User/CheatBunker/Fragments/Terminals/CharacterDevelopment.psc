@@ -41,10 +41,20 @@ Game.ShowAllMapMarkers()
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_Terminal_08
+Function Fragment_Terminal_08(ObjectReference akTerminalRef)
+;BEGIN CODE
+CheatBunkerDevelopmentBuildPackagePaginator.init(akTerminalRef, PackageData)
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-CheatBunker:DevelopmentScript Property CheatBunkerDevelopmentQuest Auto Const
+CheatBunker:DevelopmentScript Property CheatBunkerDevelopmentQuest Auto Const Mandatory
 
-CheatBunker:Autocompletion:PackagePaginator Property PackagePaginator Auto Const
+CheatBunker:Autocompletion:PackagePaginator Property PackagePaginator Auto Const Mandatory
 
-Chronicle:Package:ListWrapper Property PackageData Auto Const
+Chronicle:Package:ListWrapper Property PackageData Auto Const Mandatory
+
+CheatBunker:Development:Build:PackagePaginator Property CheatBunkerDevelopmentBuildPackagePaginator Auto Const Mandatory

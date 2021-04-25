@@ -4,9 +4,11 @@ InjectTec:Injector:Bulk:ChronicleBehavior:Search Property CheatBunkerPackageBeha
 InjectTec:Integrator:ChronicleBehavior:Search Property CheatBunkerPackageBehaviorSearchImporters Auto Const Mandatory
 CheatBunker:Setting:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchSettings Auto Const Mandatory
 CheatBunker:Autocompletion:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchAutocompletions Auto Const Mandatory
+CheatBunker:Development:Build:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchBuilds Auto Const Mandatory
 CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const Mandatory
 Jiffy:Vault111ExitDetector Property CheatBunkerVault111ExitDetector Auto Const Mandatory
 Jiffy:BackgroundProcessor:FormListCleaner Property CheatBunkerFormListCleaner Auto Const Mandatory
+CheatBunker:Development:Utility Property CheatBunkerDevelopmentUtility Auto Const Mandatory
 
 CheatBunker:Dependencies:General Function getInstance() Global
 	return Game.GetFormFromFile(0x000029A8, CheatBunker:Dependencies.getPluginFilename()) as CheatBunker:Dependencies:General
@@ -28,6 +30,10 @@ CheatBunker:Autocompletion:PackageBehavior:Search Function getAutocompletionSear
 	return CheatBunkerPackageBehaviorSearchAutocompletions
 EndFunction
 
+CheatBunker:Development:Build:PackageBehavior:Search Function getBuildSearcher()
+	return CheatBunkerPackageBehaviorSearchBuilds
+EndFunction
+
 Jiffy:Vault111ExitDetector Function getVault111ExitDetector()
 	return CheatBunkerVault111ExitDetector
 EndFunction
@@ -46,4 +52,8 @@ EndFunction
 
 Jiffy:BackgroundProcessor:FormListCleaner Function getFormListCleaner()
 	return CheatBunkerFormListCleaner
+EndFunction
+
+CheatBunker:Development:Utility Function getDevelopmentUtility()
+	return CheatBunkerDevelopmentUtility
 EndFunction
