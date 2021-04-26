@@ -10,29 +10,130 @@ Struct StartingStats
 	Int luck = 1
 EndStruct
 
-Struct Step
-	Int strength = 1
-	Int perception = 1
-	Int endurance = 1
-	Int charisma = 1
-	Int intelligence = 1
-	Int agility = 1
-	Int luck = 1
-	Perk nextPerk = None
-	Perk nextPerkMale = None
-	Perk nextPerkFemale = None
+Struct BobbleheadRequirements
+	bool strength = false
+	bool perception = false
+	bool endurance = false
+	bool charisma = false
+	bool intelligence = false
+	bool agility = false
+	bool luck = false
 EndStruct
 
-String sStateWaiting = "Waiting"
-String sStateWorking = "Working"
+Struct Step
+	Bool holdPerkPoint = false
+	Perk nextPerk = None
+	ActorValue attribute = None
+	Perk nextPerkMale = None
+	Perk nextPerkFemale = None
+	CheatBunker:Development:Build:MultiPerkStep multiperk = None
+EndStruct
 
-Bool bWorking = false Conditional
+string sStateWaiting = "Waiting"
+string sStateWorking = "Working"
+
+bool bWorking = false Conditional
+
+int heldPoints = 0 Conditional
+
+int expectedLevel = 0 Conditional
+int expectedStrength = 0 Conditional
+int expectedPerception = 0 Conditional
+int expectedEndurance = 0 Conditional
+int expectedCharisma = 0 Conditional
+int expectedIntelligence = 0 Conditional
+int expectedAgility = 0 Conditional
+int expectedLuck = 0 Conditional
 
 CheatBunker:DevelopmentScript Property CheatBunkerDevelopmentScript Auto Const Mandatory
 
 CheatBunker:DevelopmentScript Function getDevelopmentScript()
 	return CheatBunkerDevelopmentScript
 EndFunction
+
+function clearExpectations()
+	heldPoints = 0
+	expectedLevel = 0
+	expectedStrength = 0
+	expectedPerception = 0
+	expectedEndurance = 0
+	expectedCharisma = 0
+	expectedIntelligence = 0
+	expectedAgility = 0
+	expectedLuck = 0
+endfunction
+
+function incrementExpectedLevel()
+	expectedLevel += 1
+endfunction
+
+bool function hasHeldPoints()
+	return heldPoints > 0
+endfunction
+
+function incrementHeldPoints()
+	heldPoints += 1
+endfunction
+
+function decrementHeldPoints()
+	heldPoints -= 1
+endfunction
+
+function setExpectedStrength(int value)
+	expectedStrength = value
+endfunction
+
+function incrementExpectedStrength()
+	expectedStrength += 1
+endfunction
+
+function setExpectedPerception(int value)
+	expectedPerception = value
+endfunction
+
+function incrementExpectedPerception()
+	expectedPerception += 1
+endfunction
+
+function setExpectedEndurance(int value)
+	expectedEndurance = value
+endfunction
+
+function incrementExpectedEndurance()
+	expectedEndurance += 1
+endfunction
+
+function setExpectedCharisma(int value)
+	expectedCharisma = value
+endfunction
+
+function incrementExpectedCharisma()
+	expectedCharisma += 1
+endfunction
+
+function setExpectedIntelligence(int value)
+	expectedIntelligence = value
+endfunction
+
+function incrementExpectedIntelligence()
+	expectedIntelligence += 1
+endfunction
+
+function setExpectedAgility(int value)
+	expectedAgility = value
+endfunction
+
+function incrementExpectedAgility()
+	expectedAgility += 1
+endfunction
+
+function setExpectedLuck(int value)
+	expectedLuck = value
+endfunction
+
+function incrementExpectedLuck()
+	expectedLuck += 1
+endfunction
 
 bool function isWorking()
 	return bWorking
@@ -44,6 +145,53 @@ Function advanceLevel()
 	characterDevelopment.addPerkPoints(255) ; so that advancing a level will zero out the perk points to keep things nice and clean for the player
 	characterDevelopment.addLevels(1);
 EndFunction
+
+bool function enforceLevel()
+	Actor aPlayer = Game.GetPlayer()
+	while (aPlayer.GetLevel() < expectedLevel)
+		advanceLevel()
+	endWhile
+
+	return true
+endfunction
+
+bool function incrementAttributeExpectation(ActorValue attribute)
+	CheatBunker:DevelopmentScript development = getDevelopmentScript()
+
+	bool bResult = true
+
+	if (development.Strength == attribute)
+		incrementExpectedStrength()
+	elseif (development.Perception == attribute)
+		incrementExpectedPerception()
+	elseif (development.Endurance == attribute)
+		incrementExpectedEndurance()
+	elseif (development.Charisma == attribute)
+		incrementExpectedCharisma()
+	elseif (development.Intelligence == attribute)
+		incrementExpectedIntelligence()
+	elseif (development.Agility == attribute)
+		incrementExpectedAgility()
+	elseif (development.Luck == attribute)
+		incrementExpectedLuck()
+	else
+		bResult = false
+	endif
+
+	return bResult
+endfunction
+
+bool function augmentSpecialValue(ActorValue attribute)
+	if (!attribute)
+		return false
+	endif
+
+	Actor aPlayer = Game.GetPlayer()
+	advanceLevel()
+	aPlayer.SetValue(attribute, aPlayer.GetValue(attribute) + 1)
+
+	return true
+endfunction
 
 Bool Function enforceSpecialValue(ActorValue attribute, Int value)
 	if (!attribute)
@@ -63,40 +211,50 @@ Bool Function enforceSpecialValue(ActorValue attribute, Int value)
 	return true
 EndFunction
 
-Bool Function enforceStrength(Int value)
-	return enforceSpecialValue(getDevelopmentScript().Strength, value)
-EndFunction
+bool function enforceBobbleheads(BobbleheadRequirements bobbleheads)
+	if (!bobbleheads)
+		return false
+	endif
 
-Bool Function enforcePerception(Int value)
-	return enforceSpecialValue(getDevelopmentScript().Perception, value)
-EndFunction
+	Actor aPlayer = Game.GetPlayer()
+	CheatBunker:DevelopmentScript development = getDevelopmentScript()
 
-Bool Function enforceEndurance(Int value)
-	return enforceSpecialValue(getDevelopmentScript().Endurance, value)
-EndFunction
+	bobbleheads.strength && aPlayer.SetValue(development.Strength, aPlayer.GetValue(development.Strength) + 1)
+	bobbleheads.perception && aPlayer.SetValue(development.Perception, aPlayer.GetValue(development.Perception) + 1)
+	bobbleheads.endurance && aPlayer.SetValue(development.Endurance, aPlayer.GetValue(development.Endurance) + 1)
+	bobbleheads.charisma && aPlayer.SetValue(development.Charisma, aPlayer.GetValue(development.Charisma) + 1)
+	bobbleheads.intelligence && aPlayer.SetValue(development.Intelligence, aPlayer.GetValue(development.Intelligence) + 1)
+	bobbleheads.agility && aPlayer.SetValue(development.Agility, aPlayer.GetValue(development.Agility) + 1)
+	bobbleheads.luck && aPlayer.SetValue(development.Luck, aPlayer.GetValue(development.Luck) + 1)
 
-Bool Function enforceCharisma(Int value)
-	return enforceSpecialValue(getDevelopmentScript().Charisma, value)
-EndFunction
+	return true
+endfunction
 
-Bool Function enforceIntelligence(Int value)
-	return enforceSpecialValue(getDevelopmentScript().Intelligence, value)
-EndFunction
+bool function enforceSpecials()
+	CheatBunker:DevelopmentScript development = getDevelopmentScript()
+	return enforceSpecialValue(development.Strength, expectedStrength) && enforceSpecialValue(development.Perception, expectedPerception) && enforceSpecialValue(development.Endurance, expectedEndurance) && enforceSpecialValue(development.Charisma, expectedCharisma) && enforceSpecialValue(development.Intelligence, expectedIntelligence) && enforceSpecialValue(development.Agility, expectedAgility) && enforceSpecialValue(development.Luck, expectedLuck)
+endfunction
 
-Bool Function enforceAgility(Int value)
-	return enforceSpecialValue(getDevelopmentScript().Agility, value)
-EndFunction
+bool function enforceExpectations()
+	return enforceSpecials() && enforceLevel()
+endfunction
 
-Bool Function enforceLuck(Int value)
-	return enforceSpecialValue(getDevelopmentScript().Luck, value)
-EndFunction
-
-Bool Function enforceStartingStats(StartingStats values)
+Bool Function enforceStartingStats(StartingStats values, BobbleheadRequirements bobbleheads)
 	if (!values)
 		return false
 	endif
 
-	return enforceStrength(values.strength) && enforcePerception(values.perception) && enforceEndurance(values.endurance) && enforceCharisma(values.charisma) && enforceIntelligence(values.intelligence) && enforceAgility(values.agility) && enforceLuck(values.luck)
+	expectedStrength = values.strength
+	expectedPerception = values.Perception
+	expectedEndurance = values.endurance
+	expectedCharisma = values.charisma
+	expectedIntelligence = values.intelligence
+	expectedAgility = values.agility
+	expectedLuck = values.luck
+
+	enforceSpecials()
+
+	enforceBobbleheads(bobbleheads)
 EndFunction
 
 Bool Function enforcePerk(Perk thePerk)
@@ -109,18 +267,56 @@ Bool Function enforcePerk(Perk thePerk)
 		return true
 	endif
 
-	advanceLevel()
+	if (hasHeldPoints())
+		decrementHeldPoints()
+	else
+		advanceLevel()
+	endif
+
 	aPlayer.AddPerk(thePerk)
 	return true
 EndFunction
 
-Bool Function enforceStep(Step values)
+Bool function enforceStepPerk(Step values)
+	if (values.nextPerk && (values.nextPerkMale || values.nextPerkFemale))
+		return false
+	endif
+
+	if (values.nextPerk)
+		return enforcePerk(values.nextPerk)
+	endif
+
+	if (Game.GetPlayer().GetActorBase().GetSex() == 0)
+		return enforcePerk(values.nextPerkMale)
+	else
+		return enforcePerk(values.nextPerkFemale)
+	endif
+
+	return false
+endfunction
+
+bool function enforceStep(Step values)
 	if (!values)
 		return false
 	endif
 
-	return enforceStrength(values.strength) && enforcePerception(values.perception) && enforceEndurance(values.endurance) && enforceCharisma(values.charisma) && enforceIntelligence(values.intelligence) && enforceAgility(values.agility) && enforceLuck(values.luck) && (enforcePerk(values.nextPerk) || enforcePerk(values.nextPerkMale) || enforcePerk(values.nextPerkFemale))
-EndFunction
+	incrementExpectedLevel()
+
+	if (values.holdPerkPoint)
+		incrementHeldPoints()
+	else
+		if (values.multiperk)
+			enforcePerks(values.multiperk.getPerks())
+			enforcePerks(values.multiperk.getMalePerks())
+			enforcePerks(values.multiperk.getFemalePerks())
+		else
+			incrementAttributeExpectation(values.attribute)
+			enforceStepPerk(values)
+		endif
+	endif
+
+	enforceExpectations()
+endfunction
 
 Bool function enforcePerks(Perk[] perks)
 	if (!perks || !perks.length)
@@ -178,6 +374,7 @@ Auto State Waiting
 
 	Function apply(CheatBunker:Development:Build build)
 		goToWorking()
+		clearExpectations()
 		build.apply()
 		goToWaiting()
 	EndFunction
