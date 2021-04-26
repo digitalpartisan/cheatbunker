@@ -219,13 +219,45 @@ bool function enforceBobbleheads(BobbleheadRequirements bobbleheads)
 	Actor aPlayer = Game.GetPlayer()
 	CheatBunker:DevelopmentScript development = getDevelopmentScript()
 
-	bobbleheads.strength && aPlayer.SetValue(development.Strength, aPlayer.GetValue(development.Strength) + 1)
-	bobbleheads.perception && aPlayer.SetValue(development.Perception, aPlayer.GetValue(development.Perception) + 1)
-	bobbleheads.endurance && aPlayer.SetValue(development.Endurance, aPlayer.GetValue(development.Endurance) + 1)
-	bobbleheads.charisma && aPlayer.SetValue(development.Charisma, aPlayer.GetValue(development.Charisma) + 1)
-	bobbleheads.intelligence && aPlayer.SetValue(development.Intelligence, aPlayer.GetValue(development.Intelligence) + 1)
-	bobbleheads.agility && aPlayer.SetValue(development.Agility, aPlayer.GetValue(development.Agility) + 1)
-	bobbleheads.luck && aPlayer.SetValue(development.Luck, aPlayer.GetValue(development.Luck) + 1)
+	if (bobbleheads.strength)
+		aPlayer.SetValue(development.Strength, aPlayer.GetValue(development.Strength) + 1)
+		incrementExpectedStrength()
+	endif
+
+	if (bobbleheads.perception)
+		aPlayer.SetValue(development.Perception, aPlayer.GetValue(development.Perception) + 1)
+		incrementExpectedPerception()
+	endif
+
+	
+	if (bobbleheads.endurance)
+		aPlayer.SetValue(development.Endurance, aPlayer.GetValue(development.Endurance) + 1)
+		incrementExpectedEndurance()
+	endif
+
+	
+	if (bobbleheads.charisma)
+		aPlayer.SetValue(development.Charisma, aPlayer.GetValue(development.Charisma) + 1)
+		incrementExpectedCharisma()
+	endif
+
+	
+	if (bobbleheads.intelligence)
+		aPlayer.SetValue(development.Intelligence, aPlayer.GetValue(development.Intelligence) + 1)
+		incrementExpectedIntelligence()
+	endif
+
+	
+	if (bobbleheads.agility)
+		aPlayer.SetValue(development.Agility, aPlayer.GetValue(development.Agility) + 1)
+		incrementExpectedAgility()
+	endif
+
+	
+	if (bobbleheads.luck)
+		aPlayer.SetValue(development.Luck, aPlayer.GetValue(development.Luck) + 1)
+		incrementExpectedLuck()
+	endif
 
 	return true
 endfunction
