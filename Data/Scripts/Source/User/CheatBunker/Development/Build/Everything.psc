@@ -32,14 +32,15 @@ endfunction
 Function apply()
 	CheatBunker:Development:Utility buildUtility = CheatBunker:Dependencies:General.getInstance().getDevelopmentUtility()
 
-	buildUtility.setExpectedStrength(10)
-	buildUtility.setExpectedPerception(10)
-	buildUtility.setExpectedEndurance(10)
-	buildUtility.setExpectedCharisma(10)
-	buildUtility.setExpectedIntelligence(10)
-	buildUtility.setExpectedAgility(10)
-	buildUtility.setExpectedLuck(10)
-	buildUtility.enforceSpecials()
+	CheatBunker:Development:Utility:StartingStats maxSpecial = new CheatBunker:Development:Utility:StartingStats
+	maxSpecial.strength = 10
+	maxSpecial.perception = 10
+	maxSpecial.endurance = 10
+	maxSpecial.charisma = 10
+	maxSpecial.intelligence = 10
+	maxSpecial.agility = 10
+	maxSpecial.luck = 10
+	buildUtility.enforceStartingStats(maxSpecial)
 
 	buildUtility.enforcePerkList(CheatBunkerPackageBaseBuilds00EverythingPerks)
 	if (Game.GetPlayer().GetActorBase().GetSex() == 0)

@@ -2,7 +2,6 @@ Scriptname CheatBunker:Development:Build:Leveled extends CheatBunker:Development
 
 CheatBunker:Development:Utility:Step[] Property Steps Auto Const Mandatory
 CheatBunker:Development:Utility:StartingStats Property StartingStats Auto Const Mandatory
-CheatBunker:Development:Utility:BobbleheadRequirements Property Bobbleheads Auto Const
 CheatBunker:Development:Utility:Step[] function getSteps()
 	return Steps
 endfunction
@@ -14,7 +13,7 @@ function apply()
 	endif
 
 	CheatBunker:Development:Utility buildUtility = CheatBunker:Dependencies:General.getInstance().getDevelopmentUtility()
-	buildUtility.enforceStartingStats(StartingStats, Bobbleheads)
+	buildUtility.enforceStartingStats(StartingStats)
 
 	Int iCounter = 0
 	while (iCounter < mySteps.length)
