@@ -45,13 +45,13 @@ EndFunction
 function clearExpectations()
 	heldPoints = 0
 	expectedLevel = 1
-	expectedStrength = 0
-	expectedPerception = 0
-	expectedEndurance = 0
-	expectedCharisma = 0
-	expectedIntelligence = 0
-	expectedAgility = 0
-	expectedLuck = 0
+	expectedStrength = 1
+	expectedPerception = 1
+	expectedEndurance = 1
+	expectedCharisma = 1
+	expectedIntelligence = 1
+	expectedAgility = 1
+	expectedLuck = 1
 endfunction
 
 function incrementExpectedLevel()
