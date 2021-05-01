@@ -29,7 +29,7 @@ function applyDLC(InjectTec:Plugin targetPlugin, InjectTec:Utility:HexidecimalLo
 	endif
 endfunction
 
-Function apply()
+Function apply(int progressionPercentage = 100)
 	CheatBunker:Development:Utility buildUtility = CheatBunker:Dependencies:General.getInstance().getDevelopmentUtility()
 
 	CheatBunker:Development:Utility:StartingStats maxSpecial = new CheatBunker:Development:Utility:StartingStats

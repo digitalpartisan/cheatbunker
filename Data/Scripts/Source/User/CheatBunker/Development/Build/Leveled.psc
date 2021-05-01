@@ -6,7 +6,7 @@ CheatBunker:Development:Utility:Step[] function getSteps()
 	return Steps
 endfunction
 
-function apply()
+function apply(int progressionPercentage = 100)
 	CheatBunker:Development:Utility:Step[] mySteps = getSteps()
 	if (!mySteps || !mySteps.length)
 		return
@@ -16,8 +16,23 @@ function apply()
 	buildUtility.enforceStartingStats(StartingStats)
 
 	Int iCounter = 0
-	while (iCounter < mySteps.length)
+	Int iTargetLevel = getTargetLevel(progressionPercentage)
+	while (iCounter < mySteps.length && iCounter < iTargetLevel)
 		buildUtility.enforceStep(mySteps[iCounter])
 		iCounter += 1
 	endwhile
+endfunction
+
+bool function hasProgressionOptions()
+	return true
+endfunction
+
+int function getLevelCount()
+	CheatBunker:Development:Utility:Step[] mySteps = getSteps()
+
+	if (!mySteps)
+		return 0
+	endif
+
+	return mySteps.length
 endfunction

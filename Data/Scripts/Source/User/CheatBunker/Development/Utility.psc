@@ -327,7 +327,7 @@ Function goToWaiting()
 
 EndFunction
 
-Function apply(CheatBunker:Development:Build build)
+Function apply(CheatBunker:Development:Build build, int progressionPercentage = 100)
 	
 EndFunction
 
@@ -340,11 +340,11 @@ Auto State Waiting
 		GoToState(sStateWorking)
 	EndFunction
 
-	Function apply(CheatBunker:Development:Build build)
+	Function apply(CheatBunker:Development:Build build, int progressionPercentage = 100)
 		goToWorking()
 		CheatBunker:Development:Logger.applyingBuild(build)
 		clearExpectations()
-		build.apply()
+		build.apply(progressionPercentage)
 		CheatBunker:Development:Logger.doneApplyingBuild(build)
 		goToWaiting()
 	EndFunction
