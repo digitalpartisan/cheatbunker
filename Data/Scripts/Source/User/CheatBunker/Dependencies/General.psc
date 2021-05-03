@@ -5,6 +5,7 @@ InjectTec:Integrator:ChronicleBehavior:Search Property CheatBunkerPackageBehavio
 CheatBunker:Setting:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchSettings Auto Const Mandatory
 CheatBunker:Autocompletion:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchAutocompletions Auto Const Mandatory
 CheatBunker:Development:Build:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchBuilds Auto Const Mandatory
+CheatBunker:CollectibleTracker:PackageBehavior:Search Property CheatBunkerPackageBehaviorSearchTrackers Auto Const Mandatory
 CheatBunker:TransitScript Property CheatBunkerTransitQuest Auto Const Mandatory
 Jiffy:Vault111ExitDetector Property CheatBunkerVault111ExitDetector Auto Const Mandatory
 Jiffy:BackgroundProcessor:FormListCleaner Property CheatBunkerFormListCleaner Auto Const Mandatory
@@ -32,6 +33,10 @@ EndFunction
 
 CheatBunker:Development:Build:PackageBehavior:Search Function getBuildSearcher()
 	return CheatBunkerPackageBehaviorSearchBuilds
+EndFunction
+
+CheatBunker:CollectibleTracker:PackageBehavior:Search Function getTrackerSearcher()
+	return CheatBunkerPackageBehaviorSearchTrackers
 EndFunction
 
 Jiffy:Vault111ExitDetector Function getVault111ExitDetector()

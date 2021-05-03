@@ -1,6 +1,7 @@
 Scriptname CheatBunker:Development:Build extends Quest Hidden
 
 Message Property Explanation Auto Const Mandatory
+Message Property DisplayLevels Auto Const Mandatory
 Message Property Author Auto Const Mandatory
 
 Message Function getExplanation()
@@ -10,6 +11,10 @@ EndFunction
 Message Function getAuthor()
 	return Author
 EndFunction
+
+message function getDisplayLevels()
+	return DisplayLevels
+endfunction
 
 Function apply(int progressionPercentage = 100)
 

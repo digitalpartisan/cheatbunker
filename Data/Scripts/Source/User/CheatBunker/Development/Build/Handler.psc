@@ -43,6 +43,7 @@ function tokenReplacementLogic()
 	replace("BuildObject", build)
 	replace("BuildExplanation", build.getExplanation())
 	replace("BuildAuthor", build.getAuthor())
+	replace("BuildDisplayLevels", build.getDisplayLevels())
 endfunction
 
 function apply(ObjectReference akTerminalRef, int progressionPercentage = 100)

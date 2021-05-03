@@ -1,0 +1,8 @@
+Scriptname CheatBunker:CollectibleTracker:Paginator extends DynamicTerminal:Paginator Conditional
+
+CheatBunker:CollectibleTracker:Handler Property CheatBunkerCollectibleTrackerHandler Auto Const
+
+Function itemActivation(Int iItem, ObjectReference akTerminalRef)
+	CheatBunkerCollectibleTrackerHandler.setBuild(getItem(iItem) as CheatBunker:CollectibleTracker)
+	CheatBunkerCollectibleTrackerHandler.draw(akTerminalRef)
+EndFunction
