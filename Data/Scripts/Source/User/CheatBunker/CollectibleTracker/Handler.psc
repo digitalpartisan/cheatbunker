@@ -2,7 +2,7 @@ scriptname CheatBunker:CollectibleTracker:Handler extends DynamicTerminal:Basic 
 
 Bool bIsValid = false Conditional
 Bool bIsTracking = false Conditional
-CheatBunker:CollectibleTracker myTracker = None
+CheatBunker:CollectibleTracker:Quest myTracker = None
 
 Bool function isValid()
 	return bIsValid
@@ -12,11 +12,11 @@ bool function isTracking()
 	return bIsTracking
 endfunction
 
-CheatBunker:CollectibleTracker function getTracker()
+CheatBunker:CollectibleTracker:Quest function getTracker()
 	return myTracker
 endfunction
 
-function setBuild(CheatBunker:CollectibleTracker newValue)
+function setTracker(CheatBunker:CollectibleTracker:Quest newValue)
 	myTracker = newValue
 	checkState()
 endfunction
@@ -37,8 +37,8 @@ function tokenReplacementLogic()
 		return
 	endif
 	
-	CheatBunker:CollectibleTracker tracker = getTracker()
-	replace("TrackerObject", tracker)
+	CheatBunker:CollectibleTracker:Quest tracker = getTracker()
+	replace("TrackerName", tracker.getDisplayName())
 	replace("TrackerNotes", tracker.getNotes())
 endfunction
 
@@ -47,7 +47,7 @@ function track(ObjectReference akTerminalRef)
 		return
 	endif
 
-	getTracker().track()
+	getTracker().Start()
 	checkState()
 	draw(akTerminalRef)
 endfunction
@@ -57,7 +57,7 @@ function stopTracking(ObjectReference akTerminalRef)
 		return
 	endif
 
-	getTracker().stopTracking()
+	getTracker().Stop()
 	checkState()
 	draw(akTerminalRef)
 endfunction

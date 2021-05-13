@@ -7,6 +7,6 @@ FormList Function getTrackers()
 EndFunction
 
 Bool Function uninstallBehavior()
-	CheatBunker:CollectibleTracker.stopBulk(getTrackers())
+	CheatBunker:CollectibleTracker:Quest.stopBulk(getTrackers())
 	return true
 EndFunction
