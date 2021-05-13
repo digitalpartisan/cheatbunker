@@ -153,7 +153,7 @@ Bool Function enforceSpecialValue(ActorValue attribute, Int value)
 		return false
 	endif
 
-	if (value < 1 || 10 < value)
+	if (value < 1) ; 11 is possible due to bobbleheads / special book
 		return false
 	endif
 
