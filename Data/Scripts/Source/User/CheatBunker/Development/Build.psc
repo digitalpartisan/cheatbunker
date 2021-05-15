@@ -1,12 +1,21 @@
 Scriptname CheatBunker:Development:Build extends Quest Hidden
 
 Message Property Explanation Auto Const Mandatory
+message property Details Auto Const
 Message Property DisplayLevels Auto Const Mandatory
 Message Property Author Auto Const Mandatory
 
 Message Function getExplanation()
 	return Explanation
 EndFunction
+
+message function getDetails()
+	return Details
+endfunction
+
+bool function hasDetails()
+	return getDetails()
+endfunction
 
 Message Function getAuthor()
 	return Author

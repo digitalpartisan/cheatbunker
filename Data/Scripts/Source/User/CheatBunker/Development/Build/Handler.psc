@@ -3,6 +3,7 @@ Scriptname CheatBunker:Development:Build:Handler extends DynamicTerminal:Basic C
 Bool bIsValid = false Conditional
 Bool bIsWorking = false Conditional
 bool bHasProgressionOptions = false Conditional
+bool bHasDetails = false Conditional
 CheatBunker:Development:Build myBuild = None
 
 Bool function isValid()
@@ -11,6 +12,10 @@ endfunction
 
 bool function isWorking()
 	return bIsWorking
+endfunction
+
+bool function hasDetails()
+	return bHasDetails
 endfunction
 
 CheatBunker:Development:Build function getBuild()
@@ -24,11 +29,14 @@ endfunction
 
 function checkState()
 	bHasProgressionOptions = false
+	bHasDetails = false
 
 	bIsValid = (None != myBuild)
 	bIsWorking = CheatBunker:Dependencies:General.getInstance().getDevelopmentUtility().isWorking()
 	if (isValid())
-		bHasProgressionOptions = getBuild().hasProgressionOptions()
+		CheatBunker:Development:Build build = getBuild()
+		bHasProgressionOptions = build.hasProgressionOptions()
+		bHasDetails = build.hasDetails()
 	endif
 endfunction
 
@@ -44,6 +52,7 @@ function tokenReplacementLogic()
 	replace("BuildExplanation", build.getExplanation())
 	replace("BuildAuthor", build.getAuthor())
 	replace("BuildDisplayLevels", build.getDisplayLevels())
+	replace("BuildDetails", build.getDetails())
 endfunction
 
 function apply(ObjectReference akTerminalRef, int progressionPercentage = 100)

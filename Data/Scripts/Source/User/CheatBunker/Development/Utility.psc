@@ -60,7 +60,11 @@ function incrementExpectedLevel()
 endfunction
 
 bool function hasHeldPoints()
-	return heldPoints > 0
+	return getHeldPoints() > 0
+endfunction
+
+int function getHeldPoints()
+	return heldPoints
 endfunction
 
 function incrementHeldPoints()
@@ -223,7 +227,7 @@ Bool Function enforceStartingStats(StartingStats values, bool bBobbleheads = tru
 	bBobbleheads && enforceBobbleheads()
 EndFunction
 
-Bool Function enforcePerk(Perk thePerk)
+Bool Function enforcePerk(Perk thePerk, bool bUseHeldPoints = false)
 	if (!thePerk)
 		return false
 	endif
@@ -233,7 +237,7 @@ Bool Function enforcePerk(Perk thePerk)
 		return true
 	endif
 
-	if (hasHeldPoints())
+	if (bUseHeldPoints && hasHeldPoints())
 		decrementHeldPoints()
 	else
 		advanceLevel()
@@ -261,45 +265,26 @@ Bool function enforceStepPerk(Step values)
 	return false
 endfunction
 
-bool function enforceStep(Step values)
-	if (!values)
-		return false
-	endif
-
-	CheatBunker:Development:Logger.enforcingStep(values)
-
-	!values.noLevel && incrementExpectedLevel()
-
-	if (values.holdPerkPoint)
-		incrementHeldPoints()
-	else
-		if (values.multiperk)
-			enforcePerks(values.multiperk.getPerks())
-			enforcePerks(values.multiperk.getMalePerks())
-			enforcePerks(values.multiperk.getFemalePerks())
-		else
-			incrementAttributeExpectation(values.attribute, values.noLevel)
-			enforceStepPerk(values)
-		endif
-	endif
-
-	enforceExpectations()
-endfunction
-
-Bool function enforcePerks(Perk[] perks)
+Bool function enforcePerks(Perk[] perks, bool bUseHeldPoints = false)
 	if (!perks || !perks.length)
 		return false
 	endif
 
 	int iCounter = 0
 	while (iCounter < perks.length)
-		if (!enforcePerk(perks[iCounter]))
+		if (!enforcePerk(perks[iCounter], bUseHeldPoints))
 			return false
 		endif
 		iCounter += 1
 	endwhile
 
 	return true
+endfunction
+
+bool function enforceMultiperks(CheatBunker:Development:Build:MultiPerkStep multiperk)
+	enforcePerks(multiperk.getPerks(), true)
+	enforcePerks(multiperk.getMalePerks(), true)
+	enforcePerks(multiperk.getFemalePerks(), true)
 endfunction
 
 Bool Function enforcePerkList(FormList perks)
@@ -318,6 +303,33 @@ Bool Function enforcePerkList(FormList perks)
 
 	return true
 EndFunction
+
+bool function enforceStep(Step values)
+	if (!values)
+		return false
+	endif
+
+	CheatBunker:Development:Logger.enforcingStep(values)
+
+	!values.noLevel && incrementExpectedLevel()
+
+	if (values.holdPerkPoint)
+		incrementHeldPoints()
+	else
+		if (values.multiperk)
+			enforceMultiperks(values.multiperk)
+		else
+			incrementAttributeExpectation(values.attribute, values.noLevel)
+			enforceStepPerk(values)
+		endif
+	endif
+
+	enforceExpectations()
+endfunction
+
+bool function awardRemainingPerkPoints()
+	
+endfunction
 
 Function goToWorking()
 
@@ -345,6 +357,7 @@ Auto State Waiting
 		CheatBunker:Development:Logger.applyingBuild(build)
 		clearExpectations()
 		build.apply(progressionPercentage)
+		getDevelopmentScript().addPerkPoints(getHeldPoints()) ; in case a build doesn't quite complete and the player has the option of using a point somehow
 		CheatBunker:Development:Logger.doneApplyingBuild(build)
 		goToWaiting()
 	EndFunction
