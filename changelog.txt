@@ -1,3 +1,7 @@
+v1.11.0
+Implemented pre-made character builds feature
+Implemented collectible tracker feature
+
 v1.10.0
 Library integrations:
 	Jiffy v1.0.0
